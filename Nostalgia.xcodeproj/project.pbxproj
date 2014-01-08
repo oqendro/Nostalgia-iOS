@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		75270AC0187CCBB700B49643 /* DataLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 75270ABF187CCBB700B49643 /* DataLoader.m */; };
 		75C735B41846E0260055F8C3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75C735B31846E0260055F8C3 /* Foundation.framework */; };
 		75C735B61846E0260055F8C3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75C735B51846E0260055F8C3 /* CoreGraphics.framework */; };
 		75C735B81846E0260055F8C3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75C735B71846E0260055F8C3 /* UIKit.framework */; };
@@ -21,6 +22,7 @@
 		75C735D51846E0270055F8C3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75C735B71846E0260055F8C3 /* UIKit.framework */; };
 		75C735DD1846E0270055F8C3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 75C735DB1846E0270055F8C3 /* InfoPlist.strings */; };
 		75C735DF1846E0270055F8C3 /* NostalgiaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 75C735DE1846E0270055F8C3 /* NostalgiaTests.m */; };
+		FA3EFB11A6DD40D1917C6D71 /* libPods-Nostalgia.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89784CB92502488DB677EEE9 /* libPods-Nostalgia.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +36,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		03196A2CFEB8495180B11472 /* Pods-Nostalgia.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nostalgia.xcconfig"; path = "Pods/Pods-Nostalgia.xcconfig"; sourceTree = "<group>"; };
+		75270ABE187CCBB700B49643 /* DataLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataLoader.h; sourceTree = "<group>"; };
+		75270ABF187CCBB700B49643 /* DataLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataLoader.m; sourceTree = "<group>"; };
 		75C735B01846E0260055F8C3 /* Nostalgia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nostalgia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75C735B31846E0260055F8C3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		75C735B51846E0260055F8C3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -53,6 +58,7 @@
 		75C735DA1846E0270055F8C3 /* NostalgiaTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NostalgiaTests-Info.plist"; sourceTree = "<group>"; };
 		75C735DC1846E0270055F8C3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		75C735DE1846E0270055F8C3 /* NostalgiaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NostalgiaTests.m; sourceTree = "<group>"; };
+		89784CB92502488DB677EEE9 /* libPods-Nostalgia.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Nostalgia.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +69,7 @@
 				75C735B61846E0260055F8C3 /* CoreGraphics.framework in Frameworks */,
 				75C735B81846E0260055F8C3 /* UIKit.framework in Frameworks */,
 				75C735B41846E0260055F8C3 /* Foundation.framework in Frameworks */,
+				FA3EFB11A6DD40D1917C6D71 /* libPods-Nostalgia.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +93,7 @@
 				75C735D81846E0270055F8C3 /* NostalgiaTests */,
 				75C735B21846E0260055F8C3 /* Frameworks */,
 				75C735B11846E0260055F8C3 /* Products */,
+				03196A2CFEB8495180B11472 /* Pods-Nostalgia.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -105,6 +113,7 @@
 				75C735B51846E0260055F8C3 /* CoreGraphics.framework */,
 				75C735B71846E0260055F8C3 /* UIKit.framework */,
 				75C735D21846E0270055F8C3 /* XCTest.framework */,
+				89784CB92502488DB677EEE9 /* libPods-Nostalgia.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -117,6 +126,8 @@
 				75C735C51846E0260055F8C3 /* Main.storyboard */,
 				75C735C81846E0260055F8C3 /* ViewController.h */,
 				75C735C91846E0260055F8C3 /* ViewController.m */,
+				75270ABE187CCBB700B49643 /* DataLoader.h */,
+				75270ABF187CCBB700B49643 /* DataLoader.m */,
 				75C735CB1846E0260055F8C3 /* Images.xcassets */,
 				75C735BA1846E0260055F8C3 /* Supporting Files */,
 			);
@@ -159,9 +170,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 75C735E21846E0270055F8C3 /* Build configuration list for PBXNativeTarget "Nostalgia" */;
 			buildPhases = (
+				0A680BC1065C470ABB8C0D9C /* Check Pods Manifest.lock */,
 				75C735AC1846E0260055F8C3 /* Sources */,
 				75C735AD1846E0260055F8C3 /* Frameworks */,
 				75C735AE1846E0260055F8C3 /* Resources */,
+				BA2C48A2B27143A98011575A /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -199,6 +212,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = placeholder;
 				TargetAttributes = {
+					75C735AF1846E0260055F8C3 = {
+						DevelopmentTeam = 28UAY82S25;
+					};
 					75C735D01846E0270055F8C3 = {
 						TestTargetID = 75C735AF1846E0260055F8C3;
 					};
@@ -244,11 +260,45 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0A680BC1065C470ABB8C0D9C /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		BA2C48A2B27143A98011575A /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-Nostalgia-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		75C735AC1846E0260055F8C3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75270AC0187CCBB700B49643 /* DataLoader.m in Sources */,
 				75C735CA1846E0260055F8C3 /* ViewController.m in Sources */,
 				75C735C41846E0260055F8C3 /* AppDelegate.m in Sources */,
 				75C735C01846E0260055F8C3 /* main.m in Sources */,
@@ -375,26 +425,34 @@
 		};
 		75C735E31846E0270055F8C3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 03196A2CFEB8495180B11472 /* Pods-Nostalgia.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Nostalgia/Nostalgia-Prefix.pch";
 				INFOPLIST_FILE = "Nostalgia/Nostalgia-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
 		};
 		75C735E41846E0270055F8C3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 03196A2CFEB8495180B11472 /* Pods-Nostalgia.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Nostalgia/Nostalgia-Prefix.pch";
 				INFOPLIST_FILE = "Nostalgia/Nostalgia-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -460,6 +518,7 @@
 				75C735E41846E0270055F8C3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		75C735E51846E0270055F8C3 /* Build configuration list for PBXNativeTarget "NostalgiaTests" */ = {
 			isa = XCConfigurationList;
@@ -468,6 +527,7 @@
 				75C735E71846E0270055F8C3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
