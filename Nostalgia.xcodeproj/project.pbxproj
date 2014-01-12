@@ -22,6 +22,9 @@
 		75C735D51846E0270055F8C3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75C735B71846E0260055F8C3 /* UIKit.framework */; };
 		75C735DD1846E0270055F8C3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 75C735DB1846E0270055F8C3 /* InfoPlist.strings */; };
 		75C735DF1846E0270055F8C3 /* NostalgiaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 75C735DE1846E0270055F8C3 /* NostalgiaTests.m */; };
+		75CA879C18821D24007A9F06 /* Nostalgia.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 75CA879A18821D24007A9F06 /* Nostalgia.xcdatamodeld */; };
+		75CA87A01882242E007A9F06 /* CoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 75CA879F1882242E007A9F06 /* CoreDataManager.m */; };
+		75CA87A21882247F007A9F06 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75CA87A11882247F007A9F06 /* CoreData.framework */; };
 		FA3EFB11A6DD40D1917C6D71 /* libPods-Nostalgia.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89784CB92502488DB677EEE9 /* libPods-Nostalgia.a */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +61,10 @@
 		75C735DA1846E0270055F8C3 /* NostalgiaTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NostalgiaTests-Info.plist"; sourceTree = "<group>"; };
 		75C735DC1846E0270055F8C3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		75C735DE1846E0270055F8C3 /* NostalgiaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NostalgiaTests.m; sourceTree = "<group>"; };
+		75CA879B18821D24007A9F06 /* Nostalgia.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Nostalgia.xcdatamodel; sourceTree = "<group>"; };
+		75CA879E1882242E007A9F06 /* CoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataManager.h; sourceTree = "<group>"; };
+		75CA879F1882242E007A9F06 /* CoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataManager.m; sourceTree = "<group>"; };
+		75CA87A11882247F007A9F06 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		89784CB92502488DB677EEE9 /* libPods-Nostalgia.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Nostalgia.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -66,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75CA87A21882247F007A9F06 /* CoreData.framework in Frameworks */,
 				75C735B61846E0260055F8C3 /* CoreGraphics.framework in Frameworks */,
 				75C735B81846E0260055F8C3 /* UIKit.framework in Frameworks */,
 				75C735B41846E0260055F8C3 /* Foundation.framework in Frameworks */,
@@ -109,6 +117,7 @@
 		75C735B21846E0260055F8C3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				75CA87A11882247F007A9F06 /* CoreData.framework */,
 				75C735B31846E0260055F8C3 /* Foundation.framework */,
 				75C735B51846E0260055F8C3 /* CoreGraphics.framework */,
 				75C735B71846E0260055F8C3 /* UIKit.framework */,
@@ -126,8 +135,7 @@
 				75C735C51846E0260055F8C3 /* Main.storyboard */,
 				75C735C81846E0260055F8C3 /* ViewController.h */,
 				75C735C91846E0260055F8C3 /* ViewController.m */,
-				75270ABE187CCBB700B49643 /* DataLoader.h */,
-				75270ABF187CCBB700B49643 /* DataLoader.m */,
+				75CA879D18821D87007A9F06 /* Model */,
 				75C735CB1846E0260055F8C3 /* Images.xcassets */,
 				75C735BA1846E0260055F8C3 /* Supporting Files */,
 			);
@@ -161,6 +169,18 @@
 				75C735DB1846E0270055F8C3 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		75CA879D18821D87007A9F06 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				75270ABE187CCBB700B49643 /* DataLoader.h */,
+				75270ABF187CCBB700B49643 /* DataLoader.m */,
+				75CA879A18821D24007A9F06 /* Nostalgia.xcdatamodeld */,
+				75CA879E1882242E007A9F06 /* CoreDataManager.h */,
+				75CA879F1882242E007A9F06 /* CoreDataManager.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -298,6 +318,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75CA87A01882242E007A9F06 /* CoreDataManager.m in Sources */,
+				75CA879C18821D24007A9F06 /* Nostalgia.xcdatamodeld in Sources */,
 				75270AC0187CCBB700B49643 /* DataLoader.m in Sources */,
 				75C735CA1846E0260055F8C3 /* ViewController.m in Sources */,
 				75C735C41846E0260055F8C3 /* AppDelegate.m in Sources */,
@@ -530,6 +552,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		75CA879A18821D24007A9F06 /* Nostalgia.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				75CA879B18821D24007A9F06 /* Nostalgia.xcdatamodel */,
+			);
+			currentVersion = 75CA879B18821D24007A9F06 /* Nostalgia.xcdatamodel */;
+			path = Nostalgia.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 75C735A81846E0260055F8C3 /* Project object */;
 }

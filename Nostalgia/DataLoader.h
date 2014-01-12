@@ -10,6 +10,7 @@
 
 @interface DataLoader : NSObject
 
-+(void)loadMusicData;
++ (void)loadMusicData;
++ (void)loadMovieData;
 
 @end

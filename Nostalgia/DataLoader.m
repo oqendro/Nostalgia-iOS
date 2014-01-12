@@ -13,4 +13,9 @@
 + (void)loadMusicData{
     
 }
+
++(void)loadMovieData{
+    
+}
+
 @end
