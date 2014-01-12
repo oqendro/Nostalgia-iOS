@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7519BA49188252900010D874 /* TimeMachineTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7519BA48188252900010D874 /* TimeMachineTVC.m */; };
+		7519BA4F18825BCD0010D874 /* SignUpCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7519BA4E18825BCD0010D874 /* SignUpCell.m */; };
 		75270AC0187CCBB700B49643 /* DataLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 75270ABF187CCBB700B49643 /* DataLoader.m */; };
 		75C735B41846E0260055F8C3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75C735B31846E0260055F8C3 /* Foundation.framework */; };
 		75C735B61846E0260055F8C3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75C735B51846E0260055F8C3 /* CoreGraphics.framework */; };
@@ -42,6 +44,10 @@
 
 /* Begin PBXFileReference section */
 		03196A2CFEB8495180B11472 /* Pods-Nostalgia.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nostalgia.xcconfig"; path = "Pods/Pods-Nostalgia.xcconfig"; sourceTree = "<group>"; };
+		7519BA47188252900010D874 /* TimeMachineTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeMachineTVC.h; sourceTree = "<group>"; };
+		7519BA48188252900010D874 /* TimeMachineTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeMachineTVC.m; sourceTree = "<group>"; };
+		7519BA4D18825BCD0010D874 /* SignUpCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpCell.h; sourceTree = "<group>"; };
+		7519BA4E18825BCD0010D874 /* SignUpCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpCell.m; sourceTree = "<group>"; };
 		75270ABE187CCBB700B49643 /* DataLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataLoader.h; sourceTree = "<group>"; };
 		75270ABF187CCBB700B49643 /* DataLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataLoader.m; sourceTree = "<group>"; };
 		75C735B01846E0260055F8C3 /* Nostalgia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nostalgia.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -100,6 +106,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7519BA50188265970010D874 /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				75CA87A61882499D007A9F06 /* SignUpTVC.h */,
+				75CA87A71882499D007A9F06 /* SignUpTVC.m */,
+				75CA87A918824A39007A9F06 /* TextFieldCell.h */,
+				75CA87AA18824A39007A9F06 /* TextFieldCell.m */,
+				7519BA4D18825BCD0010D874 /* SignUpCell.h */,
+				7519BA4E18825BCD0010D874 /* SignUpCell.m */,
+			);
+			name = SignUp;
+			sourceTree = "<group>";
+		};
 		75C735A71846E0260055F8C3 = {
 			isa = PBXGroup;
 			children = (
@@ -139,10 +158,9 @@
 				75C735C21846E0260055F8C3 /* AppDelegate.h */,
 				75C735C31846E0260055F8C3 /* AppDelegate.m */,
 				75C735C51846E0260055F8C3 /* Main.storyboard */,
-				75CA87A61882499D007A9F06 /* SignUpTVC.h */,
-				75CA87A71882499D007A9F06 /* SignUpTVC.m */,
-				75CA87A918824A39007A9F06 /* TextFieldCell.h */,
-				75CA87AA18824A39007A9F06 /* TextFieldCell.m */,
+				7519BA50188265970010D874 /* SignUp */,
+				7519BA47188252900010D874 /* TimeMachineTVC.h */,
+				7519BA48188252900010D874 /* TimeMachineTVC.m */,
 				75C735C81846E0260055F8C3 /* ViewController.h */,
 				75C735C91846E0260055F8C3 /* ViewController.m */,
 				75CA879D18821D87007A9F06 /* Model */,
@@ -328,6 +346,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7519BA49188252900010D874 /* TimeMachineTVC.m in Sources */,
 				75CA87A01882242E007A9F06 /* CoreDataManager.m in Sources */,
 				75CA87A81882499D007A9F06 /* SignUpTVC.m in Sources */,
 				75CA879C18821D24007A9F06 /* Nostalgia.xcdatamodeld in Sources */,
@@ -336,6 +355,7 @@
 				75C735CA1846E0260055F8C3 /* ViewController.m in Sources */,
 				75C735C41846E0260055F8C3 /* AppDelegate.m in Sources */,
 				75C735C01846E0260055F8C3 /* main.m in Sources */,
+				7519BA4F18825BCD0010D874 /* SignUpCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

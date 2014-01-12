@@ -12,7 +12,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    NSLog(@"its %@",[CoreDataManager mainThreadContext]);
+//    NSLog(@"its %@",[CoreDataManager mainThreadContext]);
     return YES;
 }
 							
