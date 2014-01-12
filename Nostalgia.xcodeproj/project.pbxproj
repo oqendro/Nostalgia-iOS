@@ -25,6 +25,8 @@
 		75CA879C18821D24007A9F06 /* Nostalgia.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 75CA879A18821D24007A9F06 /* Nostalgia.xcdatamodeld */; };
 		75CA87A01882242E007A9F06 /* CoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 75CA879F1882242E007A9F06 /* CoreDataManager.m */; };
 		75CA87A21882247F007A9F06 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75CA87A11882247F007A9F06 /* CoreData.framework */; };
+		75CA87A81882499D007A9F06 /* SignUpTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 75CA87A71882499D007A9F06 /* SignUpTVC.m */; };
+		75CA87AB18824A39007A9F06 /* TextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 75CA87AA18824A39007A9F06 /* TextFieldCell.m */; };
 		FA3EFB11A6DD40D1917C6D71 /* libPods-Nostalgia.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89784CB92502488DB677EEE9 /* libPods-Nostalgia.a */; };
 /* End PBXBuildFile section */
 
@@ -65,6 +67,10 @@
 		75CA879E1882242E007A9F06 /* CoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataManager.h; sourceTree = "<group>"; };
 		75CA879F1882242E007A9F06 /* CoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataManager.m; sourceTree = "<group>"; };
 		75CA87A11882247F007A9F06 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		75CA87A61882499D007A9F06 /* SignUpTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpTVC.h; sourceTree = "<group>"; };
+		75CA87A71882499D007A9F06 /* SignUpTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpTVC.m; sourceTree = "<group>"; };
+		75CA87A918824A39007A9F06 /* TextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextFieldCell.h; sourceTree = "<group>"; };
+		75CA87AA18824A39007A9F06 /* TextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextFieldCell.m; sourceTree = "<group>"; };
 		89784CB92502488DB677EEE9 /* libPods-Nostalgia.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Nostalgia.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -133,6 +139,10 @@
 				75C735C21846E0260055F8C3 /* AppDelegate.h */,
 				75C735C31846E0260055F8C3 /* AppDelegate.m */,
 				75C735C51846E0260055F8C3 /* Main.storyboard */,
+				75CA87A61882499D007A9F06 /* SignUpTVC.h */,
+				75CA87A71882499D007A9F06 /* SignUpTVC.m */,
+				75CA87A918824A39007A9F06 /* TextFieldCell.h */,
+				75CA87AA18824A39007A9F06 /* TextFieldCell.m */,
 				75C735C81846E0260055F8C3 /* ViewController.h */,
 				75C735C91846E0260055F8C3 /* ViewController.m */,
 				75CA879D18821D87007A9F06 /* Model */,
@@ -319,7 +329,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				75CA87A01882242E007A9F06 /* CoreDataManager.m in Sources */,
+				75CA87A81882499D007A9F06 /* SignUpTVC.m in Sources */,
 				75CA879C18821D24007A9F06 /* Nostalgia.xcdatamodeld in Sources */,
+				75CA87AB18824A39007A9F06 /* TextFieldCell.m in Sources */,
 				75270AC0187CCBB700B49643 /* DataLoader.m in Sources */,
 				75C735CA1846E0260055F8C3 /* ViewController.m in Sources */,
 				75C735C41846E0260055F8C3 /* AppDelegate.m in Sources */,
