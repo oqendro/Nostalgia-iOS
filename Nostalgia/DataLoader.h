@@ -13,4 +13,7 @@
 + (void)loadMusicData;
 + (void)loadMovieData;
 
+
++ (void)uploadMusic;
+
 @end

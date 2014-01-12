@@ -10,11 +10,46 @@
 
 @implementation CoreDataManager
 
+static NSManagedObjectContext  *mainThreadContext;
+
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
 #pragma mark - Core Data stack
+
++ (NSManagedObjectContext *)mainThreadContext
+{
+    if (!mainThreadContext) {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            mainThreadContext = [CoreDataManager mainManagedObjectContext];
+        });
+        
+    }
+    
+    return mainThreadContext;
+}
+
++ (NSManagedObjectContext *)mainManagedObjectContext{
+    
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"Nostalgia" withExtension:@"momd"];
+    NSManagedObjectModel *managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+
+    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Nostalgia.sqlite"];
+    
+    NSError *error = nil;
+    NSPersistentStoreCoordinator *coordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:managedObjectModel];
+    if (![coordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+        
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    
+    NSManagedObjectContext *managedObjectContext = [[NSManagedObjectContext alloc] init];
+    managedObjectContext.persistentStoreCoordinator = coordinator;
+    return managedObjectContext;
+}
 
 // Returns the managed object context for the application.
 // If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
@@ -52,7 +87,7 @@
         return _persistentStoreCoordinator;
     }
     
-    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Nostalgia.sqlite"];
+    NSURL *storeURL = [[CoreDataManager applicationDocumentsDirectory] URLByAppendingPathComponent:@"Nostalgia.sqlite"];
     
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
@@ -104,7 +139,7 @@
 #pragma mark - Application's Documents directory
 
 // Returns the URL to the application's Documents directory.
-- (NSURL *)applicationDocumentsDirectory
++ (NSURL *)applicationDocumentsDirectory
 {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
