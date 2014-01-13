@@ -66,10 +66,10 @@ typedef NS_ENUM(NSInteger, SectionType) {
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     switch (section) {
-            case SectionTypeOne:
+        case SectionTypeOne:
             return SignUpCellTypeCount-1;
             break;
-            case SectionTypeTwo:
+        case SectionTypeTwo:
             return 1;
         default:
             return 0;
@@ -109,16 +109,16 @@ typedef NS_ENUM(NSInteger, SectionType) {
 - (void)configureCell:(TextFieldCell *)cell atIndexPath:(NSIndexPath *)path{
     [self addNotificationToTextField:cell.textField];
     switch (path.row) {
-            case SignUpCellTypeFirstName:
+        case SignUpCellTypeFirstName:
             cell.textField.placeholder = NSLocalizedString(@"FIRST_NAME_CELL_TITLE", @"Label title for first name in sign up view controller");
             break;
-            case SignUpCellTypeLastName:
+        case SignUpCellTypeLastName:
             cell.textField.placeholder = NSLocalizedString(@"FIRST_NAME_CELL_TITLE", @"Label title for first name in sign up view controller");
             break;
-            case SignUpCellTypeEmail:
+        case SignUpCellTypeEmail:
             cell.textField.placeholder = NSLocalizedString(@"FIRST_NAME_CELL_TITLE", @"Label title for first name in sign up view controller");
             break;
-            case SignUpCellTypePassword:
+        case SignUpCellTypePassword:
             cell.textField.placeholder = NSLocalizedString(@"FIRST_NAME_CELL_TITLE", @"Label title for first name in sign up view controller");
             break;
         default:
@@ -146,15 +146,15 @@ typedef NS_ENUM(NSInteger, SectionType) {
     for (TextFieldCell *cell in cells) {
         NSIndexPath *path = [self.tableView indexPathForCell:cell];
         switch (path.row) {
-                case SignUpCellTypeFirstName:
+            case SignUpCellTypeFirstName:
                 valid = cell.textField.text.length > 1 ? YES:NO;
                 NSLog(@"valid %i",valid);
                 break;
-                case SignUpCellTypeLastName:
+            case SignUpCellTypeLastName:
                 break;
-                case SignUpCellTypeEmail:
+            case SignUpCellTypeEmail:
                 break;
-                case SignUpCellTypePassword:
+            case SignUpCellTypePassword:
                 break;
             default:
                 break;

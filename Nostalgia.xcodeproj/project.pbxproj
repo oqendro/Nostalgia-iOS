@@ -10,6 +10,10 @@
 		7519BA49188252900010D874 /* TimeMachineTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7519BA48188252900010D874 /* TimeMachineTVC.m */; };
 		7519BA4F18825BCD0010D874 /* SignUpCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7519BA4E18825BCD0010D874 /* SignUpCell.m */; };
 		75270AC0187CCBB700B49643 /* DataLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 75270ABF187CCBB700B49643 /* DataLoader.m */; };
+		75B729801882D3B500D0A695 /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 75B7297F1882D3B500D0A695 /* Song.m */; };
+		75B729861882D81B00D0A695 /* Song+Networking.m in Sources */ = {isa = PBXBuildFile; fileRef = 75B729851882D81B00D0A695 /* Song+Networking.m */; };
+		75B729881882DBB900D0A695 /* MusicRanked.json in Resources */ = {isa = PBXBuildFile; fileRef = 75B729871882DBB900D0A695 /* MusicRanked.json */; };
+		75B7298B1882DFF200D0A695 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 75B7298A1882DFF200D0A695 /* Constants.m */; };
 		75C735B41846E0260055F8C3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75C735B31846E0260055F8C3 /* Foundation.framework */; };
 		75C735B61846E0260055F8C3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75C735B51846E0260055F8C3 /* CoreGraphics.framework */; };
 		75C735B81846E0260055F8C3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75C735B71846E0260055F8C3 /* UIKit.framework */; };
@@ -50,6 +54,13 @@
 		7519BA4E18825BCD0010D874 /* SignUpCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpCell.m; sourceTree = "<group>"; };
 		75270ABE187CCBB700B49643 /* DataLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataLoader.h; sourceTree = "<group>"; };
 		75270ABF187CCBB700B49643 /* DataLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataLoader.m; sourceTree = "<group>"; };
+		75B7297E1882D3B500D0A695 /* Song.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Song.h; sourceTree = "<group>"; };
+		75B7297F1882D3B500D0A695 /* Song.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Song.m; sourceTree = "<group>"; };
+		75B729841882D81B00D0A695 /* Song+Networking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Song+Networking.h"; sourceTree = "<group>"; };
+		75B729851882D81B00D0A695 /* Song+Networking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Song+Networking.m"; sourceTree = "<group>"; };
+		75B729871882DBB900D0A695 /* MusicRanked.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MusicRanked.json; sourceTree = "<group>"; };
+		75B729891882DFF200D0A695 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		75B7298A1882DFF200D0A695 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		75C735B01846E0260055F8C3 /* Nostalgia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nostalgia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75C735B31846E0260055F8C3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		75C735B51846E0260055F8C3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -157,6 +168,8 @@
 			children = (
 				75C735C21846E0260055F8C3 /* AppDelegate.h */,
 				75C735C31846E0260055F8C3 /* AppDelegate.m */,
+				75B729891882DFF200D0A695 /* Constants.h */,
+				75B7298A1882DFF200D0A695 /* Constants.m */,
 				75C735C51846E0260055F8C3 /* Main.storyboard */,
 				7519BA50188265970010D874 /* SignUp */,
 				7519BA47188252900010D874 /* TimeMachineTVC.h */,
@@ -202,11 +215,16 @@
 		75CA879D18821D87007A9F06 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				75B729871882DBB900D0A695 /* MusicRanked.json */,
+				75CA879E1882242E007A9F06 /* CoreDataManager.h */,
+				75CA879F1882242E007A9F06 /* CoreDataManager.m */,
 				75270ABE187CCBB700B49643 /* DataLoader.h */,
 				75270ABF187CCBB700B49643 /* DataLoader.m */,
 				75CA879A18821D24007A9F06 /* Nostalgia.xcdatamodeld */,
-				75CA879E1882242E007A9F06 /* CoreDataManager.h */,
-				75CA879F1882242E007A9F06 /* CoreDataManager.m */,
+				75B7297E1882D3B500D0A695 /* Song.h */,
+				75B7297F1882D3B500D0A695 /* Song.m */,
+				75B729841882D81B00D0A695 /* Song+Networking.h */,
+				75B729851882D81B00D0A695 /* Song+Networking.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -294,6 +312,7 @@
 			files = (
 				75C735CC1846E0260055F8C3 /* Images.xcassets in Resources */,
 				75C735BE1846E0260055F8C3 /* InfoPlist.strings in Resources */,
+				75B729881882DBB900D0A695 /* MusicRanked.json in Resources */,
 				75C735C71846E0260055F8C3 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -346,9 +365,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75B729801882D3B500D0A695 /* Song.m in Sources */,
+				75B729861882D81B00D0A695 /* Song+Networking.m in Sources */,
 				7519BA49188252900010D874 /* TimeMachineTVC.m in Sources */,
 				75CA87A01882242E007A9F06 /* CoreDataManager.m in Sources */,
 				75CA87A81882499D007A9F06 /* SignUpTVC.m in Sources */,
+				75B7298B1882DFF200D0A695 /* Constants.m in Sources */,
 				75CA879C18821D24007A9F06 /* Nostalgia.xcdatamodeld in Sources */,
 				75CA87AB18824A39007A9F06 /* TextFieldCell.m in Sources */,
 				75270AC0187CCBB700B49643 /* DataLoader.m in Sources */,

@@ -7,12 +7,21 @@
 //
 
 #import "AppDelegate.h"
+#import "DataLoader.h"
+#import "Song+Networking.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-//    NSLog(@"its %@",[CoreDataManager mainThreadContext]);
+    [DataLoader setupParseWithLaunchOptions:launchOptions];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:firstLaunchKey]) {
+        [DataLoader uploadMusicData];
+    }
+    [Song loadSongsWithBlock:^(NSArray *songs, NSError *error) {
+        NSLog(@"loaded");
+    }];
+ 
     return YES;
 }
 							

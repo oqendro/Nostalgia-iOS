@@ -11,6 +11,7 @@
 @implementation CoreDataManager
 
 static NSManagedObjectContext  *mainThreadContext;
+static NSManagedObjectContext  *backgroundThreadContext;
 
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
@@ -18,7 +19,7 @@ static NSManagedObjectContext  *mainThreadContext;
 
 #pragma mark - Core Data stack
 
-+ (NSManagedObjectContext *)mainThreadContext
++ (NSManagedObjectContext *)sharedMainThreadContext
 {
     if (!mainThreadContext) {
         static dispatch_once_t onceToken;
@@ -29,6 +30,20 @@ static NSManagedObjectContext  *mainThreadContext;
     }
     
     return mainThreadContext;
+}
+
++ (NSManagedObjectContext *)sharedBackgroundThreadContext
+{
+    if (!backgroundThreadContext) {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            backgroundThreadContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+            backgroundThreadContext.parentContext = [CoreDataManager sharedMainThreadContext];
+        });
+        
+    }
+    
+    return backgroundThreadContext;
 }
 
 + (NSManagedObjectContext *)mainManagedObjectContext{
@@ -46,7 +61,7 @@ static NSManagedObjectContext  *mainThreadContext;
         abort();
     }
     
-    NSManagedObjectContext *managedObjectContext = [[NSManagedObjectContext alloc] init];
+    NSManagedObjectContext *managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
     managedObjectContext.persistentStoreCoordinator = coordinator;
     return managedObjectContext;
 }

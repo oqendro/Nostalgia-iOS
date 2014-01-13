@@ -10,10 +10,8 @@
 
 @interface DataLoader : NSObject
 
-+ (void)loadMusicData;
-+ (void)loadMovieData;
++ (void)setupParseWithLaunchOptions:(NSDictionary *)launchOptions;
 
-
-+ (void)uploadMusic;
++ (void)uploadMusicData;
 
 @end
