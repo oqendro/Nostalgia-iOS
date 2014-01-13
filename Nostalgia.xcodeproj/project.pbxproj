@@ -14,6 +14,7 @@
 		75B729861882D81B00D0A695 /* Song+Networking.m in Sources */ = {isa = PBXBuildFile; fileRef = 75B729851882D81B00D0A695 /* Song+Networking.m */; };
 		75B729881882DBB900D0A695 /* MusicRanked.json in Resources */ = {isa = PBXBuildFile; fileRef = 75B729871882DBB900D0A695 /* MusicRanked.json */; };
 		75B7298B1882DFF200D0A695 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 75B7298A1882DFF200D0A695 /* Constants.m */; };
+		75B7298F1883920900D0A695 /* DatePickerTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 75B7298E1883920900D0A695 /* DatePickerTVC.m */; };
 		75C735B41846E0260055F8C3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75C735B31846E0260055F8C3 /* Foundation.framework */; };
 		75C735B61846E0260055F8C3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75C735B51846E0260055F8C3 /* CoreGraphics.framework */; };
 		75C735B81846E0260055F8C3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75C735B71846E0260055F8C3 /* UIKit.framework */; };
@@ -61,6 +62,8 @@
 		75B729871882DBB900D0A695 /* MusicRanked.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MusicRanked.json; sourceTree = "<group>"; };
 		75B729891882DFF200D0A695 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		75B7298A1882DFF200D0A695 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		75B7298D1883920900D0A695 /* DatePickerTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatePickerTVC.h; sourceTree = "<group>"; };
+		75B7298E1883920900D0A695 /* DatePickerTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatePickerTVC.m; sourceTree = "<group>"; };
 		75C735B01846E0260055F8C3 /* Nostalgia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nostalgia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75C735B31846E0260055F8C3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		75C735B51846E0260055F8C3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -117,17 +120,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7519BA50188265970010D874 /* SignUp */ = {
+		7519BA50188265970010D874 /* Sign Up */ = {
 			isa = PBXGroup;
 			children = (
 				75CA87A61882499D007A9F06 /* SignUpTVC.h */,
 				75CA87A71882499D007A9F06 /* SignUpTVC.m */,
+				75B7298D1883920900D0A695 /* DatePickerTVC.h */,
+				75B7298E1883920900D0A695 /* DatePickerTVC.m */,
 				75CA87A918824A39007A9F06 /* TextFieldCell.h */,
 				75CA87AA18824A39007A9F06 /* TextFieldCell.m */,
 				7519BA4D18825BCD0010D874 /* SignUpCell.h */,
 				7519BA4E18825BCD0010D874 /* SignUpCell.m */,
 			);
-			name = SignUp;
+			name = "Sign Up";
+			sourceTree = "<group>";
+		};
+		75B7298C18837D4200D0A695 /* Time Machine */ = {
+			isa = PBXGroup;
+			children = (
+				7519BA47188252900010D874 /* TimeMachineTVC.h */,
+				7519BA48188252900010D874 /* TimeMachineTVC.m */,
+				75C735C81846E0260055F8C3 /* ViewController.h */,
+				75C735C91846E0260055F8C3 /* ViewController.m */,
+			);
+			name = "Time Machine";
 			sourceTree = "<group>";
 		};
 		75C735A71846E0260055F8C3 = {
@@ -171,11 +187,8 @@
 				75B729891882DFF200D0A695 /* Constants.h */,
 				75B7298A1882DFF200D0A695 /* Constants.m */,
 				75C735C51846E0260055F8C3 /* Main.storyboard */,
-				7519BA50188265970010D874 /* SignUp */,
-				7519BA47188252900010D874 /* TimeMachineTVC.h */,
-				7519BA48188252900010D874 /* TimeMachineTVC.m */,
-				75C735C81846E0260055F8C3 /* ViewController.h */,
-				75C735C91846E0260055F8C3 /* ViewController.m */,
+				7519BA50188265970010D874 /* Sign Up */,
+				75B7298C18837D4200D0A695 /* Time Machine */,
 				75CA879D18821D87007A9F06 /* Model */,
 				75C735CB1846E0260055F8C3 /* Images.xcassets */,
 				75C735BA1846E0260055F8C3 /* Supporting Files */,
@@ -374,6 +387,7 @@
 				75CA879C18821D24007A9F06 /* Nostalgia.xcdatamodeld in Sources */,
 				75CA87AB18824A39007A9F06 /* TextFieldCell.m in Sources */,
 				75270AC0187CCBB700B49643 /* DataLoader.m in Sources */,
+				75B7298F1883920900D0A695 /* DatePickerTVC.m in Sources */,
 				75C735CA1846E0260055F8C3 /* ViewController.m in Sources */,
 				75C735C41846E0260055F8C3 /* AppDelegate.m in Sources */,
 				75C735C01846E0260055F8C3 /* main.m in Sources */,

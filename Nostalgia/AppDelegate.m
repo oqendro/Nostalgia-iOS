@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import "DataLoader.h"
-#import "Song+Networking.h"
 
 @implementation AppDelegate
 
@@ -18,9 +17,6 @@
     if ([[NSUserDefaults standardUserDefaults] boolForKey:firstLaunchKey]) {
         [DataLoader uploadMusicData];
     }
-    [Song loadSongsWithBlock:^(NSArray *songs, NSError *error) {
-        NSLog(@"loaded");
-    }];
  
     return YES;
 }

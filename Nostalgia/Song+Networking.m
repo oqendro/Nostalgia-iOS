@@ -75,15 +75,12 @@
                 song.updatedAt = PFObject.updatedAt;
                 song.year = [PFObject objectForKey:yearKey];
             }];
-            NSLog(@"ascending update here");
         }
             break;
         case NSOrderedDescending:
-            NSLog(@"descending no need to update");
             return;
             break;
         case NSOrderedSame:
-            NSLog(@"same");
             return;
             break;            
         default:

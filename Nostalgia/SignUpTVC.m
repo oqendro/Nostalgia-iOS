@@ -10,10 +10,13 @@
 #import "TextFieldCell.h"
 #import "SignUpCell.h"
 #import "TimeMachineTVC.h"
+#import "DatePickerTVC.h"
+#import <SHEmailValidator.h>
 
 typedef NS_ENUM(NSInteger, SignUpCellType) {
     SignUpCellTypeFirstName,
     SignUpCellTypeLastName,
+    SignUpCellTypeDOB,
     SignUpCellTypeEmail,
     SignUpCellTypePassword,
     SignUpCellTypeSignUp,
@@ -26,9 +29,16 @@ typedef NS_ENUM(NSInteger, SectionType) {
     SectionTypeCount
 };
 
-@interface SignUpTVC ()
+@interface SignUpTVC () <DatePickerTVCDelegate>
 
 @property (nonatomic, strong) NSMutableArray *localChangeObservers;
+@property (nonatomic, strong) TextFieldCell *firstNameCell;
+@property (nonatomic, strong) TextFieldCell *lastNameCell;
+@property (nonatomic, strong) TextFieldCell *dobCell;
+@property (nonatomic, strong) TextFieldCell *emailCell;
+@property (nonatomic, strong) TextFieldCell *passwordCell;
+@property (nonatomic, strong) SignUpCell *signUpCell;
+@property (nonatomic, strong) NSDate *birthDate;
 
 @end
 
@@ -46,6 +56,13 @@ typedef NS_ENUM(NSInteger, SectionType) {
     // Dispose of any resources that can be recreated.
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([segue.identifier isEqualToString:@"DatePickerTVC"]) {
+        UINavigationController *navController = segue.destinationViewController;
+        DatePickerTVC *datePickerTVC = (DatePickerTVC *)navController.topViewController;
+        datePickerTVC.delegate = self;
+    }
+}
 - (void)showTimeMachine{
     TimeMachineTVC *timeMachine = [self.storyboard instantiateViewControllerWithIdentifier:@"TimeMachineTVC"];
     [self.navigationController setViewControllers:@[timeMachine] animated:YES];
@@ -85,17 +102,18 @@ typedef NS_ENUM(NSInteger, SectionType) {
     UITableViewCell *cell;
     
     switch (indexPath.section) {
-            case SectionTypeOne:
-                cell = [tableView dequeueReusableCellWithIdentifier:textFieldCellIdentifier forIndexPath:indexPath];
-                [self configureCell:(TextFieldCell *)cell atIndexPath:indexPath];
+        case SectionTypeOne:
+            cell = [tableView dequeueReusableCellWithIdentifier:textFieldCellIdentifier forIndexPath:indexPath];
+            [self configureCell:(TextFieldCell *)cell atIndexPath:indexPath];
             break;
-            case SectionTypeTwo: {
-                cell = [tableView dequeueReusableCellWithIdentifier:signUpCellIdentifier forIndexPath:indexPath];
-                SignUpCell *signUpCell = (SignUpCell *)cell;
-                [signUpCell.signUpButton setTitle:NSLocalizedString(@"SIGN_UP_BUTTON_TITLE", @"Title for sign up button in sign up view controller")
+        case SectionTypeTwo: {
+            cell = [tableView dequeueReusableCellWithIdentifier:signUpCellIdentifier forIndexPath:indexPath];
+            self.signUpCell = (SignUpCell *)cell;
+            [self.signUpCell.signUpButton setTitle:NSLocalizedString(@"SIGN_UP_BUTTON_TITLE", @"Title for sign up button in sign up view controller")
                                          forState:UIControlStateNormal];
-                [signUpCell.signUpButton addTarget:self action:@selector(signUpButtonTouched) forControlEvents:UIControlEventTouchUpInside];
-            }
+            [self.signUpCell.signUpButton addTarget:self action:@selector(signUpButtonTouched) forControlEvents:UIControlEventTouchUpInside];
+            self.signUpCell.signUpButton.enabled = NO;
+        }
         default:
             break;
     }
@@ -106,20 +124,54 @@ typedef NS_ENUM(NSInteger, SectionType) {
     return cell;
 }
 
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if ([indexPath isEqual:[NSIndexPath indexPathForRow:SignUpCellTypeDOB inSection:SectionTypeOne]]) {
+        [self performSegueWithIdentifier:@"DatePickerTVC" sender:[tableView cellForRowAtIndexPath:indexPath]];
+    }
+}
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath{
+    if ([indexPath isEqual:[NSIndexPath indexPathForRow:SignUpCellTypeDOB inSection:SectionTypeOne]]) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+#pragma mark - Convenience
+
 - (void)configureCell:(TextFieldCell *)cell atIndexPath:(NSIndexPath *)path{
-    [self addNotificationToTextField:cell.textField];
+    if ([cell isKindOfClass:[TextFieldCell class]]) {
+        [self addNotificationToTextField:cell.textField];
+    }
+    
     switch (path.row) {
         case SignUpCellTypeFirstName:
-            cell.textField.placeholder = NSLocalizedString(@"FIRST_NAME_CELL_TITLE", @"Label title for first name in sign up view controller");
+            self.firstNameCell = cell;
+            self.firstNameCell.label.text = NSLocalizedString(@"FIRST_NAME_CELL_TITLE", @"Label title for first name in sign up view controller");
+            self.firstNameCell.textField.placeholder = NSLocalizedString(@"FIRST_NAME_CELL_TITLE", @"Label title for first name in sign up view controller");
             break;
         case SignUpCellTypeLastName:
-            cell.textField.placeholder = NSLocalizedString(@"FIRST_NAME_CELL_TITLE", @"Label title for first name in sign up view controller");
+            self.lastNameCell = cell;
+            self.lastNameCell.label.text = NSLocalizedString(@"LAST_NAME_CELL_TITLE", @"Label title for last name in sign up view controller");
+            self.lastNameCell.textField.placeholder = NSLocalizedString(@"LAST_NAME_CELL_TITLE", @"Label title for last name in sign up view controller");
+            break;
+        case SignUpCellTypeDOB:
+            self.dobCell = cell;
+            self.dobCell.textField.userInteractionEnabled = NO;
+            self.dobCell.label.text = NSLocalizedString(@"BIRTHDAY_CELL_TITLE", @"Label title for birthday cell in sign up view controller");
+            cell.textField.placeholder = NSLocalizedString(@"SELECT_BIRTHDAY_CELL_DETAIL_TEXT", @"Text that says please select your birthday in sign up view controller");
             break;
         case SignUpCellTypeEmail:
-            cell.textField.placeholder = NSLocalizedString(@"FIRST_NAME_CELL_TITLE", @"Label title for first name in sign up view controller");
+            self.emailCell = cell;
+            self.emailCell.label.text = NSLocalizedString(@"EMAIL_CELL_TITLE", @"Label title for email in sign up view controller");
+            self.emailCell.textField.placeholder = NSLocalizedString(@"EMAIL_NAME_CELL_TITLE", @"Label title for email in sign up view controller");
             break;
         case SignUpCellTypePassword:
-            cell.textField.placeholder = NSLocalizedString(@"FIRST_NAME_CELL_TITLE", @"Label title for first name in sign up view controller");
+            self.passwordCell = cell;
+            self.passwordCell.label.text = NSLocalizedString(@"PASSWORD_CELL_TITLE", @"Label title for password in sign up view controller");
+            self.passwordCell.textField.placeholder = NSLocalizedString(@"PASSWORD_NAME_CELL_TITLE", @"Label title for password in sign up view controller");
             break;
         default:
             break;
@@ -131,7 +183,7 @@ typedef NS_ENUM(NSInteger, SectionType) {
                                                                     object:textField
                                                                      queue:nil
                                                                 usingBlock:^(NSNotification *note) {
-                                                                    //
+                                                                    [self validatefields];
                                                                 }];
     if (!self.localChangeObservers) {
         self.localChangeObservers = [[NSMutableArray alloc] init];
@@ -140,26 +192,34 @@ typedef NS_ENUM(NSInteger, SectionType) {
 }
 
 - (void)validatefields{
+    self.signUpCell.signUpButton.enabled = YES;
     BOOL valid = YES;
-    
-    NSArray *cells = [self.tableView visibleCells];
-    for (TextFieldCell *cell in cells) {
-        NSIndexPath *path = [self.tableView indexPathForCell:cell];
-        switch (path.row) {
-            case SignUpCellTypeFirstName:
-                valid = cell.textField.text.length > 1 ? YES:NO;
-                NSLog(@"valid %i",valid);
-                break;
-            case SignUpCellTypeLastName:
-                break;
-            case SignUpCellTypeEmail:
-                break;
-            case SignUpCellTypePassword:
-                break;
-            default:
-                break;
-        }
+    valid = self.firstNameCell.textField.text.length > 1 ? YES:NO;
+    if (!valid) {
+        self.signUpCell.signUpButton.enabled = NO;
     }
+    valid = self.lastNameCell.textField.text.length > 1 ? YES:NO;
+    if (!valid) {
+        self.signUpCell.signUpButton.enabled = NO;
+    }
+    valid = self.birthDate ? YES:NO;
+    if (!valid) {
+        self.signUpCell.signUpButton.enabled = NO;
+    }
+    NSError *emailError;
+    valid = [[SHEmailValidator validator] validateSyntaxOfEmailAddress:self.emailCell.textField.text withError:&emailError];
+    if (!valid) {
+        self.signUpCell.signUpButton.enabled = NO;
+        [self.emailCell.textField setTextColor:[UIColor redColor]];
+    } else {
+        self.emailCell.textField.textColor = [UIColor blackColor];
+    }
+    valid = self.passwordCell.textField.text.length > 1 ? YES:NO;
+    if (!valid) {
+        self.signUpCell.signUpButton.enabled = NO;
+    }
+    
+
 }
 
 - (void)dealloc{
@@ -167,55 +227,23 @@ typedef NS_ENUM(NSInteger, SectionType) {
         [[NSNotificationCenter defaultCenter] removeObserver:observer];
     }
 }
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
 
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
- {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- }
- else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
+#pragma mark - DatePicker Delegate
 
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
+- (void)datePickerDidFinishWithDate:(NSDate *)birthdate{
+    if (birthdate) {
+        self.birthDate = birthdate;
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateStyle:NSDateFormatterShortStyle];
+        self.dobCell.textField.text = [dateFormatter stringFromDate:birthdate];
+    }
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self validatefields];
+    }];
+}
 
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
-
-/*
- #pragma mark - Navigation
- 
- // In a story board-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- 
- */
+- (void)datePickerDidCancel{
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
 
 @end
