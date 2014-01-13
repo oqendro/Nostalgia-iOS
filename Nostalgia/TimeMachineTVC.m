@@ -10,11 +10,13 @@
 
 @interface TimeMachineTVC ()
 
+@property (nonatomic, strong) NSArray *selectableYears;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
 @end
 
 @implementation TimeMachineTVC
+
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -41,6 +43,25 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Convenience
+
+- (NSArray *)yearsForUser{
+    NSDate *birthdate = [self.user objectForKey:@"birthDate"];
+    
+    NSInteger years = [[[NSCalendar currentCalendar] components:NSYearCalendarUnit
+                                                       fromDate:birthdate
+                                                         toDate:[NSDate date]
+                                                        options:0] year];
+    
+    NSInteger months = [[[NSCalendar currentCalendar] components:NSMonthCalendarUnit
+                                                        fromDate:birthdate
+                                                          toDate:[NSDate date]
+                                                         options:0] month];
+    NSLog(@"Number of years: %ld",(long)years);
+    NSLog(@"Number of Months: %ld,",(long)months);
+    
 }
 
 #pragma mark - Table view data source

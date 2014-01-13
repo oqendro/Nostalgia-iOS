@@ -10,4 +10,7 @@
 
 @interface TimeMachineTVC : UITableViewController
 
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, strong) NSDictionary *user;
+
 @end
