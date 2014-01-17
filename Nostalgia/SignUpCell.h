@@ -10,6 +10,6 @@
 
 @interface SignUpCell : UITableViewCell
 
-@property (strong, nonatomic) IBOutlet UIButton *signUpButton;
+@property (strong, nonatomic) IBOutlet UILabel *label;
 
 @end

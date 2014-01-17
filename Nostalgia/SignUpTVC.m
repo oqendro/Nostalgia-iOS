@@ -29,7 +29,9 @@ typedef NS_ENUM(NSInteger, SectionType) {
     SectionTypeCount
 };
 
-@interface SignUpTVC () <DatePickerTVCDelegate>
+static NSInteger numberOfCharactersRequired = 1;
+
+@interface SignUpTVC () <DatePickerTVCDelegate, UITextFieldDelegate>
 
 @property (nonatomic, strong) NSMutableArray *localChangeObservers;
 @property (nonatomic, strong) TextFieldCell *firstNameCell;
@@ -48,8 +50,13 @@ typedef NS_ENUM(NSInteger, SectionType) {
 {
     [super viewDidLoad];
     self.title = NSLocalizedString(@"SIGN_UP_VIEW_CONTROLLER_TITLE", @"Title for sign up view controller");
+    [self setupUI];
 }
 
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self setupUI];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -63,6 +70,24 @@ typedef NS_ENUM(NSInteger, SectionType) {
         datePickerTVC.delegate = self;
     }
 }
+
+- (void)setupUI{
+    self.firstNameCell.textField.returnKeyType = UIReturnKeyNext;
+    self.firstNameCell.textField.enablesReturnKeyAutomatically = YES;
+    self.firstNameCell.textField.delegate = self;
+    self.lastNameCell.textField.returnKeyType = UIReturnKeyNext;
+    self.lastNameCell.textField.enablesReturnKeyAutomatically = YES;
+    self.lastNameCell.textField.delegate = self;
+    self.emailCell.textField.returnKeyType = UIReturnKeyNext;
+    self.emailCell.textField.keyboardType = UIKeyboardTypeEmailAddress;
+    self.emailCell.textField.enablesReturnKeyAutomatically = YES;
+    self.emailCell.textField.delegate = self;
+    self.passwordCell.textField.returnKeyType = UIReturnKeyDone;
+    self.passwordCell.textField.enablesReturnKeyAutomatically = YES;
+    self.passwordCell.textField.delegate = self;
+    
+}
+
 - (void)showTimeMachine{
     TimeMachineTVC *timeMachine = [self.storyboard instantiateViewControllerWithIdentifier:@"TimeMachineTVC"];
     [self.navigationController setViewControllers:@[timeMachine] animated:YES];
@@ -109,10 +134,8 @@ typedef NS_ENUM(NSInteger, SectionType) {
         case SectionTypeTwo: {
             cell = [tableView dequeueReusableCellWithIdentifier:signUpCellIdentifier forIndexPath:indexPath];
             self.signUpCell = (SignUpCell *)cell;
-            [self.signUpCell.signUpButton setTitle:NSLocalizedString(@"SIGN_UP_BUTTON_TITLE", @"Title for sign up button in sign up view controller")
-                                         forState:UIControlStateNormal];
-            [self.signUpCell.signUpButton addTarget:self action:@selector(signUpButtonTouched) forControlEvents:UIControlEventTouchUpInside];
-            self.signUpCell.signUpButton.enabled = NO;
+            self.signUpCell.label.text = NSLocalizedString(@"SIGN_UP_BUTTON_TITLE", @"Title for sign up button in sign up view controller");
+            self.signUpCell.label.enabled = NO;
         }
         default:
             break;
@@ -127,12 +150,20 @@ typedef NS_ENUM(NSInteger, SectionType) {
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+    
     if ([indexPath isEqual:[NSIndexPath indexPathForRow:SignUpCellTypeDOB inSection:SectionTypeOne]]) {
         [self performSegueWithIdentifier:@"DatePickerTVC" sender:[tableView cellForRowAtIndexPath:indexPath]];
     }
+    if ([indexPath isEqual:[NSIndexPath indexPathForRow:0 inSection:SectionTypeTwo]]) {
+        UIViewController *timeMachineVC = [self.storyboard instantiateViewControllerWithIdentifier:@"TimeMachineTVC"];
+        [self.navigationController setViewControllers:@[timeMachineVC] animated:YES];
+    }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath{
-    if ([indexPath isEqual:[NSIndexPath indexPathForRow:SignUpCellTypeDOB inSection:SectionTypeOne]]) {
+    if ([indexPath isEqual:[NSIndexPath indexPathForRow:SignUpCellTypeDOB inSection:SectionTypeOne]] ||
+        [indexPath isEqual:[NSIndexPath indexPathForRow:0 inSection:SectionTypeTwo]]) {
         return YES;
     } else {
         return NO;
@@ -179,11 +210,12 @@ typedef NS_ENUM(NSInteger, SectionType) {
 }
 
 - (void)addNotificationToTextField:(UITextField *)textField{
+    __weak SignUpTVC *weakSelf = self;
     id observer = [[NSNotificationCenter defaultCenter] addObserverForName:UITextFieldTextDidChangeNotification
                                                                     object:textField
                                                                      queue:nil
                                                                 usingBlock:^(NSNotification *note) {
-                                                                    [self validatefields];
+                                                                    [weakSelf validatefieldsWithWeakSelf:weakSelf];
                                                                 }];
     if (!self.localChangeObservers) {
         self.localChangeObservers = [[NSMutableArray alloc] init];
@@ -191,41 +223,81 @@ typedef NS_ENUM(NSInteger, SectionType) {
     [self.localChangeObservers addObject:observer];
 }
 
-- (void)validatefields{
-    self.signUpCell.signUpButton.enabled = YES;
-    BOOL valid = YES;
-    valid = self.firstNameCell.textField.text.length > 1 ? YES:NO;
-    if (!valid) {
-        self.signUpCell.signUpButton.enabled = NO;
-    }
-    valid = self.lastNameCell.textField.text.length > 1 ? YES:NO;
-    if (!valid) {
-        self.signUpCell.signUpButton.enabled = NO;
-    }
-    valid = self.birthDate ? YES:NO;
-    if (!valid) {
-        self.signUpCell.signUpButton.enabled = NO;
-    }
-    NSError *emailError;
-    valid = [[SHEmailValidator validator] validateSyntaxOfEmailAddress:self.emailCell.textField.text withError:&emailError];
-    if (!valid) {
-        self.signUpCell.signUpButton.enabled = NO;
-        [self.emailCell.textField setTextColor:[UIColor redColor]];
+- (void)validatefieldsWithWeakSelf:(SignUpTVC *)weakSelf{
+    if (weakSelf.firstNameCell.textField.text.length >= numberOfCharactersRequired &&
+        weakSelf.lastNameCell.textField.text.length >= numberOfCharactersRequired &&
+        weakSelf.birthDate &&
+        weakSelf.emailCell.textField.text.length >= numberOfCharactersRequired &&
+        weakSelf.passwordCell.textField.text.length >= numberOfCharactersRequired) {
+        
+        weakSelf.signUpCell.label.enabled = YES;
+        weakSelf.signUpCell.userInteractionEnabled = YES;
+        weakSelf.signUpCell.backgroundColor = [UIColor orangeColor];
     } else {
-        self.emailCell.textField.textColor = [UIColor blackColor];
+        weakSelf.signUpCell.label.enabled = NO;;
+        weakSelf.signUpCell.userInteractionEnabled = NO;
+        weakSelf.signUpCell.backgroundColor = [UIColor whiteColor];
     }
-    valid = self.passwordCell.textField.text.length > 1 ? YES:NO;
-    if (!valid) {
-        self.signUpCell.signUpButton.enabled = NO;
-    }
-    
+}
 
+- (void)signUp{
+    
 }
 
 - (void)dealloc{
+    NSLog(@"dealloc");
     for (NSObject *observer in self.localChangeObservers) {
         [[NSNotificationCenter defaultCenter] removeObserver:observer];
     }
+}
+
+#pragma mark - UITextfield Delegate
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    if (textField == self.firstNameCell.textField) {
+        [self.tableView scrollToRowAtIndexPath:[self.tableView indexPathForCell:self.firstNameCell]
+                              atScrollPosition:UITableViewScrollPositionMiddle
+                                      animated:YES];
+    }
+    if (textField == self.lastNameCell.textField) {
+        [self.tableView scrollToRowAtIndexPath:[self.tableView indexPathForCell:self.lastNameCell]
+                              atScrollPosition:UITableViewScrollPositionMiddle
+                                      animated:YES];
+    }
+    if (textField == self.dobCell.textField) {
+        [self.tableView scrollToRowAtIndexPath:[self.tableView indexPathForCell:self.dobCell]
+                              atScrollPosition:UITableViewScrollPositionMiddle
+                                      animated:YES];
+    }
+    if (textField == self.emailCell.textField) {
+        [self.tableView scrollToRowAtIndexPath:[self.tableView indexPathForCell:self.emailCell]
+                              atScrollPosition:UITableViewScrollPositionMiddle
+                                      animated:YES];
+    }
+    if (textField == self.passwordCell.textField) {
+        [self.tableView scrollToRowAtIndexPath:[self.tableView indexPathForCell:self.passwordCell]
+                              atScrollPosition:UITableViewScrollPositionMiddle
+                                      animated:YES];
+    }
+
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    if (textField == self.firstNameCell.textField) {
+        [self.lastNameCell.textField becomeFirstResponder];
+    }
+    if (textField == self.lastNameCell.textField) {
+        [self performSegueWithIdentifier:@"DatePickerTVC" sender:nil];
+    }
+    if (textField == self.dobCell.textField) {
+    }
+    if (textField == self.emailCell.textField) {
+        [self.passwordCell.textField becomeFirstResponder];
+    }
+    if (textField == self.passwordCell.textField) {
+        [self signUp];
+    }
+    return YES;
 }
 
 #pragma mark - DatePicker Delegate
@@ -238,7 +310,8 @@ typedef NS_ENUM(NSInteger, SectionType) {
         self.dobCell.textField.text = [dateFormatter stringFromDate:birthdate];
     }
     [self dismissViewControllerAnimated:YES completion:^{
-        [self validatefields];
+        [self validatefieldsWithWeakSelf:self];
+        [self.emailCell.textField becomeFirstResponder];
     }];
 }
 
