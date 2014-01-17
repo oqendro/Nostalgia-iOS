@@ -19,6 +19,10 @@
     return self;
 }
 
+- (void)awakeFromNib{
+    self.label.textColor = [UIColor whiteColor];
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];

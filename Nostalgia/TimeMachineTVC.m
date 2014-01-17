@@ -31,12 +31,8 @@
 {
     [super viewDidLoad];
     self.title = NSLocalizedString(@"TIME_MACHINE_TITLE", @"Title for time machine view controller");
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.selectableYears = [self yearsForUser];
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -49,48 +45,51 @@
 
 - (NSArray *)yearsForUser{
     NSDate *birthdate = [self.user objectForKey:@"birthDate"];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *birthComp = [calendar components:NSYearCalendarUnit fromDate:birthdate];
     
-    NSInteger years = [[[NSCalendar currentCalendar] components:NSYearCalendarUnit
-                                                       fromDate:birthdate
-                                                         toDate:[NSDate date]
-                                                        options:0] year];
+    NSInteger years = [[calendar components:NSYearCalendarUnit
+                                   fromDate:birthdate
+                                     toDate:[NSDate date]
+                                    options:0] year];
     
-    NSInteger months = [[[NSCalendar currentCalendar] components:NSMonthCalendarUnit
-                                                        fromDate:birthdate
-                                                          toDate:[NSDate date]
-                                                         options:0] month];
-    NSLog(@"Number of years: %ld",(long)years);
-    NSLog(@"Number of Months: %ld,",(long)months);
-    return nil;
+    NSMutableArray *yearsArray = [[NSMutableArray alloc] initWithCapacity:years];
+    for (int i = 0; i < years+1; i++) {
+        NSInteger currentyear = birthComp.year + i;
+        [yearsArray addObject:@{@"year": [NSNumber numberWithInteger:currentyear], @"age": [NSNumber numberWithInt:i]}];
+    }
+    return yearsArray;
     
 }
 
 #pragma mark - Table view data source
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-    return [self.fetchedResultsController sectionIndexTitleForSectionName:sectionInfo.name];
-}
+//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+//    id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
+//    return [self.fetchedResultsController sectionIndexTitleForSectionName:sectionInfo.name];
+//}
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [[self.fetchedResultsController sections] count];
+    return 1;
+//    return [[self.fetchedResultsController sections] count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-    return [sectionInfo numberOfObjects];
+    return self.selectableYears.count;
+//    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
+//    return [sectionInfo numberOfObjects];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ELTCell" forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     [self configureTableViewCell:cell atIndexPath:indexPath];
     
     return cell;
 }
 
 - (void)configureTableViewCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath{
-    
+    cell.textLabel.text = [[[self.selectableYears objectAtIndex:indexPath.row] objectForKey:@"age"] description];
 }
 
 #pragma mark - Fetched Results Controller
@@ -100,7 +99,7 @@
         return _fetchedResultsController;
     }
 //    NSFetchRequest *
-//    _fetchedResultsController = [NSFetchedResultsController alloc] initWithFetchRequest:<#(NSFetchRequest *)#> managedObjectContext:<#(NSManagedObjectContext *)#> sectionNameKeyPath:<#(NSString *)#> cacheName:<#(NSString *)#>
+//    _fetchedResultsController = [NSFetchedResultsController alloc] initWithFetchRequest:] managedObjectContext:<#(NSManagedObjectContext *)#> sectionNameKeyPath:<#(NSString *)#> cacheName:<#(NSString *)#>
     return nil;
 }
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller

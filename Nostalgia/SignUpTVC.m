@@ -50,7 +50,6 @@ static NSInteger numberOfCharactersRequired = 1;
 {
     [super viewDidLoad];
     self.title = NSLocalizedString(@"SIGN_UP_VIEW_CONTROLLER_TITLE", @"Title for sign up view controller");
-    [self setupUI];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -156,8 +155,7 @@ static NSInteger numberOfCharactersRequired = 1;
         [self performSegueWithIdentifier:@"DatePickerTVC" sender:[tableView cellForRowAtIndexPath:indexPath]];
     }
     if ([indexPath isEqual:[NSIndexPath indexPathForRow:0 inSection:SectionTypeTwo]]) {
-        UIViewController *timeMachineVC = [self.storyboard instantiateViewControllerWithIdentifier:@"TimeMachineTVC"];
-        [self.navigationController setViewControllers:@[timeMachineVC] animated:YES];
+        [self signUp];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -241,11 +239,12 @@ static NSInteger numberOfCharactersRequired = 1;
 }
 
 - (void)signUp{
-    
+    TimeMachineTVC *timeMachineVC = [self.storyboard instantiateViewControllerWithIdentifier:@"TimeMachineTVC"];    
+    timeMachineVC.user  = @{@"birthDate": self.birthDate};
+    [self.navigationController setViewControllers:@[timeMachineVC] animated:YES];
 }
 
 - (void)dealloc{
-    NSLog(@"dealloc");
     for (NSObject *observer in self.localChangeObservers) {
         [[NSNotificationCenter defaultCenter] removeObserver:observer];
     }
