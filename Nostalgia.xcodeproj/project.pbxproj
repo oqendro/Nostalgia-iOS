@@ -22,7 +22,7 @@
 		75C735C01846E0260055F8C3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 75C735BF1846E0260055F8C3 /* main.m */; };
 		75C735C41846E0260055F8C3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 75C735C31846E0260055F8C3 /* AppDelegate.m */; };
 		75C735C71846E0260055F8C3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75C735C51846E0260055F8C3 /* Main.storyboard */; };
-		75C735CA1846E0260055F8C3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75C735C91846E0260055F8C3 /* ViewController.m */; };
+		75C735CA1846E0260055F8C3 /* PickerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 75C735C91846E0260055F8C3 /* PickerVC.m */; };
 		75C735CC1846E0260055F8C3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75C735CB1846E0260055F8C3 /* Images.xcassets */; };
 		75C735D31846E0270055F8C3 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75C735D21846E0270055F8C3 /* XCTest.framework */; };
 		75C735D41846E0270055F8C3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75C735B31846E0260055F8C3 /* Foundation.framework */; };
@@ -75,8 +75,8 @@
 		75C735C21846E0260055F8C3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		75C735C31846E0260055F8C3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		75C735C61846E0260055F8C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		75C735C81846E0260055F8C3 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		75C735C91846E0260055F8C3 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		75C735C81846E0260055F8C3 /* PickerVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PickerVC.h; sourceTree = "<group>"; };
+		75C735C91846E0260055F8C3 /* PickerVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PickerVC.m; sourceTree = "<group>"; };
 		75C735CB1846E0260055F8C3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		75C735D11846E0270055F8C3 /* NostalgiaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NostalgiaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		75C735D21846E0270055F8C3 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -140,8 +140,8 @@
 			children = (
 				7519BA47188252900010D874 /* TimeMachineTVC.h */,
 				7519BA48188252900010D874 /* TimeMachineTVC.m */,
-				75C735C81846E0260055F8C3 /* ViewController.h */,
-				75C735C91846E0260055F8C3 /* ViewController.m */,
+				75C735C81846E0260055F8C3 /* PickerVC.h */,
+				75C735C91846E0260055F8C3 /* PickerVC.m */,
 			);
 			name = "Time Machine";
 			sourceTree = "<group>";
@@ -388,7 +388,7 @@
 				75CA87AB18824A39007A9F06 /* TextFieldCell.m in Sources */,
 				75270AC0187CCBB700B49643 /* DataLoader.m in Sources */,
 				75B7298F1883920900D0A695 /* DatePickerTVC.m in Sources */,
-				75C735CA1846E0260055F8C3 /* ViewController.m in Sources */,
+				75C735CA1846E0260055F8C3 /* PickerVC.m in Sources */,
 				75C735C41846E0260055F8C3 /* AppDelegate.m in Sources */,
 				75C735C01846E0260055F8C3 /* main.m in Sources */,
 				7519BA4F18825BCD0010D874 /* SignUpCell.m in Sources */,

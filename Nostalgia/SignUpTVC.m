@@ -55,6 +55,7 @@ static NSInteger numberOfCharactersRequired = 1;
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     [self setupUI];
+    [self signUp];
 }
 - (void)didReceiveMemoryWarning
 {
@@ -239,8 +240,8 @@ static NSInteger numberOfCharactersRequired = 1;
 }
 
 - (void)signUp{
-    TimeMachineTVC *timeMachineVC = [self.storyboard instantiateViewControllerWithIdentifier:@"TimeMachineTVC"];    
-    timeMachineVC.user  = @{@"birthDate": self.birthDate};
+    TimeMachineTVC *timeMachineVC = [self.storyboard instantiateViewControllerWithIdentifier:@"PickerVC"];
+//    timeMachineVC.user  = @{@"birthDate": self.birthDate};
     [self.navigationController setViewControllers:@[timeMachineVC] animated:YES];
 }
 
