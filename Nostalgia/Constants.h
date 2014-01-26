@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+
 #define SharedAppDelegate ((AppDelegate *)[[UIApplication sharedApplication] delegate])
+#define isiPhone5  ([[UIScreen mainScreen] bounds].size.height == 568)?TRUE:FALSE
 
 extern NSString *const firstLaunchKey;

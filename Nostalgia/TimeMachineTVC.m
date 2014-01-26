@@ -12,8 +12,10 @@
 
 @property (nonatomic, strong) NSArray *selectableYears;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property NSInteger paddingCellCount;
 
 @end
+
 
 @implementation TimeMachineTVC
 
@@ -30,6 +32,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    if (isiPhone5) {
+        self.paddingCellCount = 10;
+    } else {
+        self.paddingCellCount = 5;
+    }
+    
     self.title = NSLocalizedString(@"TIME_MACHINE_TITLE", @"Title for time machine view controller");
     self.selectableYears = [self yearsForUser];
     [self.tableView reloadData];
@@ -45,7 +53,14 @@
 
 - (NSArray *)yearsForUser{
     NSDate *birthdate = [self.user objectForKey:@"birthDate"];
+    NSDateComponents *myBirthdayComp = [[NSDateComponents alloc] init];
+    myBirthdayComp.year = 1987;
+    myBirthdayComp.month = 5;
+    myBirthdayComp.day = 11;
+    
     NSCalendar *calendar = [NSCalendar currentCalendar];
+    birthdate = [calendar dateFromComponents:myBirthdayComp];
+    
     NSDateComponents *birthComp = [calendar components:NSYearCalendarUnit fromDate:birthdate];
     
     NSInteger years = [[calendar components:NSYearCalendarUnit
@@ -75,7 +90,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.selectableYears.count;
+    return self.selectableYears.count + self.paddingCellCount;
 //    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
 //    return [sectionInfo numberOfObjects];
 }
@@ -89,7 +104,24 @@
 }
 
 - (void)configureTableViewCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath{
+    NSInteger paddingHalf = self.paddingCellCount /2;
+    if (indexPath.row < paddingHalf) {
+        return;
+    }
+    if (indexPath.row > paddingHalf + self.selectableYears.count - 1) {
+        return;
+    }
+    NSLog(@"%@",indexPath);
     cell.textLabel.text = [[[self.selectableYears objectAtIndex:indexPath.row] objectForKey:@"age"] description];
+}
+
+#pragma mark - ScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    NSArray *vis = self.tableView.indexPathsForVisibleRows;
+    NSLog(@"Visible %i",vis.count/2);
+    if (vis.count %2 == 1) {
+        [self.tableView selectRowAtIndexPath:vis[vis.count/2] animated:YES scrollPosition:UITableViewScrollPositionNone];
+    }
 }
 
 #pragma mark - Fetched Results Controller
