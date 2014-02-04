@@ -11,5 +11,6 @@
 #define SharedAppDelegate ((AppDelegate *)[[UIApplication sharedApplication] delegate])
 #define isiPhone5  ([[UIScreen mainScreen] bounds].size.height == 568)?TRUE:FALSE
 
-#define HelveticaNeueLight18 [UIFont 
+#define HelveticaNeueLight18 [UIFont fontWithName:@"HelveticaNeue-Light" size:18]
+
 extern NSString *const firstLaunchKey;

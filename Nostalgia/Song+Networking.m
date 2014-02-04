@@ -10,6 +10,32 @@
 
 @implementation Song (Networking)
 
++ (void)loadSongsForYear:(NSNumber *)year withBlock:(void (^)(NSArray *songs, NSError *error))block{
+    PFQuery *songQuery = [PFQuery queryWithClassName:@"Song"];
+    [songQuery whereKey:@"Year" equalTo:year];
+
+    [songQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        NSLog(@"results %i",objects.count);
+        for (PFObject *song in objects) {
+            Song *managedSong = [self songForIdentifier:song.objectId];
+            if (managedSong) {
+                [self updateSongIfNeeded:managedSong withPFObject:song];
+            } else {
+                [self createNewSongWithPFObject:song];
+            }
+        }
+        if (block) {
+            block(objects, error);
+        }
+        NSError *saveError;
+        [SharedAppDelegate.coreDataStack.managedObjectContext save:&saveError];
+        if (saveError) {
+            NSLog(@"%@",error.debugDescription);
+        }
+
+    }];
+}
+
 + (void)loadSongsWithBlock:(void (^)(NSArray *, NSError *))block{
     PFQuery *songQuery = [PFQuery queryWithClassName:@"Song"];
     [songQuery setLimit: 1000];
@@ -24,36 +50,21 @@
         }
         if (block) {
             block(objects, error);
-        };
-        NSError *saveError;
-        [[CoreDataManager sharedBackgroundThreadContext] save:&saveError];
-        if (saveError) {
-            NSLog(@"%@",saveError.debugDescription);
         }
-        [[CoreDataManager sharedMainThreadContext] performBlock:^{
-            NSError *error;
-            [[CoreDataManager sharedMainThreadContext] save:&error];
-            if (error) {
-                NSLog(@"%@",error.debugDescription);
-            }
-        }];
     }];
-
 }
 
 + (Song *)songForIdentifier:(NSString *)identifier{
     __block NSArray *songs;
-    [[CoreDataManager sharedBackgroundThreadContext] performBlockAndWait:^{
-        NSError *error;
-        NSPredicate *identifierPredicate = [NSPredicate predicateWithFormat:@"identifier == %@",identifier];
-        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Song"];
-        request.predicate = identifierPredicate;
+    NSError *error;
+    NSPredicate *identifierPredicate = [NSPredicate predicateWithFormat:@"identifier == %@",identifier];
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Song"];
+    request.predicate = identifierPredicate;
 
-        songs = [[CoreDataManager sharedBackgroundThreadContext] executeFetchRequest:request error:&error];
-        if (error) {
-            NSLog(@"%@",error.debugDescription);
-        }
-    }];
+    songs = [SharedAppDelegate.coreDataStack.managedObjectContext executeFetchRequest:request error:&error];
+    if (error) {
+        NSLog(@"%@",error.debugDescription);
+    }
     if (songs.count > 1) {
         NSLog(@"ERROR IN SONG NETWORKING");
     }
@@ -64,7 +75,6 @@
     NSComparisonResult comparisonResult = [song.updatedAt compare:PFObject.updatedAt];
     switch (comparisonResult) {
         case NSOrderedAscending: {
-            [[CoreDataManager sharedBackgroundThreadContext] performBlock:^{
                 song.album = [PFObject objectForKey:albumKey];
                 song.artist = [PFObject objectForKey:artistKey];
                 song.createdAt = [PFObject objectForKey:createdAtKey];
@@ -74,7 +84,6 @@
                 song.title = [PFObject objectForKey:titleKey];
                 song.updatedAt = PFObject.updatedAt;
                 song.year = [PFObject objectForKey:yearKey];
-            }];
         }
             break;
         case NSOrderedDescending:
@@ -89,9 +98,9 @@
 }
 
 + (void)createNewSongWithPFObject:(PFObject *)songObject{
-    [[CoreDataManager sharedBackgroundThreadContext] performBlock:^{
+    NSLog(@"song object %@",songObject);
         Song *newSong = [NSEntityDescription insertNewObjectForEntityForName:@"Song"
-                                                      inManagedObjectContext:[CoreDataManager sharedBackgroundThreadContext]];
+                                                      inManagedObjectContext:SharedAppDelegate.coreDataStack.managedObjectContext];
         newSong.album = [songObject objectForKey:albumKey];
         newSong.artist = [songObject objectForKey:artistKey];
         newSong.createdAt = songObject.createdAt;
@@ -101,7 +110,7 @@
         newSong.title = [songObject objectForKey:titleKey];
         newSong.updatedAt = songObject.updatedAt;
         newSong.year = [songObject objectForKey:yearKey];
-    }];
+    NSLog(@"song is %@",newSong);
 }
 
 @end

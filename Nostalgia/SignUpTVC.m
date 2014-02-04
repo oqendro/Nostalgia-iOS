@@ -55,7 +55,6 @@ static NSInteger numberOfCharactersRequired = 1;
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     [self setupUI];
-    [self signUp];
 }
 - (void)didReceiveMemoryWarning
 {
@@ -223,11 +222,13 @@ static NSInteger numberOfCharactersRequired = 1;
 }
 
 - (void)validatefieldsWithWeakSelf:(SignUpTVC *)weakSelf{
+    NSError *error;
     if (weakSelf.firstNameCell.textField.text.length >= numberOfCharactersRequired &&
         weakSelf.lastNameCell.textField.text.length >= numberOfCharactersRequired &&
         weakSelf.birthDate &&
         weakSelf.emailCell.textField.text.length >= numberOfCharactersRequired &&
-        weakSelf.passwordCell.textField.text.length >= numberOfCharactersRequired) {
+        weakSelf.passwordCell.textField.text.length >= numberOfCharactersRequired &&
+        [[SHEmailValidator validator] validateSyntaxOfEmailAddress:weakSelf.emailCell.textField.text withError:&error]) {
         
         weakSelf.signUpCell.label.enabled = YES;
         weakSelf.signUpCell.userInteractionEnabled = YES;
@@ -240,8 +241,8 @@ static NSInteger numberOfCharactersRequired = 1;
 }
 
 - (void)signUp{
-    TimeMachineTVC *timeMachineVC = [self.storyboard instantiateViewControllerWithIdentifier:@"PickerVC"];
-//    timeMachineVC.user  = @{@"birthDate": self.birthDate};
+    TimeMachineTVC *timeMachineVC = [self.storyboard instantiateViewControllerWithIdentifier:@"TimeMachineTVC"];
+    timeMachineVC.user  = @{@"birthDate": self.birthDate};
     [self.navigationController setViewControllers:@[timeMachineVC] animated:YES];
 }
 

@@ -7,13 +7,13 @@
 //
 
 #import "TimeMachineTVC.h"
+#import "ResultsCVC.h"
 
 @interface TimeMachineTVC ()
 
 @property (nonatomic, strong) NSArray *selectableYears;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
-@property NSInteger paddingCellCount;
-
+@property (nonatomic, strong) NSNumber *selectedYear;
 @end
 
 
@@ -31,16 +31,17 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-    if (isiPhone5) {
-        self.paddingCellCount = 10;
-    } else {
-        self.paddingCellCount = 5;
-    }
-    
+    [super viewDidLoad];    
     self.title = NSLocalizedString(@"TIME_MACHINE_TITLE", @"Title for time machine view controller");
+    UIBarButtonItem *next = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(showResults)];
+    next.enabled = NO;
+    self.navigationItem.rightBarButtonItem = next;
     self.selectableYears = [self yearsForUser];
     [self.tableView reloadData];
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning
@@ -49,7 +50,20 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([segue.identifier isEqualToString:@"ResultsCVC"]) {
+        ResultsCVC *destinationVC = segue.destinationViewController;
+        destinationVC.year = [[self.selectableYears objectAtIndex:[self.tableView indexPathForSelectedRow].row] objectForKey:@"year"];
+#warning DATA fix
+        destinationVC.managedObjectContext = SharedAppDelegate.coreDataStack.managedObjectContext;
+    }
+}
+
 #pragma mark - Convenience
+
+- (void)showResults{
+    [self performSegueWithIdentifier:@"ResultsCVC" sender:nil];
+}
 
 - (NSArray *)yearsForUser{
     NSDate *birthdate = [self.user objectForKey:@"birthDate"];
@@ -73,15 +87,25 @@
         NSInteger currentyear = birthComp.year + i;
         [yearsArray addObject:@{@"year": [NSNumber numberWithInteger:currentyear], @"age": [NSNumber numberWithInt:i]}];
     }
-    return yearsArray;
+    
+    NSMutableArray *reversedArray = [[NSMutableArray alloc] initWithCapacity:yearsArray.count];
+    [yearsArray enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [reversedArray addObject:obj];
+    }];
+    
+    return reversedArray;
     
 }
 
 #pragma mark - Table view data source
-//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-//    id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-//    return [self.fetchedResultsController sectionIndexTitleForSectionName:sectionInfo.name];
-//}
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+#warning LOCALIZE
+    return @"Select the year you would like to return to...";
+    
+    id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
+    return [self.fetchedResultsController sectionIndexTitleForSectionName:sectionInfo.name];
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -90,7 +114,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.selectableYears.count + self.paddingCellCount;
+    return self.selectableYears.count;
 //    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
 //    return [sectionInfo numberOfObjects];
 }
@@ -104,24 +128,17 @@
 }
 
 - (void)configureTableViewCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath{
-    NSInteger paddingHalf = self.paddingCellCount /2;
-    if (indexPath.row < paddingHalf) {
-        return;
-    }
-    if (indexPath.row > paddingHalf + self.selectableYears.count - 1) {
-        return;
-    }
-    NSLog(@"%@",indexPath);
-    cell.textLabel.text = [[[self.selectableYears objectAtIndex:indexPath.row] objectForKey:@"age"] description];
+    NSNumber *age = [[self.selectableYears objectAtIndex:indexPath.row] objectForKey:@"age"];
+    NSMutableAttributedString *ageString = [[NSMutableAttributedString alloc] initWithString:age.stringValue attributes:@{NSFontAttributeName:HelveticaNeueLight18, NSForegroundColorAttributeName: [UIColor blueColor]}];
+#warning LOCALIZE
+    [ageString appendAttributedString:[[NSAttributedString alloc] initWithString:@" years old"]];
+    cell.textLabel.attributedText = ageString;
 }
 
-#pragma mark - ScrollViewDelegate
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    NSArray *vis = self.tableView.indexPathsForVisibleRows;
-    NSLog(@"Visible %i",vis.count/2);
-    if (vis.count %2 == 1) {
-        [self.tableView selectRowAtIndexPath:vis[vis.count/2] animated:YES scrollPosition:UITableViewScrollPositionNone];
-    }
+#pragma mark - Table view Delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    self.navigationItem.rightBarButtonItem.enabled = YES;
 }
 
 #pragma mark - Fetched Results Controller

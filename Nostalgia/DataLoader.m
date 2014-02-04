@@ -15,14 +15,6 @@
     [Parse setApplicationId:@"WDw4yF7IQ4zgFEXAAxVcA2JWTUV9KbiqYnsLvNVR"
                   clientKey:@"q1QlNWkF9er5hG6HOUhpj7oQ3FO1nmT3zvIRmSWG"];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
-    
-//    [Song songsWithBlock:^(NSArray *posts, NSError *error) {
-//        if (error) {
-//            NSLog(@"%@",error.debugDescription);
-//        }
-//        NSLog(@"%@",posts);
-//    }];
-    
 }
 
 + (void)uploadMusicData{

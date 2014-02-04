@@ -13,6 +13,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+	_coreDataStack = [[DCTCoreDataStack alloc] initWithStoreFilename:@"Nostalgia"];
     [DataLoader setupParseWithLaunchOptions:launchOptions];
     if ([[NSUserDefaults standardUserDefaults] boolForKey:firstLaunchKey]) {
         [DataLoader uploadMusicData];
@@ -47,5 +48,6 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
 
 @end

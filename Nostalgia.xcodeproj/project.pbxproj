@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		750065B81895ADEC00778029 /* TimeMachineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 750065B71895ADEC00778029 /* TimeMachineCell.m */; };
+		750065BB1895B26600778029 /* ResultsCVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 750065BA1895B26600778029 /* ResultsCVC.m */; };
+		750065BE1895B3CC00778029 /* SongCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 750065BD1895B3CC00778029 /* SongCell.m */; };
+		7511EA0D18A0602800CE553B /* _DCTCDSManagedObjectContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 7511EA0818A0602800CE553B /* _DCTCDSManagedObjectContext.m */; };
+		7511EA0E18A0602800CE553B /* DCTCoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 7511EA0A18A0602800CE553B /* DCTCoreDataStack.m */; };
+		7511EA0F18A0602800CE553B /* NSManagedObjectContext+DCTCoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 7511EA0C18A0602800CE553B /* NSManagedObjectContext+DCTCoreDataStack.m */; };
 		7519BA49188252900010D874 /* TimeMachineTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7519BA48188252900010D874 /* TimeMachineTVC.m */; };
 		7519BA4F18825BCD0010D874 /* SignUpCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7519BA4E18825BCD0010D874 /* SignUpCell.m */; };
 		75270AC0187CCBB700B49643 /* DataLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 75270ABF187CCBB700B49643 /* DataLoader.m */; };
@@ -30,7 +36,6 @@
 		75C735DD1846E0270055F8C3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 75C735DB1846E0270055F8C3 /* InfoPlist.strings */; };
 		75C735DF1846E0270055F8C3 /* NostalgiaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 75C735DE1846E0270055F8C3 /* NostalgiaTests.m */; };
 		75CA879C18821D24007A9F06 /* Nostalgia.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 75CA879A18821D24007A9F06 /* Nostalgia.xcdatamodeld */; };
-		75CA87A01882242E007A9F06 /* CoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 75CA879F1882242E007A9F06 /* CoreDataManager.m */; };
 		75CA87A21882247F007A9F06 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75CA87A11882247F007A9F06 /* CoreData.framework */; };
 		75CA87A81882499D007A9F06 /* SignUpTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 75CA87A71882499D007A9F06 /* SignUpTVC.m */; };
 		75CA87AB18824A39007A9F06 /* TextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 75CA87AA18824A39007A9F06 /* TextFieldCell.m */; };
@@ -49,6 +54,18 @@
 
 /* Begin PBXFileReference section */
 		03196A2CFEB8495180B11472 /* Pods-Nostalgia.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nostalgia.xcconfig"; path = "Pods/Pods-Nostalgia.xcconfig"; sourceTree = "<group>"; };
+		750065B61895ADEC00778029 /* TimeMachineCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeMachineCell.h; sourceTree = "<group>"; };
+		750065B71895ADEC00778029 /* TimeMachineCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeMachineCell.m; sourceTree = "<group>"; };
+		750065B91895B26600778029 /* ResultsCVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultsCVC.h; sourceTree = "<group>"; };
+		750065BA1895B26600778029 /* ResultsCVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultsCVC.m; sourceTree = "<group>"; };
+		750065BC1895B3CC00778029 /* SongCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SongCell.h; sourceTree = "<group>"; };
+		750065BD1895B3CC00778029 /* SongCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SongCell.m; sourceTree = "<group>"; };
+		7511EA0718A0602800CE553B /* _DCTCDSManagedObjectContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _DCTCDSManagedObjectContext.h; sourceTree = "<group>"; };
+		7511EA0818A0602800CE553B /* _DCTCDSManagedObjectContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _DCTCDSManagedObjectContext.m; sourceTree = "<group>"; };
+		7511EA0918A0602800CE553B /* DCTCoreDataStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCTCoreDataStack.h; sourceTree = "<group>"; };
+		7511EA0A18A0602800CE553B /* DCTCoreDataStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCTCoreDataStack.m; sourceTree = "<group>"; };
+		7511EA0B18A0602800CE553B /* NSManagedObjectContext+DCTCoreDataStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectContext+DCTCoreDataStack.h"; sourceTree = "<group>"; };
+		7511EA0C18A0602800CE553B /* NSManagedObjectContext+DCTCoreDataStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+DCTCoreDataStack.m"; sourceTree = "<group>"; };
 		7519BA47188252900010D874 /* TimeMachineTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeMachineTVC.h; sourceTree = "<group>"; };
 		7519BA48188252900010D874 /* TimeMachineTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeMachineTVC.m; sourceTree = "<group>"; };
 		7519BA4D18825BCD0010D874 /* SignUpCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpCell.h; sourceTree = "<group>"; };
@@ -84,8 +101,6 @@
 		75C735DC1846E0270055F8C3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		75C735DE1846E0270055F8C3 /* NostalgiaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NostalgiaTests.m; sourceTree = "<group>"; };
 		75CA879B18821D24007A9F06 /* Nostalgia.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Nostalgia.xcdatamodel; sourceTree = "<group>"; };
-		75CA879E1882242E007A9F06 /* CoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataManager.h; sourceTree = "<group>"; };
-		75CA879F1882242E007A9F06 /* CoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataManager.m; sourceTree = "<group>"; };
 		75CA87A11882247F007A9F06 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		75CA87A61882499D007A9F06 /* SignUpTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpTVC.h; sourceTree = "<group>"; };
 		75CA87A71882499D007A9F06 /* SignUpTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpTVC.m; sourceTree = "<group>"; };
@@ -120,6 +135,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7511EA0618A0602800CE553B /* DCTCoreDataStack */ = {
+			isa = PBXGroup;
+			children = (
+				7511EA0718A0602800CE553B /* _DCTCDSManagedObjectContext.h */,
+				7511EA0818A0602800CE553B /* _DCTCDSManagedObjectContext.m */,
+				7511EA0918A0602800CE553B /* DCTCoreDataStack.h */,
+				7511EA0A18A0602800CE553B /* DCTCoreDataStack.m */,
+				7511EA0B18A0602800CE553B /* NSManagedObjectContext+DCTCoreDataStack.h */,
+				7511EA0C18A0602800CE553B /* NSManagedObjectContext+DCTCoreDataStack.m */,
+			);
+			path = DCTCoreDataStack;
+			sourceTree = "<group>";
+		};
 		7519BA50188265970010D874 /* Sign Up */ = {
 			isa = PBXGroup;
 			children = (
@@ -142,6 +170,8 @@
 				7519BA48188252900010D874 /* TimeMachineTVC.m */,
 				75C735C81846E0260055F8C3 /* PickerVC.h */,
 				75C735C91846E0260055F8C3 /* PickerVC.m */,
+				750065B61895ADEC00778029 /* TimeMachineCell.h */,
+				750065B71895ADEC00778029 /* TimeMachineCell.m */,
 			);
 			name = "Time Machine";
 			sourceTree = "<group>";
@@ -189,6 +219,10 @@
 				75C735C51846E0260055F8C3 /* Main.storyboard */,
 				7519BA50188265970010D874 /* Sign Up */,
 				75B7298C18837D4200D0A695 /* Time Machine */,
+				750065B91895B26600778029 /* ResultsCVC.h */,
+				750065BA1895B26600778029 /* ResultsCVC.m */,
+				750065BC1895B3CC00778029 /* SongCell.h */,
+				750065BD1895B3CC00778029 /* SongCell.m */,
 				75CA879D18821D87007A9F06 /* Model */,
 				75C735CB1846E0260055F8C3 /* Images.xcassets */,
 				75C735BA1846E0260055F8C3 /* Supporting Files */,
@@ -228,9 +262,8 @@
 		75CA879D18821D87007A9F06 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				7511EA0618A0602800CE553B /* DCTCoreDataStack */,
 				75B729871882DBB900D0A695 /* MusicRanked.json */,
-				75CA879E1882242E007A9F06 /* CoreDataManager.h */,
-				75CA879F1882242E007A9F06 /* CoreDataManager.m */,
 				75270ABE187CCBB700B49643 /* DataLoader.h */,
 				75270ABF187CCBB700B49643 /* DataLoader.m */,
 				75CA879A18821D24007A9F06 /* Nostalgia.xcdatamodeld */,
@@ -379,19 +412,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				75B729801882D3B500D0A695 /* Song.m in Sources */,
+				7511EA0F18A0602800CE553B /* NSManagedObjectContext+DCTCoreDataStack.m in Sources */,
+				7511EA0D18A0602800CE553B /* _DCTCDSManagedObjectContext.m in Sources */,
 				75B729861882D81B00D0A695 /* Song+Networking.m in Sources */,
 				7519BA49188252900010D874 /* TimeMachineTVC.m in Sources */,
-				75CA87A01882242E007A9F06 /* CoreDataManager.m in Sources */,
 				75CA87A81882499D007A9F06 /* SignUpTVC.m in Sources */,
+				750065BB1895B26600778029 /* ResultsCVC.m in Sources */,
 				75B7298B1882DFF200D0A695 /* Constants.m in Sources */,
 				75CA879C18821D24007A9F06 /* Nostalgia.xcdatamodeld in Sources */,
+				750065BE1895B3CC00778029 /* SongCell.m in Sources */,
 				75CA87AB18824A39007A9F06 /* TextFieldCell.m in Sources */,
 				75270AC0187CCBB700B49643 /* DataLoader.m in Sources */,
 				75B7298F1883920900D0A695 /* DatePickerTVC.m in Sources */,
+				7511EA0E18A0602800CE553B /* DCTCoreDataStack.m in Sources */,
 				75C735CA1846E0260055F8C3 /* PickerVC.m in Sources */,
 				75C735C41846E0260055F8C3 /* AppDelegate.m in Sources */,
 				75C735C01846E0260055F8C3 /* main.m in Sources */,
 				7519BA4F18825BCD0010D874 /* SignUpCell.m in Sources */,
+				750065B81895ADEC00778029 /* TimeMachineCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -525,7 +563,7 @@
 				GCC_PREFIX_HEADER = "Nostalgia/Nostalgia-Prefix.pch";
 				INFOPLIST_FILE = "Nostalgia/Nostalgia-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "4CFB419D-FAD0-45DC-BB64-263519E0E336";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -536,13 +574,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Walter Vargas-Pena (28UAY82S25)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Walter Vargas-Pena (28UAY82S25)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Nostalgia/Nostalgia-Prefix.pch";
 				INFOPLIST_FILE = "Nostalgia/Nostalgia-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "4CFB419D-FAD0-45DC-BB64-263519E0E336";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
