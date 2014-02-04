@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, SignUpTVCMode) {
+    SignUpTVCModeSignUp,
+    SignUpTVCModeLogin
+};
+
 @interface SignUpTVC : UITableViewController
+
+@property SignUpTVCMode mode;
 
 @end

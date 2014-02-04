@@ -563,7 +563,7 @@
 				GCC_PREFIX_HEADER = "Nostalgia/Nostalgia-Prefix.pch";
 				INFOPLIST_FILE = "Nostalgia/Nostalgia-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4CFB419D-FAD0-45DC-BB64-263519E0E336";
+				PROVISIONING_PROFILE = "0B01B99C-8039-45C0-AFCE-5AD24AC781DF";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
