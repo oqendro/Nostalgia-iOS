@@ -152,8 +152,16 @@
                                             <rect key="frame" x="0.0" y="0.0" width="85" height="86"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c2F-Fk-5e2">
+                                            <rect key="frame" x="0.0" y="65" width="85" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="9aN-HF-dbr"/>
+                                            </constraints>
+                                        </view>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Swr-By-Ols">
-                                            <rect key="frame" x="22" y="57" width="42" height="21"/>
+                                            <rect key="frame" x="22" y="65" width="42" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -165,10 +173,13 @@
                                 <color key="backgroundColor" red="0.0" green="0.60784313729999995" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="OoW-ID-8OF" secondAttribute="bottom" id="AZW-NA-QMX"/>
-                                    <constraint firstAttribute="bottom" secondItem="Swr-By-Ols" secondAttribute="bottom" constant="8" id="CKk-uA-Iof"/>
+                                    <constraint firstAttribute="bottom" secondItem="Swr-By-Ols" secondAttribute="bottom" id="CKk-uA-Iof"/>
+                                    <constraint firstAttribute="trailing" secondItem="c2F-Fk-5e2" secondAttribute="trailing" id="DSF-QJ-FVF"/>
                                     <constraint firstItem="OoW-ID-8OF" firstAttribute="leading" secondItem="zgD-ey-MGm" secondAttribute="leading" id="VSK-ds-HaM"/>
+                                    <constraint firstAttribute="bottom" secondItem="c2F-Fk-5e2" secondAttribute="bottom" id="WRV-Jt-iVy"/>
                                     <constraint firstAttribute="centerX" secondItem="Swr-By-Ols" secondAttribute="centerX" id="dcO-eb-O9E"/>
                                     <constraint firstAttribute="trailing" secondItem="OoW-ID-8OF" secondAttribute="trailing" id="jxr-SI-Wew"/>
+                                    <constraint firstItem="c2F-Fk-5e2" firstAttribute="leading" secondItem="zgD-ey-MGm" secondAttribute="leading" id="sbM-yO-5dZ"/>
                                     <constraint firstItem="OoW-ID-8OF" firstAttribute="top" secondItem="zgD-ey-MGm" secondAttribute="top" id="yZC-t7-OE6"/>
                                 </constraints>
                                 <connections>

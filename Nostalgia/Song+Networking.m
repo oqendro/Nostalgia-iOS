@@ -13,9 +13,7 @@
 + (void)loadSongsForYear:(NSNumber *)year withBlock:(void (^)(NSArray *songs, NSError *error))block{
     PFQuery *songQuery = [PFQuery queryWithClassName:@"Song"];
     [songQuery whereKey:@"Year" equalTo:year];
-
     [songQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        NSLog(@"results %i",objects.count);
         for (PFObject *song in objects) {
             Song *managedSong = [self songForIdentifier:song.objectId];
             if (managedSong) {
@@ -75,15 +73,18 @@
     NSComparisonResult comparisonResult = [song.updatedAt compare:PFObject.updatedAt];
     switch (comparisonResult) {
         case NSOrderedAscending: {
-                song.album = [PFObject objectForKey:albumKey];
-                song.artist = [PFObject objectForKey:artistKey];
-                song.createdAt = [PFObject objectForKey:createdAtKey];
-                song.genre = [PFObject objectForKey:genreKey];
-                song.identifier = PFObject.objectId;
-                song.rank = [PFObject objectForKey:rankKey];
-                song.title = [PFObject objectForKey:titleKey];
-                song.updatedAt = PFObject.updatedAt;
-                song.year = [PFObject objectForKey:yearKey];
+            song.album = [PFObject objectForKey:albumKey];
+            song.artist = [PFObject objectForKey:artistKey];
+            song.createdAt = [PFObject objectForKey:createdAtKey];
+            song.genre = [PFObject objectForKey:genreKey];
+            song.identifier = PFObject.objectId;
+            song.rank = [PFObject objectForKey:rankKey];
+            song.title = [PFObject objectForKey:titleKey];
+            song.updatedAt = PFObject.updatedAt;
+            song.year = [PFObject objectForKey:yearKey];
+            PFFile *thumbnail = [PFObject objectForKey:thumbnailKey];
+            song.thumbnail.name = thumbnail.name;
+            song.thumbnail.url = thumbnail.url;
         }
             break;
         case NSOrderedDescending:
@@ -98,7 +99,6 @@
 }
 
 + (void)createNewSongWithPFObject:(PFObject *)songObject{
-    NSLog(@"song object %@",songObject);
         Song *newSong = [NSEntityDescription insertNewObjectForEntityForName:@"Song"
                                                       inManagedObjectContext:SharedAppDelegate.coreDataStack.managedObjectContext];
         newSong.album = [songObject objectForKey:albumKey];
@@ -110,7 +110,13 @@
         newSong.title = [songObject objectForKey:titleKey];
         newSong.updatedAt = songObject.updatedAt;
         newSong.year = [songObject objectForKey:yearKey];
-    NSLog(@"song is %@",newSong);
+    
+    PFFile *thumbnail = [songObject objectForKey:thumbnailKey];
+    Thumbnail *managedThumbnail = [NSEntityDescription insertNewObjectForEntityForName:@"Thumbnail"
+                                                                inManagedObjectContext:SharedAppDelegate.coreDataStack.managedObjectContext];
+    managedThumbnail.name = thumbnail.name;
+    managedThumbnail.url = thumbnail.url;
+    [managedThumbnail addSongObject:newSong];
 }
 
 @end

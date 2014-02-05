@@ -7,6 +7,7 @@
 //
 
 #import "Song.h"
+#import "Thumbnail.h"
 
 static NSString *albumKey = @"Album";
 static NSString *artistKey = @"Artist";

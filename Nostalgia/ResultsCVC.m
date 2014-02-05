@@ -37,12 +37,13 @@ static NSString *musicCellIdentifier = @"SongCell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+#warning LOCALIZE
+    self.title = @"Results";
     _objectChanges = [NSMutableArray array];
     _sectionChanges = [NSMutableArray array];
     self.collectionView.dataSource = self;
-    NSLog(@"year is %@",self.year);
     [Song loadSongsForYear:self.year withBlock:^(NSArray *songs, NSError *error) {
-        NSLog(@"songs %i",songs.count);
+        NSLog(@"songs %lu for %@",(unsigned long)songs.count, self.year);
     }];
 }
 
@@ -73,8 +74,8 @@ static NSString *musicCellIdentifier = @"SongCell";
     
     Song *song = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.bottomLabel.text = song.title;
-//    NSURL *imageURL = [NSURL URLWithString:song.]
-//    cell.imageView setImageWithURL:<#(NSURL *)#> placeholderImage:<#(UIImage *)#>
+    NSURL *imageURL = [NSURL URLWithString:song.thumbnail.url];
+    [cell.imageView setImageWithURL:imageURL];
     
     return cell;
 }
@@ -102,7 +103,6 @@ static NSString *musicCellIdentifier = @"SongCell";
 	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
 	    abort();
 	}
-    NSLog(@"count is %i",FRC.fetchedObjects.count);
     return _fetchedResultsController;
 }
 

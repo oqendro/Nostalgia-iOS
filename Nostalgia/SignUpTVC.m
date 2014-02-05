@@ -53,6 +53,9 @@ static NSInteger numberOfCharactersRequired = 1;
 {
     [super viewDidLoad];
     self.title = NSLocalizedString(@"SIGN_UP_VIEW_CONTROLLER_TITLE", @"Title for sign up view controller");
+    if ([PFUser currentUser]) {
+        [self showTimeMachineWithUser:[PFUser currentUser]];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated{
