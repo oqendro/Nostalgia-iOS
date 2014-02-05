@@ -172,6 +172,7 @@
                                 </view>
                                 <color key="backgroundColor" red="0.0" green="0.60784313729999995" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Swr-By-Ols" secondAttribute="trailing" id="20F-sn-4hB"/>
                                     <constraint firstAttribute="bottom" secondItem="OoW-ID-8OF" secondAttribute="bottom" id="AZW-NA-QMX"/>
                                     <constraint firstAttribute="bottom" secondItem="Swr-By-Ols" secondAttribute="bottom" id="CKk-uA-Iof"/>
                                     <constraint firstAttribute="trailing" secondItem="c2F-Fk-5e2" secondAttribute="trailing" id="DSF-QJ-FVF"/>
@@ -179,12 +180,14 @@
                                     <constraint firstAttribute="bottom" secondItem="c2F-Fk-5e2" secondAttribute="bottom" id="WRV-Jt-iVy"/>
                                     <constraint firstAttribute="centerX" secondItem="Swr-By-Ols" secondAttribute="centerX" id="dcO-eb-O9E"/>
                                     <constraint firstAttribute="trailing" secondItem="OoW-ID-8OF" secondAttribute="trailing" id="jxr-SI-Wew"/>
+                                    <constraint firstItem="Swr-By-Ols" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="zgD-ey-MGm" secondAttribute="leading" id="mgu-Vi-ANb"/>
                                     <constraint firstItem="c2F-Fk-5e2" firstAttribute="leading" secondItem="zgD-ey-MGm" secondAttribute="leading" id="sbM-yO-5dZ"/>
                                     <constraint firstItem="OoW-ID-8OF" firstAttribute="top" secondItem="zgD-ey-MGm" secondAttribute="top" id="yZC-t7-OE6"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="bottomLabel" destination="Swr-By-Ols" id="34N-in-0gr"/>
                                     <outlet property="imageView" destination="OoW-ID-8OF" id="Axk-gd-5lN"/>
+                                    <outlet property="labelBackgroundView" destination="c2F-Fk-5e2" id="PgP-V0-f41"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>

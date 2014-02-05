@@ -21,6 +21,8 @@
 
 - (void)awakeFromNib{
     self.bottomLabel.textColor = [UIColor whiteColor];
+    self.labelBackgroundView.alpha = .6;
+    self.labelBackgroundView.backgroundColor = [UIColor blackColor];
 }
 /*
 // Only override drawRect: if you perform custom drawing.
