@@ -18,6 +18,7 @@
 		75270AC0187CCBB700B49643 /* DataLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 75270ABF187CCBB700B49643 /* DataLoader.m */; };
 		755E35FF18A2DC11005D6583 /* Thumbnail.m in Sources */ = {isa = PBXBuildFile; fileRef = 755E35FE18A2DC11005D6583 /* Thumbnail.m */; };
 		755E360218A2DC12005D6583 /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 755E360118A2DC12005D6583 /* Song.m */; };
+		75B0EB8A18AB154800673236 /* SongDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 75B0EB8918AB154800673236 /* SongDetailVC.m */; };
 		75B729861882D81B00D0A695 /* Song+Networking.m in Sources */ = {isa = PBXBuildFile; fileRef = 75B729851882D81B00D0A695 /* Song+Networking.m */; };
 		75B729881882DBB900D0A695 /* MusicRanked.json in Resources */ = {isa = PBXBuildFile; fileRef = 75B729871882DBB900D0A695 /* MusicRanked.json */; };
 		75B7298B1882DFF200D0A695 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 75B7298A1882DFF200D0A695 /* Constants.m */; };
@@ -78,6 +79,8 @@
 		755E35FE18A2DC11005D6583 /* Thumbnail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Thumbnail.m; sourceTree = "<group>"; };
 		755E360018A2DC12005D6583 /* Song.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Song.h; sourceTree = "<group>"; };
 		755E360118A2DC12005D6583 /* Song.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Song.m; sourceTree = "<group>"; };
+		75B0EB8818AB154800673236 /* SongDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SongDetailVC.h; sourceTree = "<group>"; };
+		75B0EB8918AB154800673236 /* SongDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SongDetailVC.m; sourceTree = "<group>"; };
 		75B729841882D81B00D0A695 /* Song+Networking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Song+Networking.h"; sourceTree = "<group>"; };
 		75B729851882D81B00D0A695 /* Song+Networking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Song+Networking.m"; sourceTree = "<group>"; };
 		75B729871882DBB900D0A695 /* MusicRanked.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MusicRanked.json; sourceTree = "<group>"; };
@@ -226,6 +229,8 @@
 				75B7298C18837D4200D0A695 /* Time Machine */,
 				750065B91895B26600778029 /* ResultsCVC.h */,
 				750065BA1895B26600778029 /* ResultsCVC.m */,
+				75B0EB8818AB154800673236 /* SongDetailVC.h */,
+				75B0EB8918AB154800673236 /* SongDetailVC.m */,
 				750065BC1895B3CC00778029 /* SongCell.h */,
 				750065BD1895B3CC00778029 /* SongCell.m */,
 				75CA879D18821D87007A9F06 /* Model */,
@@ -427,6 +432,7 @@
 				7519BA49188252900010D874 /* TimeMachineTVC.m in Sources */,
 				75CA87A81882499D007A9F06 /* SignUpTVC.m in Sources */,
 				750065BB1895B26600778029 /* ResultsCVC.m in Sources */,
+				75B0EB8A18AB154800673236 /* SongDetailVC.m in Sources */,
 				75B7298B1882DFF200D0A695 /* Constants.m in Sources */,
 				75CA879C18821D24007A9F06 /* Nostalgia.xcdatamodeld in Sources */,
 				750065BE1895B3CC00778029 /* SongCell.m in Sources */,

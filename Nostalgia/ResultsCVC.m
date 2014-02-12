@@ -10,6 +10,7 @@
 #import "Song+Networking.h"
 #import "SongCell.h"
 #import <UIImageView+AFNetworking.h>
+#import "SongDetailVC.h"
 
 @interface ResultsCVC () <NSFetchedResultsControllerDelegate>
 {
@@ -52,7 +53,16 @@ static NSString *musicCellIdentifier = @"SongCell";
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - UICollectionVIew
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([segue.identifier isEqualToString:@"SongDetailVC"]) {
+        NSIndexPath *path = [self.collectionView indexPathForCell:sender];
+        Song *selectedSong = [self.fetchedResultsController objectAtIndexPath:path];
+        SongDetailVC *detailVC = segue.destinationViewController;
+        detailVC.song = selectedSong;
+    }
+}
+
+#pragma mark - UICollectionVIew DataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
