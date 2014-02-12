@@ -37,8 +37,7 @@ static NSString *musicCellIdentifier = @"SongCell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-#warning LOCALIZE
-    self.title = @"Results";
+    self.title = NSLocalizedString(@"RESULTS_TITLE", @"Title for results View Controller");
     _objectChanges = [NSMutableArray array];
     _sectionChanges = [NSMutableArray array];
     self.collectionView.dataSource = self;

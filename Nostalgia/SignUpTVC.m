@@ -20,7 +20,7 @@ typedef NS_ENUM(NSInteger, SignUpCellType) {
     SignUpCellTypeDOB,
     SignUpCellTypeEmail,
     SignUpCellTypePassword,
-    SignUpCellTypeSignUp,
+    SignUpCellTypeSignUpLogin,
     SignUpCellTypeCount
 };
 
@@ -41,7 +41,7 @@ static NSInteger numberOfCharactersRequired = 1;
 @property (nonatomic, strong) TextFieldCell *dobCell;
 @property (nonatomic, strong) TextFieldCell *emailCell;
 @property (nonatomic, strong) TextFieldCell *passwordCell;
-@property (nonatomic, strong) SignUpCell *signUpCell;
+@property (nonatomic, strong) SignUpCell *signUpLoginCell;
 @property (nonatomic, strong) NSDate *birthDate;
 @property (strong, nonatomic) IBOutlet UIButton *toggleButton;
 
@@ -152,10 +152,14 @@ static NSInteger numberOfCharactersRequired = 1;
             break;
         case SectionTypeTwo: {
             cell = [tableView dequeueReusableCellWithIdentifier:signUpCellIdentifier forIndexPath:indexPath];
-            self.signUpCell = (SignUpCell *)cell;
-            self.signUpCell.label.text = NSLocalizedString(@"SIGN_UP_BUTTON_TITLE", @"Title for sign up button in sign up view controller");
-            self.signUpCell.label.enabled = NO;
-            self.signUpCell.userInteractionEnabled = NO;
+            self.signUpLoginCell = (SignUpCell *)cell;
+            if (self.mode == SignUpTVCModeSignUp) {
+                self.signUpLoginCell.label.text = NSLocalizedString(@"SIGN_UP_TEXT", @"Text of toggle button that indicates sign up VC will toggle to sing up mode");
+            } else {
+                self.signUpLoginCell.label.text = NSLocalizedString(@"LOGIN_TEXT", @"Text of toggle button that indicates sign up VC will toggle to login mode");
+            }
+            self.signUpLoginCell.label.enabled = NO;
+            self.signUpLoginCell.userInteractionEnabled = NO;
         }
         default:
             break;
@@ -172,17 +176,17 @@ static NSInteger numberOfCharactersRequired = 1;
         return 0;
     }
 }
-#warning LOCALIZE
+
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     if (section == SectionTypeTwo) {
         UIButton *toggleButton = [UIButton buttonWithType:UIButtonTypeSystem];
         self.toggleButton = toggleButton;
         switch (self.mode) {
             case SignUpTVCModeSignUp:
-                [self.toggleButton setTitle:@"Login" forState:UIControlStateNormal];
+                [self.toggleButton setTitle:NSLocalizedString(@"LOGIN_TEXT", @"Text of toggle button that indicates sign up VC will toggle to login mode") forState:UIControlStateNormal];
                 break;
             case SignUpTVCModeLogin:
-                [self.toggleButton setTitle:@"Sign Up" forState:UIControlStateNormal];
+                [self.toggleButton setTitle:NSLocalizedString(@"SIGN_UP_TEXT", @"Text of toggle button that indicates sign up VC will toggle to sing up mode") forState:UIControlStateNormal];
             default:
                 break;
         }
@@ -222,19 +226,22 @@ static NSInteger numberOfCharactersRequired = 1;
 }
 
 #pragma mark - Convenience
-#warning LOCALIZE
+
 - (void)toggleMode:(UIButton *)button{
     NSIndexPath *firstNameIndexPath = [NSIndexPath indexPathForRow:SignUpCellTypeFirstName inSection:0];
     NSIndexPath *lastNameIndexPath = [NSIndexPath indexPathForRow:SignUpCellTypeLastName inSection:0];
     NSIndexPath *dateOfBirthIndexPath = [NSIndexPath indexPathForRow:SignUpCellTypeDOB inSection:0];
     NSIndexPath *emailIndexPath = [NSIndexPath indexPathForRow:SignUpCellTypeEmail inSection:0];
     NSArray *indexPaths = @[firstNameIndexPath,lastNameIndexPath,dateOfBirthIndexPath,emailIndexPath];
-    
+    NSIndexPath *signUpLoginIndexPath = [NSIndexPath indexPathForRow:0 inSection:1];
+
     switch (self.mode) {
         case SignUpTVCModeSignUp: {
             self.mode = SignUpTVCModeLogin;
             [self.tableView beginUpdates];
             [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView reloadRowsAtIndexPaths:@[signUpLoginIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
             [self.tableView endUpdates];
         }
             break;
@@ -242,15 +249,16 @@ static NSInteger numberOfCharactersRequired = 1;
             self.mode = SignUpTVCModeSignUp;
             [self.tableView beginUpdates];
             [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView reloadRowsAtIndexPaths:@[signUpLoginIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
             [self.tableView endUpdates];
         }
             break;
         default:
             break;
     }
-    [self.tableView reloadData];
-    
 }
+
 #warning PUT IN CONSTANTS
 - (void)signUpUser{
     PFUser *user = [PFUser user];
@@ -268,11 +276,11 @@ static NSInteger numberOfCharactersRequired = 1;
         if (!error) {
             [self showTimeMachineWithUser:user];
         } else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ERROR_TITLE", @"Title for error alert view")
                                                             message:error.localizedFailureReason
                                                            delegate:nil
                                                   cancelButtonTitle:nil
-                                                  otherButtonTitles:@"OK", nil];
+                                                  otherButtonTitles:NSLocalizedString(@"OK", @"OK text for alert view confirmations"), nil];
             [alert show];
         }
     }];
@@ -285,11 +293,11 @@ static NSInteger numberOfCharactersRequired = 1;
                                         if (user) {
                                             [self showTimeMachineWithUser:user];
                                         } else {
-                                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ERROR_TITLE", @"Title for error alert view")
                                                                                             message:error.localizedFailureReason
                                                                                            delegate:nil
                                                                                   cancelButtonTitle:nil
-                                                                                  otherButtonTitles:@"OK", nil];
+                                                                                  otherButtonTitles:NSLocalizedString(@"OK", @"OK text for alert view confirmations"), nil];
                                             [alert show];
                                         }
                                     }];
@@ -391,26 +399,26 @@ static NSInteger numberOfCharactersRequired = 1;
                 weakSelf.passwordCell.textField.text.length >= numberOfCharactersRequired &&
                 [[SHEmailValidator validator] validateSyntaxOfEmailAddress:weakSelf.emailCell.textField.text withError:&error]) {
                 
-                weakSelf.signUpCell.label.enabled = YES;
-                weakSelf.signUpCell.userInteractionEnabled = YES;
-                weakSelf.signUpCell.backgroundColor = [UIColor orangeColor];
+                weakSelf.signUpLoginCell.label.enabled = YES;
+                weakSelf.signUpLoginCell.userInteractionEnabled = YES;
+                weakSelf.signUpLoginCell.backgroundColor = [UIColor orangeColor];
             } else {
-                weakSelf.signUpCell.label.enabled = NO;;
-                weakSelf.signUpCell.userInteractionEnabled = NO;
-                weakSelf.signUpCell.backgroundColor = [UIColor whiteColor];
+                weakSelf.signUpLoginCell.label.enabled = NO;;
+                weakSelf.signUpLoginCell.userInteractionEnabled = NO;
+                weakSelf.signUpLoginCell.backgroundColor = [UIColor whiteColor];
             }
         }
             break;
         case SignUpTVCModeLogin: {
             if (weakSelf.userNameCell.textField.text.length >= numberOfCharactersRequired &&
                 weakSelf.passwordCell.textField.text.length >= numberOfCharactersRequired) {
-                weakSelf.signUpCell.label.enabled = YES;
-                weakSelf.signUpCell.userInteractionEnabled = YES;
-                weakSelf.signUpCell.backgroundColor = [UIColor orangeColor];
+                weakSelf.signUpLoginCell.label.enabled = YES;
+                weakSelf.signUpLoginCell.userInteractionEnabled = YES;
+                weakSelf.signUpLoginCell.backgroundColor = [UIColor orangeColor];
             } else {
-                weakSelf.signUpCell.label.enabled = NO;;
-                weakSelf.signUpCell.userInteractionEnabled = NO;
-                weakSelf.signUpCell.backgroundColor = [UIColor whiteColor];
+                weakSelf.signUpLoginCell.label.enabled = NO;;
+                weakSelf.signUpLoginCell.userInteractionEnabled = NO;
+                weakSelf.signUpLoginCell.backgroundColor = [UIColor whiteColor];
             }
         }
             break;

@@ -40,6 +40,7 @@
 		75CA87A21882247F007A9F06 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75CA87A11882247F007A9F06 /* CoreData.framework */; };
 		75CA87A81882499D007A9F06 /* SignUpTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 75CA87A71882499D007A9F06 /* SignUpTVC.m */; };
 		75CA87AB18824A39007A9F06 /* TextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 75CA87AA18824A39007A9F06 /* TextFieldCell.m */; };
+		75FBBE3518AAE11E00914A98 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 75FBBE3318AAE11E00914A98 /* Localizable.strings */; };
 		FA3EFB11A6DD40D1917C6D71 /* libPods-Nostalgia.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 89784CB92502488DB677EEE9 /* libPods-Nostalgia.a */; };
 /* End PBXBuildFile section */
 
@@ -109,6 +110,7 @@
 		75CA87A71882499D007A9F06 /* SignUpTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpTVC.m; sourceTree = "<group>"; };
 		75CA87A918824A39007A9F06 /* TextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextFieldCell.h; sourceTree = "<group>"; };
 		75CA87AA18824A39007A9F06 /* TextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextFieldCell.m; sourceTree = "<group>"; };
+		75FBBE3418AAE11E00914A98 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		89784CB92502488DB677EEE9 /* libPods-Nostalgia.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Nostalgia.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -238,6 +240,7 @@
 			children = (
 				75C735BB1846E0260055F8C3 /* Nostalgia-Info.plist */,
 				75C735BC1846E0260055F8C3 /* InfoPlist.strings */,
+				75FBBE3318AAE11E00914A98 /* Localizable.strings */,
 				75C735BF1846E0260055F8C3 /* main.m */,
 				75C735C11846E0260055F8C3 /* Nostalgia-Prefix.pch */,
 			);
@@ -361,6 +364,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75FBBE3518AAE11E00914A98 /* Localizable.strings in Resources */,
 				75C735CC1846E0260055F8C3 /* Images.xcassets in Resources */,
 				75C735BE1846E0260055F8C3 /* InfoPlist.strings in Resources */,
 				75B729881882DBB900D0A695 /* MusicRanked.json in Resources */,
@@ -482,6 +486,14 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
+		75FBBE3318AAE11E00914A98 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				75FBBE3418AAE11E00914A98 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -580,7 +592,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Walter Vargas-Pena (28UAY82S25)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Walter Vargas-Pena (28UAY82S25)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Nostalgia/Nostalgia-Prefix.pch";
