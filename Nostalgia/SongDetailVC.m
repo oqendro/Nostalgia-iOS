@@ -10,14 +10,16 @@
 #import <UIImageView+AFNetworking.h>
 #import "Thumbnail.h"
 
-@interface SongDetailVC ()
+@interface SongDetailVC () <UITableViewDataSource>
 
 @property (strong, nonatomic) IBOutlet UIView *containerView;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
-@property (strong, nonatomic) IBOutlet UIButton *infoButton;
+@property (strong, nonatomic) IBOutlet UIButton *toggleInfoButton;
 
 @end
+
+static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
 
 @implementation SongDetailVC
 
@@ -33,7 +35,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    [self.toggleInfoButton setImage:[UIImage imageNamed:@"724-info-gray"] forState:UIControlStateNormal];
+
+    [self.tableView registerNib:[UINib nibWithNibName:songAttributeCellIdentifier bundle:nil]
+         forCellReuseIdentifier:songAttributeCellIdentifier];
     [self.imageView setImageWithURL:[NSURL URLWithString:self.song.thumbnail.url]
                    placeholderImage:nil];
 }
@@ -45,13 +50,26 @@
 }
 
 - (IBAction)infoButtonPressed:(id)sender {
-    [UIView transitionFromView:self.imageView
-                        toView:self.tableView
-                      duration:.25
-                       options:UIViewAnimationOptionTransitionFlipFromRight
-                    completion:^(BOOL finished) {
-                        NSLog(@"from %@",self.imageView);
-                    }];
+    
+    if (self.imageView.superview == self.containerView) {
+        [UIView transitionFromView:self.imageView
+                            toView:self.tableView
+                          duration:.5
+                           options:UIViewAnimationOptionTransitionFlipFromRight
+                        completion:^(BOOL finished) {
+                            [self.toggleInfoButton setImage:[UIImage imageNamed:@"724-info-gray"]
+                                                   forState:UIControlStateNormal];
+                        }];
+
+    } else {
+        [UIView transitionFromView:self.tableView
+                            toView:self.imageView
+                          duration:.5
+                           options:UIViewAnimationOptionTransitionFlipFromRight
+                        completion:^(BOOL finished) {
+                            [self.toggleInfoButton setImage:[UIImage imageNamed:@"767-photo-1-gray"] forState:UIControlStateNormal];
+                        }];
+    }
 
 }
 
@@ -62,6 +80,7 @@
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 250, 250)
                                               style:UITableViewStylePlain];
     [self.containerView addSubview:_tableView];
+    _tableView.dataSource = self;
     return _tableView;
 }
 
@@ -72,5 +91,54 @@
     _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 250, 250)];
     [self.containerView addSubview:_imageView];
     return _imageView;
+}
+
+#pragma mark - UITableView Datasource
+
+typedef NS_ENUM(NSInteger, SongAttributeType) {
+    SongAttributeTypeYearReleased,
+    SongAttributeTypeGenre,
+    SongAttributeTypeArtist,
+    SongAttributeTypeAlbum,
+    SongAttributeTypeRank,
+    SongAttributeTypeCount
+};
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return SongAttributeTypeCount;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:songAttributeCellIdentifier forIndexPath:indexPath];
+
+    switch (indexPath.row) {
+        case SongAttributeTypeYearReleased:
+            cell.textLabel.text = @"Year Released";
+            cell.detailTextLabel.text = self.song.year.stringValue;
+            break;
+        case SongAttributeTypeGenre:
+            cell.textLabel.text = @"Genre";
+            cell.detailTextLabel.text = self.song.genre;
+            break;
+        case SongAttributeTypeArtist:
+            cell.textLabel.text = @"Artist";
+            cell.detailTextLabel.text = self.song.artist;
+            break;
+        case SongAttributeTypeAlbum:
+            cell.textLabel.text = @"Album";
+            cell.detailTextLabel.text = self.song.album;
+            break;
+        case SongAttributeTypeRank:
+            cell.textLabel.text = @"Rank";
+            cell.detailTextLabel.text = self.song.rank.stringValue;
+            break;
+        default:
+            break;
+    }
+    return cell;
 }
 @end
