@@ -39,7 +39,7 @@ static NSString *musicCellIdentifier = @"SongCell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    UIBarButtonItem *filter = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-share-white"] style:UIBarButtonItemStylePlain target:self action:@selector(filterBarButtonPressed:)];
+    UIBarButtonItem *filter = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"798-filter-white"] style:UIBarButtonItemStylePlain target:self action:@selector(filterBarButtonPressed:)];
     self.navigationItem.rightBarButtonItem = filter;
     
     self.title = NSLocalizedString(@"RESULTS_TITLE", @"Title for results View Controller");

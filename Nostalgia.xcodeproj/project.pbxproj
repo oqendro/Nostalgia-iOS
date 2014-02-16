@@ -26,6 +26,11 @@
 		756F50FA18AECCDD0068C7AC /* Movie.m in Sources */ = {isa = PBXBuildFile; fileRef = 756F50F918AECCDD0068C7AC /* Movie.m */; };
 		756F50FD18AECCDE0068C7AC /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 756F50FC18AECCDE0068C7AC /* Song.m */; };
 		756F510018AECCDE0068C7AC /* Media.m in Sources */ = {isa = PBXBuildFile; fileRef = 756F50FF18AECCDE0068C7AC /* Media.m */; };
+		756F510318B16B8C0068C7AC /* 798-filter-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 756F510118B16B8C0068C7AC /* 798-filter-gray.png */; };
+		756F510418B16B8C0068C7AC /* 798-filter-gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 756F510218B16B8C0068C7AC /* 798-filter-gray@2x.png */; };
+		756F510718B16BAF0068C7AC /* 798-filter-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 756F510518B16BAF0068C7AC /* 798-filter-white.png */; };
+		756F510818B16BAF0068C7AC /* 798-filter-white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 756F510618B16BAF0068C7AC /* 798-filter-white@2x.png */; };
+		756F510A18B1740B0068C7AC /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 756F510918B1740B0068C7AC /* MessageUI.framework */; };
 		7587C44718AE6B2B000721C3 /* ExampleThumbnail.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7587C44618AE6B2B000721C3 /* ExampleThumbnail.jpg */; };
 		7587C44A18AEA093000721C3 /* 702-share-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 7587C44818AEA093000721C3 /* 702-share-gray.png */; };
 		7587C44B18AEA093000721C3 /* 702-share-gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7587C44918AEA093000721C3 /* 702-share-gray@2x.png */; };
@@ -107,6 +112,11 @@
 		756F50FC18AECCDE0068C7AC /* Song.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Song.m; sourceTree = "<group>"; };
 		756F50FE18AECCDE0068C7AC /* Media.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Media.h; sourceTree = "<group>"; };
 		756F50FF18AECCDE0068C7AC /* Media.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Media.m; sourceTree = "<group>"; };
+		756F510118B16B8C0068C7AC /* 798-filter-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "798-filter-gray.png"; sourceTree = "<group>"; };
+		756F510218B16B8C0068C7AC /* 798-filter-gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "798-filter-gray@2x.png"; sourceTree = "<group>"; };
+		756F510518B16BAF0068C7AC /* 798-filter-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "798-filter-white.png"; sourceTree = "<group>"; };
+		756F510618B16BAF0068C7AC /* 798-filter-white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "798-filter-white@2x.png"; sourceTree = "<group>"; };
+		756F510918B1740B0068C7AC /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		7587C44618AE6B2B000721C3 /* ExampleThumbnail.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ExampleThumbnail.jpg; sourceTree = "<group>"; };
 		7587C44818AEA093000721C3 /* 702-share-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "702-share-gray.png"; sourceTree = "<group>"; };
 		7587C44918AEA093000721C3 /* 702-share-gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "702-share-gray@2x.png"; sourceTree = "<group>"; };
@@ -159,6 +169,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				756F510A18B1740B0068C7AC /* MessageUI.framework in Frameworks */,
 				75CA87A21882247F007A9F06 /* CoreData.framework in Frameworks */,
 				75C735B61846E0260055F8C3 /* CoreGraphics.framework in Frameworks */,
 				75C735B81846E0260055F8C3 /* UIKit.framework in Frameworks */,
@@ -244,6 +255,7 @@
 		75C735B21846E0260055F8C3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				756F510918B1740B0068C7AC /* MessageUI.framework */,
 				75CA87A11882247F007A9F06 /* CoreData.framework */,
 				75C735B31846E0260055F8C3 /* Foundation.framework */,
 				75C735B51846E0260055F8C3 /* CoreGraphics.framework */,
@@ -284,6 +296,10 @@
 			isa = PBXGroup;
 			children = (
 				7587C44618AE6B2B000721C3 /* ExampleThumbnail.jpg */,
+				756F510518B16BAF0068C7AC /* 798-filter-white.png */,
+				756F510618B16BAF0068C7AC /* 798-filter-white@2x.png */,
+				756F510118B16B8C0068C7AC /* 798-filter-gray.png */,
+				756F510218B16B8C0068C7AC /* 798-filter-gray@2x.png */,
 				7587C44818AEA093000721C3 /* 702-share-gray.png */,
 				7587C44918AEA093000721C3 /* 702-share-gray@2x.png */,
 				7587C44C18AEA0A7000721C3 /* 702-share-white.png */,
@@ -430,9 +446,12 @@
 				756DE88318ADC3FF003A8518 /* 724-info-gray@2x.png in Resources */,
 				75FBBE3518AAE11E00914A98 /* Localizable.strings in Resources */,
 				75C735CC1846E0260055F8C3 /* Images.xcassets in Resources */,
+				756F510318B16B8C0068C7AC /* 798-filter-gray.png in Resources */,
+				756F510818B16BAF0068C7AC /* 798-filter-white@2x.png in Resources */,
 				75D52A3618AE4755008177C3 /* 767-photo-1-gray.png in Resources */,
 				75D52A3718AE4755008177C3 /* 767-photo-1-gray@2x.png in Resources */,
 				756DE88218ADC3FF003A8518 /* 724-info-gray.png in Resources */,
+				756F510418B16B8C0068C7AC /* 798-filter-gray@2x.png in Resources */,
 				7587C44E18AEA0A7000721C3 /* 702-share-white.png in Resources */,
 				7587C44718AE6B2B000721C3 /* ExampleThumbnail.jpg in Resources */,
 				75D52A3A18AE47ED008177C3 /* 767-photo-1-white.png in Resources */,
@@ -444,6 +463,7 @@
 				75C735C71846E0260055F8C3 /* Main.storyboard in Resources */,
 				7587C44F18AEA0A7000721C3 /* 702-share-white@2x.png in Resources */,
 				756DE87E18ADC3E3003A8518 /* 724-info-white.png in Resources */,
+				756F510718B16BAF0068C7AC /* 798-filter-white.png in Resources */,
 				756DE87B18ADB3BB003A8518 /* SongAttributeCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

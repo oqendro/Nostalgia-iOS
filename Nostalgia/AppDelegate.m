@@ -19,9 +19,9 @@
     
 	_coreDataStack = [[DCTCoreDataStack alloc] initWithStoreFilename:@"Nostalgia"];
     [DataLoader setupParseWithLaunchOptions:launchOptions];
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:firstLaunchKey]) {
-        [DataLoader uploadMusicData];
-    }
+//    if ([[NSUserDefaults standardUserDefaults] boolForKey:firstLaunchKey]) {
+//        [DataLoader uploadMusicData];
+//    }
  
     return YES;
 }

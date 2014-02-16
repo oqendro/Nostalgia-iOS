@@ -10,8 +10,9 @@
 #import <UIImageView+AFNetworking.h>
 #import "Thumbnail.h"
 #import <AMRatingControl.h>
+@import MessageUI;
 
-@interface SongDetailVC () <UITableViewDataSource>
+@interface SongDetailVC () <UITableViewDataSource, UIActionSheetDelegate, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UIView *containerView;
@@ -24,7 +25,7 @@
 @end
 
 static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
-
+#warning LOCALIZE
 @implementation SongDetailVC
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -39,6 +40,13 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.title = NSLocalizedString(@"INFO_TITLE",@"Title of detail view controllers that says Info");
+    UIBarButtonItem *share = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-share-white"]
+                                                              style:UIBarButtonItemStylePlain
+                                                             target:self
+                                                             action:@selector(showShareActionSheet:)];
+    self.navigationItem.rightBarButtonItem = share;
+    
     self.view.backgroundColor = [UIColor lightGrayColor];
     self.ratingContainerView.backgroundColor = [UIColor lightGrayColor];
     
@@ -62,9 +70,63 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Convenience Methods
+
+- (void)showShareActionSheet:(UIBarButtonItem *)shareBarButtonItem{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Share"
+                                                             delegate:self
+                                                    cancelButtonTitle:@"Cancel"
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:@"Email",@"Text", nil];
+    
+    [actionSheet showFromBarButtonItem:shareBarButtonItem animated:YES];
+}
+
 - (void)configureView{
     self.titleLabel.text = self.song.title;
     [self.ratingControl setRating:2.5];
+}
+
+#warning PUT IN CONSTANTS & add html and pics
+- (void)shareAsText{
+    if ([MFMessageComposeViewController canSendText]) {
+        NSString *first = [PFUser currentUser][@"firstName"];
+        NSString *last = [PFUser currentUser][@"lastName"];
+
+        MFMessageComposeViewController *messageVC = [[MFMessageComposeViewController alloc] init];
+        messageVC.messageComposeDelegate = self;
+        NSString *textBody = [NSString stringWithFormat:@"%@ %@ wanted to share %@ by %@ with you", first, last, self.song.title, self.song.artist];
+        NSString *linkToApp = @"www.nostaligia.com";
+        messageVC.body = [NSString stringWithFormat:@"%@ \n %@",textBody, linkToApp];
+        [self presentViewController:messageVC animated:YES completion:NULL];
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:@"Device cannot send text"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil, nil];
+        [alert show];
+    }
+}
+
+- (void)shareAsEmail{
+    if ([MFMailComposeViewController canSendMail]) {
+        MFMailComposeViewController *mailVC = [[MFMailComposeViewController alloc] init];
+        mailVC.mailComposeDelegate = self;
+        NSString *first = [PFUser currentUser][@"firstName"];
+        NSString *last = [PFUser currentUser][@"lastName"];
+        NSString *textBody = [NSString stringWithFormat:@"%@ %@ wanted to share %@ by %@ with you", first, last, self.song.title, self.song.artist];
+        NSString *linkToApp = @"www.nostaligia.com";
+        [mailVC setMessageBody:[NSString stringWithFormat:@"%@ \n %@",textBody, linkToApp] isHTML:NO];
+        [self presentViewController:mailVC animated:YES completion:NULL];
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:@"Device cannot send email"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil, nil];
+        [alert show];
+    }
 }
 
 - (IBAction)infoButtonPressed:(id)sender {
@@ -183,5 +245,36 @@ typedef NS_ENUM(NSInteger, SongAttributeType) {
             break;
     }
     return cell;
+}
+
+#pragma mark - UIActionSheet Delegte 
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex{
+    switch (buttonIndex) {
+        case 0:
+            [self shareAsEmail];
+            break;
+        case 1:
+            [self shareAsText];
+            break;
+        default:
+            break;
+    }
+    
+}
+
+- (void)actionSheetCancel:(UIActionSheet *)actionSheet{
+    
+}
+
+#pragma mark - MFMessageComposeViewControllerDelegate delegate
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result{
+    
+}
+#pragma mark - MFMailComposeViewControllerDelegate delegate
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error{
+    
 }
 @end
