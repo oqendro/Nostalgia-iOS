@@ -9,13 +9,17 @@
 #import "SongDetailVC.h"
 #import <UIImageView+AFNetworking.h>
 #import "Thumbnail.h"
+#import <AMRatingControl.h>
 
 @interface SongDetailVC () <UITableViewDataSource>
 
+@property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UIView *containerView;
+@property (strong, nonatomic) IBOutlet UIView *ratingContainerView;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) IBOutlet UIButton *toggleInfoButton;
+@property (strong, nonatomic) AMRatingControl *ratingControl;
 
 @end
 
@@ -35,18 +39,32 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.toggleInfoButton setImage:[UIImage imageNamed:@"724-info-gray"] forState:UIControlStateNormal];
-
+    self.view.backgroundColor = [UIColor lightGrayColor];
+    self.ratingContainerView.backgroundColor = [UIColor lightGrayColor];
+    
+    [self.toggleInfoButton setImage:[UIImage imageNamed:@"724-info-white"]
+                           forState:UIControlStateNormal];
+    
     [self.tableView registerNib:[UINib nibWithNibName:songAttributeCellIdentifier bundle:nil]
          forCellReuseIdentifier:songAttributeCellIdentifier];
     [self.imageView setImageWithURL:[NSURL URLWithString:self.song.thumbnail.url]
                    placeholderImage:nil];
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self configureView];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)configureView{
+    self.titleLabel.text = self.song.title;
+    [self.ratingControl setRating:2.5];
 }
 
 - (IBAction)infoButtonPressed:(id)sender {
@@ -57,7 +75,7 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
                           duration:.5
                            options:UIViewAnimationOptionTransitionFlipFromRight
                         completion:^(BOOL finished) {
-                            [self.toggleInfoButton setImage:[UIImage imageNamed:@"724-info-gray"]
+                            [self.toggleInfoButton setImage:[UIImage imageNamed:@"767-photo-1-white"]
                                                    forState:UIControlStateNormal];
                         }];
 
@@ -67,11 +85,14 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
                           duration:.5
                            options:UIViewAnimationOptionTransitionFlipFromRight
                         completion:^(BOOL finished) {
-                            [self.toggleInfoButton setImage:[UIImage imageNamed:@"767-photo-1-gray"] forState:UIControlStateNormal];
+                            [self.toggleInfoButton setImage:[UIImage imageNamed:@"724-info-white"]
+                                                   forState:UIControlStateNormal];
                         }];
     }
 
 }
+
+#pragma mark - Getters
 
 - (UITableView *)tableView{
     if (_tableView) {
@@ -79,7 +100,9 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
     }
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 250, 250)
                                               style:UITableViewStylePlain];
-    [self.containerView addSubview:_tableView];
+    _tableView.allowsSelection = NO;
+    self.tableView.layer.borderWidth = 2;
+    self.tableView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     _tableView.dataSource = self;
     return _tableView;
 }
@@ -88,9 +111,29 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
     if (_imageView) {
         return _imageView;
     }
-    _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 250, 250)];
+    _imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ExampleThumbnail.jpg"]];
+    _imageView.layer.shadowColor = [UIColor blackColor].CGColor;
+    _imageView.layer.shadowOffset = CGSizeMake(5, 5);
+    _imageView.layer.shadowOpacity = .5;
+    _imageView.layer.shadowRadius = 1.0;
+    _imageView.clipsToBounds = NO;
     [self.containerView addSubview:_imageView];
+    _imageView.center = CGPointMake(self.containerView.frame.size.width / 2, self.containerView.frame.size.height / 2);
     return _imageView;
+}
+
+- (AMRatingControl *)ratingControl{
+    if (_ratingControl) {
+        return _ratingControl;
+    }
+    _ratingControl = [[AMRatingControl alloc] initWithLocation:CGPointZero
+                                                    emptyColor:[UIColor darkGrayColor]
+                                                    solidColor:[UIColor yellowColor]
+                                                    andMaxRating:5];;
+    [_ratingControl setRating:2.5];
+    [self.ratingContainerView addSubview:_ratingControl];
+    _ratingControl.center = CGPointMake(self.ratingContainerView.frame.size.width / 2, self.ratingContainerView.frame.size.height / 2);
+    return _ratingControl;
 }
 
 #pragma mark - UITableView Datasource

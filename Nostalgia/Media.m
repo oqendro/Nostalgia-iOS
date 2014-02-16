@@ -1,21 +1,21 @@
 //
-//  Thumbnail.m
+//  Media.m
 //  Nostalgia
 //
 //  Created by Walter M. Vargas-Pena on 2/14/14.
 //  Copyright (c) 2014 placeholder. All rights reserved.
 //
 
-#import "Thumbnail.h"
-#import "Song.h"
+#import "Media.h"
 
 
-@implementation Thumbnail
+@implementation Media
 
-@dynamic identifier;
-@dynamic name;
+@dynamic createdAt;
 @dynamic updatedAt;
-@dynamic url;
-@dynamic song;
+@dynamic title;
+@dynamic mediaType;
+@dynamic year;
+@dynamic identifier;
 
 @end

@@ -2,26 +2,22 @@
 //  Song.h
 //  Nostalgia
 //
-//  Created by Walter M. Vargas-Pena on 2/5/14.
+//  Created by Walter M. Vargas-Pena on 2/14/14.
 //  Copyright (c) 2014 placeholder. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "Media.h"
 
 @class Thumbnail;
 
-@interface Song : NSManagedObject
+@interface Song : Media
 
 @property (nonatomic, retain) NSString * album;
 @property (nonatomic, retain) NSString * artist;
-@property (nonatomic, retain) NSDate * createdAt;
 @property (nonatomic, retain) NSString * genre;
-@property (nonatomic, retain) NSString * identifier;
 @property (nonatomic, retain) NSNumber * rank;
-@property (nonatomic, retain) NSString * title;
-@property (nonatomic, retain) NSDate * updatedAt;
-@property (nonatomic, retain) NSNumber * year;
 @property (nonatomic, retain) Thumbnail *thumbnail;
 
 @end

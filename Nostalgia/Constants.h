@@ -14,3 +14,6 @@
 #define HelveticaNeueLight18 [UIFont fontWithName:@"HelveticaNeue-Light" size:18]
 
 extern NSString *const firstLaunchKey;
+
+extern NSString *const songsPreferenceKey;
+extern NSString *const moviesPreferenceKey;

@@ -10,3 +10,6 @@
 
 NSString *const firstLaunchKey = @"firstLaunch";
 
+NSString *const songsPreferenceKey = @"SongsPreference";
+NSString *const moviesPreferenceKey = @"MoviesPreference";
+

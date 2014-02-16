@@ -99,17 +99,19 @@
 }
 
 + (void)createNewSongWithPFObject:(PFObject *)songObject{
-        Song *newSong = [NSEntityDescription insertNewObjectForEntityForName:@"Song"
-                                                      inManagedObjectContext:SharedAppDelegate.coreDataStack.managedObjectContext];
-        newSong.album = [songObject objectForKey:albumKey];
-        newSong.artist = [songObject objectForKey:artistKey];
-        newSong.createdAt = songObject.createdAt;
-        newSong.genre = [songObject objectForKey:genreKey];
-        newSong.identifier = songObject.objectId;
-        newSong.rank = [songObject objectForKey:rankKey];
-        newSong.title = [songObject objectForKey:titleKey];
-        newSong.updatedAt = songObject.updatedAt;
-        newSong.year = [songObject objectForKey:yearKey];
+    
+    Song *newSong = [NSEntityDescription insertNewObjectForEntityForName:@"Song"
+                                                  inManagedObjectContext:SharedAppDelegate.coreDataStack.managedObjectContext];
+    newSong.album = [songObject objectForKey:albumKey];
+    newSong.artist = [songObject objectForKey:artistKey];
+    newSong.createdAt = songObject.createdAt;
+    newSong.genre = [songObject objectForKey:genreKey];
+    newSong.identifier = songObject.objectId;
+    newSong.rank = [songObject objectForKey:rankKey];
+    newSong.title = [songObject objectForKey:titleKey];
+    newSong.updatedAt = songObject.updatedAt;
+    newSong.year = [songObject objectForKey:yearKey];
+    newSong.mediaType = @"Song";
     
     PFFile *thumbnail = [songObject objectForKey:thumbnailKey];
     Thumbnail *managedThumbnail = [NSEntityDescription insertNewObjectForEntityForName:@"Thumbnail"

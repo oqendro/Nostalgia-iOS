@@ -11,8 +11,9 @@
 #import "SongCell.h"
 #import <UIImageView+AFNetworking.h>
 #import "SongDetailVC.h"
+#import "FilterTVC.h"
 
-@interface ResultsCVC () <NSFetchedResultsControllerDelegate>
+@interface ResultsCVC () <NSFetchedResultsControllerDelegate, FilterTVCDelegate>
 {
     NSMutableArray *_objectChanges;
     NSMutableArray *_sectionChanges;
@@ -38,7 +39,13 @@ static NSString *musicCellIdentifier = @"SongCell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    UIBarButtonItem *filter = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"702-share-white"] style:UIBarButtonItemStylePlain target:self action:@selector(filterBarButtonPressed:)];
+    self.navigationItem.rightBarButtonItem = filter;
+    
     self.title = NSLocalizedString(@"RESULTS_TITLE", @"Title for results View Controller");
+    UIView *backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
+    backgroundView.backgroundColor = [UIColor whiteColor];
+    self.collectionView.backgroundView = backgroundView;
     _objectChanges = [NSMutableArray array];
     _sectionChanges = [NSMutableArray array];
     self.collectionView.dataSource = self;
@@ -60,6 +67,28 @@ static NSString *musicCellIdentifier = @"SongCell";
         SongDetailVC *detailVC = segue.destinationViewController;
         detailVC.song = selectedSong;
     }
+}
+
+#pragma mark - Convenience Methods
+
+- (void)filterBarButtonPressed:(UIBarButtonItem *)filterBarButton{
+    FilterTVC *filterTVC = [[FilterTVC alloc] initWithStyle:UITableViewStylePlain];
+    filterTVC.delegate = self;
+    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:filterTVC]
+                       animated:YES
+                     completion:NULL];
+}
+
+- (NSArray *)filters{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSArray *filters = [NSArray array];
+    if ([[defaults objectForKey:songsPreferenceKey] boolValue]) {
+        filters = [filters arrayByAddingObject:@"Song"];
+    }
+    if ([[defaults objectForKey:moviesPreferenceKey] boolValue]) {
+        filters = [filters arrayByAddingObject:@"Movie"];
+    }
+    return filters;
 }
 
 #pragma mark - UICollectionVIew DataSource
@@ -85,7 +114,13 @@ static NSString *musicCellIdentifier = @"SongCell";
     cell.bottomLabel.text = song.title;
     NSURL *imageURL = [NSURL URLWithString:song.thumbnail.url];
     [cell.imageView setImageWithURL:imageURL];
-    
+    if (indexPath.row %2) {
+        cell.ratingLabel.text = @"99";
+        
+    } else {
+        cell.ratingLabel.text = @"100";
+
+    }
     return cell;
 }
 
@@ -95,8 +130,16 @@ static NSString *musicCellIdentifier = @"SongCell";
     if (_fetchedResultsController) {
         return _fetchedResultsController;
     }
-    NSFetchRequest *songFetch = [NSFetchRequest fetchRequestWithEntityName:@"Song"];
-    songFetch.predicate = [NSPredicate predicateWithFormat:@"year == %@",self.year];
+    NSFetchRequest *songFetch = [NSFetchRequest fetchRequestWithEntityName:@"Media"];
+    NSPredicate *yearPredicate = [NSPredicate predicateWithFormat:@"year == %@",self.year];
+    
+    NSMutableArray *filterPredicatesArray = [[NSMutableArray alloc] init];
+    for (NSString *mediaType in [self filters]) {
+        NSPredicate *mediaTypePredicate = [NSPredicate predicateWithFormat:@"mediaType == %@",mediaType];
+        [filterPredicatesArray addObject:mediaTypePredicate];
+    }
+    NSPredicate *filtersPredicates = [NSCompoundPredicate orPredicateWithSubpredicates:filterPredicatesArray];
+    songFetch.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[filtersPredicates, yearPredicate]];
     songFetch.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES]];
     NSFetchedResultsController *FRC = [[NSFetchedResultsController alloc] initWithFetchRequest:songFetch
                                                                           managedObjectContext:SharedAppDelegate.coreDataStack.managedObjectContext
@@ -262,6 +305,26 @@ static NSString *musicCellIdentifier = @"SongCell";
     }
     
     return shouldReload;
+}
+
+#pragma mark - FilterTVC Delegate
+
+- (void)filterTVCDidCancel{
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)filterTVCDidSelectFilters:(NSArray *)filters {
+    NSMutableArray *filterPredicatesArray = [[NSMutableArray alloc] init];
+    for (NSString *mediaType in filters) {
+        NSPredicate *mediaTypePredicate = [NSPredicate predicateWithFormat:@"mediaType == %@",mediaType];
+        [filterPredicatesArray addObject:mediaTypePredicate];
+    }
+    NSPredicate *filtersPredicates = [NSCompoundPredicate orPredicateWithSubpredicates:filterPredicatesArray];
+    NSPredicate *yearPredicate = [NSPredicate predicateWithFormat:@"year == %@",self.year];
+    self.fetchedResultsController.fetchRequest.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[filtersPredicates, yearPredicate]];
+    [self.fetchedResultsController performFetch:nil];
+    [self.collectionView reloadData];
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 @end

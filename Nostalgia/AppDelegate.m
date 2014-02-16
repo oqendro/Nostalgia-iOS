@@ -13,6 +13,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    NSDictionary *defaults = @{songsPreferenceKey: @YES, moviesPreferenceKey: @YES};
+    [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
 	_coreDataStack = [[DCTCoreDataStack alloc] initWithStoreFilename:@"Nostalgia"];
     [DataLoader setupParseWithLaunchOptions:launchOptions];
     if ([[NSUserDefaults standardUserDefaults] boolForKey:firstLaunchKey]) {

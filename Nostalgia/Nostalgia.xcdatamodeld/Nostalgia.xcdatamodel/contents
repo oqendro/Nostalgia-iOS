@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3401" systemVersion="13B42" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Song" representedClassName="Song">
-        <attribute name="album" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="artist" optional="YES" attributeType="String" syncable="YES"/>
+    <entity name="Media" representedClassName="Media" syncable="YES">
         <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="genre" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="rank" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="mediaType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="year" optional="YES" attributeType="Integer 16" defaultValueString="0">
-            <userInfo/>
-        </attribute>
+        <attribute name="year" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="Movie" representedClassName="Movie" parentEntity="Media" syncable="YES"/>
+    <entity name="Song" representedClassName="Song" parentEntity="Media">
+        <attribute name="album" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="artist" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="genre" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rank" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="thumbnail" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Thumbnail" inverseName="song" inverseEntity="Thumbnail" syncable="YES"/>
         <userInfo/>
     </entity>
@@ -23,7 +25,9 @@
         <relationship name="song" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Song" inverseName="thumbnail" inverseEntity="Song" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Song" positionX="0" positionY="0" width="128" height="193"/>
-        <element name="Thumbnail" positionX="216" positionY="35" width="128" height="118"/>
+        <element name="Song" positionX="25" positionY="-193" width="128" height="118"/>
+        <element name="Thumbnail" positionX="-189" positionY="-18" width="128" height="118"/>
+        <element name="Media" positionX="-137" positionY="-351" width="128" height="133"/>
+        <element name="Movie" positionX="-198" positionY="-198" width="128" height="43"/>
     </elements>
 </model>

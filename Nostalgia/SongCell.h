@@ -13,4 +13,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) IBOutlet UILabel *bottomLabel;
 @property (strong, nonatomic) IBOutlet UIView *labelBackgroundView;
+@property (strong, nonatomic) IBOutlet UIView *ratingLabelContainerView;
+@property (strong, nonatomic) IBOutlet UILabel *ratingLabel;
+
 @end
