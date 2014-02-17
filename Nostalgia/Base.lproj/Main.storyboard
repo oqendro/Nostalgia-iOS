@@ -263,9 +263,20 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dQx-IB-MR6">
                                 <rect key="frame" x="35" y="417" width="250" height="56"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap a Star to Rate" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iar-Nl-35g">
+                                        <rect key="frame" x="71" y="39" width="109" height="17"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstAttribute="centerX" secondItem="Iar-Nl-35g" secondAttribute="centerX" id="51p-aQ-b1I"/>
                                     <constraint firstAttribute="height" constant="56" id="XcK-xB-ST2"/>
+                                    <constraint firstAttribute="bottom" secondItem="Iar-Nl-35g" secondAttribute="bottom" id="oja-ZT-N1S"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title Of Song" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JVH-Iq-vU3">
@@ -293,6 +304,7 @@
                     <connections>
                         <outlet property="containerView" destination="Sjc-42-g3s" id="K11-gO-mPk"/>
                         <outlet property="ratingContainerView" destination="dQx-IB-MR6" id="XQw-nU-eMg"/>
+                        <outlet property="ratingLabel" destination="Iar-Nl-35g" id="7Gh-Vh-Iwq"/>
                         <outlet property="titleLabel" destination="JVH-Iq-vU3" id="nUQ-Iz-jpp"/>
                         <outlet property="toggleInfoButton" destination="1rl-6a-cxH" id="WuW-gh-udp"/>
                     </connections>

@@ -10,6 +10,7 @@
 #import <UIImageView+AFNetworking.h>
 #import "Thumbnail.h"
 #import <AMRatingControl.h>
+
 @import MessageUI;
 
 @interface SongDetailVC () <UITableViewDataSource, UIActionSheetDelegate, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate>
@@ -21,12 +22,14 @@
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) IBOutlet UIButton *toggleInfoButton;
 @property (strong, nonatomic) AMRatingControl *ratingControl;
-
+@property (strong, nonatomic) IBOutlet UILabel *ratingLabel;
 @end
 
 static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
 #warning LOCALIZE
 @implementation SongDetailVC
+
+#pragma mark - UIViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -35,6 +38,12 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
         // Custom initialization
     }
     return self;
+}
+
+- (void)awakeFromNib{
+    [super awakeFromNib];
+    [self view];
+    self.ratingLabel.font = HelveticaNeueLight12;
 }
 
 - (void)viewDidLoad
@@ -84,7 +93,16 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
 
 - (void)configureView{
     self.titleLabel.text = self.song.title;
-    [self.ratingControl setRating:2.5];
+    [self.imageView setImageWithURL:[NSURL URLWithString:self.song.thumbnail.url]
+                   placeholderImage:[UIImage imageNamed:@"767-photo-1-white"]];
+    self.ratingControl.rating = 2.5;
+    if ([PFUser currentUser]) {
+        self.ratingControl.enabled = YES;
+        self.ratingLabel.text = @"Tap a Star to Rate";
+    } else {
+        self.ratingControl.enabled = NO;
+        self.ratingLabel.text = @"Must Sign in to Rate";
+    }
 }
 
 #warning PUT IN CONSTANTS & add html and pics
@@ -163,6 +181,7 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 250, 250)
                                               style:UITableViewStylePlain];
     _tableView.allowsSelection = NO;
+    _tableView.rowHeight = 41;
     self.tableView.layer.borderWidth = 2;
     self.tableView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     _tableView.dataSource = self;
@@ -206,6 +225,7 @@ typedef NS_ENUM(NSInteger, SongAttributeType) {
     SongAttributeTypeArtist,
     SongAttributeTypeAlbum,
     SongAttributeTypeRank,
+    SongAttributeTypeRating,
     SongAttributeTypeCount
 };
 
@@ -241,6 +261,10 @@ typedef NS_ENUM(NSInteger, SongAttributeType) {
             cell.textLabel.text = @"Rank";
             cell.detailTextLabel.text = self.song.rank.stringValue;
             break;
+        case SongAttributeTypeRating:
+            cell.textLabel.text = @"Rating";
+            cell.detailTextLabel.text = @"100";
+            break;
         default:
             break;
     }
@@ -270,11 +294,37 @@ typedef NS_ENUM(NSInteger, SongAttributeType) {
 #pragma mark - MFMessageComposeViewControllerDelegate delegate
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result{
-    
+    switch (result) {
+        case MessageComposeResultCancelled:
+            //
+            break;
+        case MessageComposeResultFailed:
+            break;
+        case MessageComposeResultSent:
+            break;
+        default:
+            break;
+    }
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
+
 #pragma mark - MFMailComposeViewControllerDelegate delegate
 
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error{
-    
+    switch (result) {
+        case MFMailComposeResultCancelled:
+            //
+            break;
+        case MFMailComposeResultFailed:
+            break;
+        case MFMailComposeResultSaved:
+            break;
+        case MFMailComposeResultSent:
+            //
+            break;
+        default:
+            break;
+    }
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 @end

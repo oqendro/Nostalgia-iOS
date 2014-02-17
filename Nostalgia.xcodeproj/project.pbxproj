@@ -59,6 +59,7 @@
 		75CA87A21882247F007A9F06 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75CA87A11882247F007A9F06 /* CoreData.framework */; };
 		75CA87A81882499D007A9F06 /* SignUpTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 75CA87A71882499D007A9F06 /* SignUpTVC.m */; };
 		75CA87AB18824A39007A9F06 /* TextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 75CA87AA18824A39007A9F06 /* TextFieldCell.m */; };
+		75D4596218B1EBAF00E5144E /* Movie+Networking.m in Sources */ = {isa = PBXBuildFile; fileRef = 75D4596118B1EBAF00E5144E /* Movie+Networking.m */; };
 		75D52A3618AE4755008177C3 /* 767-photo-1-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 75D52A3418AE4755008177C3 /* 767-photo-1-gray.png */; };
 		75D52A3718AE4755008177C3 /* 767-photo-1-gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 75D52A3518AE4755008177C3 /* 767-photo-1-gray@2x.png */; };
 		75D52A3A18AE47ED008177C3 /* 767-photo-1-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 75D52A3818AE47ED008177C3 /* 767-photo-1-white.png */; };
@@ -156,6 +157,8 @@
 		75CA87A71882499D007A9F06 /* SignUpTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpTVC.m; sourceTree = "<group>"; };
 		75CA87A918824A39007A9F06 /* TextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextFieldCell.h; sourceTree = "<group>"; };
 		75CA87AA18824A39007A9F06 /* TextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextFieldCell.m; sourceTree = "<group>"; };
+		75D4596018B1EBAF00E5144E /* Movie+Networking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Movie+Networking.h"; sourceTree = "<group>"; };
+		75D4596118B1EBAF00E5144E /* Movie+Networking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Movie+Networking.m"; sourceTree = "<group>"; };
 		75D52A3418AE4755008177C3 /* 767-photo-1-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "767-photo-1-gray.png"; sourceTree = "<group>"; };
 		75D52A3518AE4755008177C3 /* 767-photo-1-gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "767-photo-1-gray@2x.png"; sourceTree = "<group>"; };
 		75D52A3818AE47ED008177C3 /* 767-photo-1-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "767-photo-1-white.png"; sourceTree = "<group>"; };
@@ -357,6 +360,8 @@
 				756F50E418AEC70F0068C7AC /* Thumbnail.m */,
 				75B729841882D81B00D0A695 /* Song+Networking.h */,
 				75B729851882D81B00D0A695 /* Song+Networking.m */,
+				75D4596018B1EBAF00E5144E /* Movie+Networking.h */,
+				75D4596118B1EBAF00E5144E /* Movie+Networking.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -531,6 +536,7 @@
 				75CA87AB18824A39007A9F06 /* TextFieldCell.m in Sources */,
 				75270AC0187CCBB700B49643 /* DataLoader.m in Sources */,
 				75B7298F1883920900D0A695 /* DatePickerTVC.m in Sources */,
+				75D4596218B1EBAF00E5144E /* Movie+Networking.m in Sources */,
 				7511EA0E18A0602800CE553B /* DCTCoreDataStack.m in Sources */,
 				75C735CA1846E0260055F8C3 /* PickerVC.m in Sources */,
 				756F50FA18AECCDD0068C7AC /* Movie.m in Sources */,
