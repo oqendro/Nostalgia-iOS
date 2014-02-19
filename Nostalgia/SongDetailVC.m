@@ -20,9 +20,11 @@
 @property (strong, nonatomic) IBOutlet UIView *ratingContainerView;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UIView *transparencyView;
 @property (strong, nonatomic) IBOutlet UIButton *toggleInfoButton;
 @property (strong, nonatomic) AMRatingControl *ratingControl;
 @property (strong, nonatomic) IBOutlet UILabel *ratingLabel;
+@property (weak, nonatomic) IBOutlet UIToolbar *toolBAr;
 @end
 
 static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
@@ -54,10 +56,22 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
                                                               style:UIBarButtonItemStylePlain
                                                              target:self
                                                              action:@selector(showShareActionSheet:)];
-    self.navigationItem.rightBarButtonItem = share;
+    UIBarButtonItem *info = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"724-info-gray"]
+                                                              style:UIBarButtonItemStylePlain
+                                                             target:self
+                                                             action:@selector(infoButtonPressed:)];
+    UIBarButtonItem *favorites = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"748-heart-gray"]
+                                                                  style:UIBarButtonItemStylePlain
+                                                                 target:self
+                                                                 action:nil];
+    UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                                                                               target:nil
+                                                                               action:nil];
+    [self.toolBAr setItems:@[flexSpace, share, flexSpace, info, flexSpace, favorites, flexSpace] animated:YES];
     
-    self.view.backgroundColor = [UIColor lightGrayColor];
-    self.ratingContainerView.backgroundColor = [UIColor lightGrayColor];
+    self.view.backgroundColor = [UIColor blackColor];
+    self.transparencyView.backgroundColor = [UIColor clearColor];
+    self.ratingContainerView.backgroundColor= [UIColor clearColor];
     
     [self.toggleInfoButton setImage:[UIImage imageNamed:@"724-info-white"]
                            forState:UIControlStateNormal];
@@ -148,6 +162,7 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
 }
 
 - (IBAction)infoButtonPressed:(id)sender {
+    self.transparencyView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.6];
     
     if (self.imageView.superview == self.containerView) {
         [UIView transitionFromView:self.imageView

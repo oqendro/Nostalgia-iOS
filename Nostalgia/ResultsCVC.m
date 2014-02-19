@@ -115,13 +115,8 @@ static NSString *musicCellIdentifier = @"SongCell";
     NSURL *imageURL = [NSURL URLWithString:song.thumbnail.url];
     [cell.imageView setImageWithURL:imageURL
                    placeholderImage:[UIImage imageNamed:@"767-photo-1-white"]];
-    if (indexPath.row %2) {
-        cell.ratingLabel.text = @"99";
-        
-    } else {
-        cell.ratingLabel.text = @"100";
-
-    }
+#warning change to rating
+    cell.ratingLabel.text = song.rank.stringValue;
     return cell;
 }
 
