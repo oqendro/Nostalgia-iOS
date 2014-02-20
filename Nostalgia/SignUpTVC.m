@@ -12,6 +12,7 @@
 #import "TimeMachineTVC.h"
 #import "DatePickerTVC.h"
 #import <SHEmailValidator.h>
+#import "FavoritesCVC.h"
 
 typedef NS_ENUM(NSInteger, SignUpCellType) {
     SignUpCellTypeUsername,
@@ -428,9 +429,32 @@ static NSInteger numberOfCharactersRequired = 1;
 }
 
 - (void)showTimeMachineWithUser:(PFUser *)user{
-    TimeMachineTVC *timeMachineVC = [self.storyboard instantiateViewControllerWithIdentifier:@"TimeMachineTVC"];
-    timeMachineVC.user  = user;
-    [self.navigationController setViewControllers:@[timeMachineVC] animated:YES];
+    UITabBarController *tabBarController = [self.storyboard instantiateViewControllerWithIdentifier:@"TabBarController"];
+    UITabBarItem *timeMachineTabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"TIME_MACHINE_TITLE", @"Title for time machine view controller")
+                                                                        image:[UIImage imageNamed:@"798-filter-gray"]
+                                                                          tag:0];
+    UITabBarItem *favoritesTabbarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"FAVORITES_TITLE", @"Title for favorites View Controller")
+                                                                      image:[UIImage imageNamed:@"726-star-gray"]
+                                                                        tag:1];
+    
+    TimeMachineTVC *timeMachineVC = (TimeMachineTVC *)[tabBarController.viewControllers[0] topViewController];
+    timeMachineVC.user = user;
+    timeMachineVC.tabBarItem = timeMachineTabBarItem;
+    
+    FavoritesCVC *favoritesVC = (FavoritesCVC *)tabBarController.viewControllers[1];
+    favoritesVC.tabBarItem = favoritesTabbarItem;
+    
+    [UIView transitionWithView:SharedAppDelegate.window
+                      duration:0.5
+                       options:UIViewAnimationOptionTransitionFlipFromLeft
+                    animations:^(void) {
+                        BOOL oldState = [UIView areAnimationsEnabled];
+                        [UIView setAnimationsEnabled:NO];
+                        SharedAppDelegate.window.rootViewController = tabBarController;
+                        [UIView setAnimationsEnabled:oldState];
+                    }
+                    completion:nil];
+
 }
 
 - (void)dealloc{

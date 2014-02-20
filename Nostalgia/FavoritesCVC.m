@@ -1,19 +1,21 @@
 //
-//  ResultsCVC.m
+//  FavoritesTVCViewController.m
 //  Nostalgia
 //
-//  Created by Walter M. Vargas-Pena on 1/26/14.
+//  Created by Walter Vargas-Pena on 2/20/14.
 //  Copyright (c) 2014 placeholder. All rights reserved.
 //
 
-#import "ResultsCVC.h"
-#import "Song+Networking.h"
-#import "SongCell.h"
-#import <UIImageView+AFNetworking.h>
-#import "SongDetailVC.h"
+#import "FavoritesCVC.h"
 #import "FilterTVC.h"
+#import "Song.h"
+#import "SongCell.h"
+#import "SongDetailVC.h"
+#import "Thumbnail.h"
+#import <UIImageView+AFNetworking.h>
 
-@interface ResultsCVC () <NSFetchedResultsControllerDelegate, FilterTVCDelegate>
+
+@interface FavoritesCVC () <NSFetchedResultsControllerDelegate, FilterTVCDelegate>
 {
     NSMutableArray *_objectChanges;
     NSMutableArray *_sectionChanges;
@@ -25,7 +27,7 @@
 
 static NSString *musicCellIdentifier = @"SongCell";
 
-@implementation ResultsCVC
+@implementation FavoritesCVC
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -45,16 +47,13 @@ static NSString *musicCellIdentifier = @"SongCell";
                                                               action:@selector(filterBarButtonPressed:)];
     self.navigationItem.rightBarButtonItem = filter;
     
-    self.title = NSLocalizedString(@"RESULTS_TITLE", @"Title for results View Controller");
+    self.title = NSLocalizedString(@"FAVORITES_TITLE", @"Title for favorites View Controller");
     UIView *backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
     backgroundView.backgroundColor = [UIColor blackColor];
     self.collectionView.backgroundView = backgroundView;
     _objectChanges = [NSMutableArray array];
     _sectionChanges = [NSMutableArray array];
     self.collectionView.dataSource = self;
-    [Song loadSongsForYear:self.year withBlock:^(NSArray *songs, NSError *error) {
-        NSLog(@"songs %lu for %@",(unsigned long)songs.count, self.year);
-    }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -69,7 +68,7 @@ static NSString *musicCellIdentifier = @"SongCell";
         Song *selectedSong = [self.fetchedResultsController objectAtIndexPath:path];
         SongDetailVC *detailVC = segue.destinationViewController;
         detailVC.song = selectedSong;
-    }
+    }    
 }
 
 #pragma mark - Convenience Methods
@@ -130,7 +129,7 @@ static NSString *musicCellIdentifier = @"SongCell";
         return _fetchedResultsController;
     }
     NSFetchRequest *songFetch = [NSFetchRequest fetchRequestWithEntityName:@"Media"];
-    NSPredicate *yearPredicate = [NSPredicate predicateWithFormat:@"year == %@",self.year];
+    NSPredicate *yearPredicate = [NSPredicate predicateWithFormat:@"favorite == %@",@YES];
     
     NSMutableArray *filterPredicatesArray = [[NSMutableArray alloc] init];
     for (NSString *mediaType in [self filters]) {
@@ -319,7 +318,7 @@ static NSString *musicCellIdentifier = @"SongCell";
         [filterPredicatesArray addObject:mediaTypePredicate];
     }
     NSPredicate *filtersPredicates = [NSCompoundPredicate orPredicateWithSubpredicates:filterPredicatesArray];
-    NSPredicate *yearPredicate = [NSPredicate predicateWithFormat:@"year == %@",self.year];
+    NSPredicate *yearPredicate = [NSPredicate predicateWithFormat:@"favorite == %@",@YES];
     self.fetchedResultsController.fetchRequest.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[filtersPredicates, yearPredicate]];
     [self.fetchedResultsController performFetch:nil];
     [self.collectionView reloadData];

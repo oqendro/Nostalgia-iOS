@@ -25,6 +25,8 @@
 @property (strong, nonatomic) AMRatingControl *ratingControl;
 @property (strong, nonatomic) IBOutlet UILabel *ratingLabel;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolBAr;
+@property BOOL infoShown;
+
 @end
 
 static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
@@ -63,7 +65,7 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
     UIBarButtonItem *favorites = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"748-heart-gray"]
                                                                   style:UIBarButtonItemStylePlain
                                                                  target:self
-                                                                 action:nil];
+                                                                 action:@selector(toggleFavorite:)];
     UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                                                                                target:nil
                                                                                action:nil];
@@ -75,7 +77,8 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
     
     [self.toggleInfoButton setImage:[UIImage imageNamed:@"724-info-white"]
                            forState:UIControlStateNormal];
-    
+    [self.view addSubview:self.tableView];
+    self.tableView.alpha = 0;
     [self.tableView registerNib:[UINib nibWithNibName:songAttributeCellIdentifier bundle:nil]
          forCellReuseIdentifier:songAttributeCellIdentifier];
     [self.imageView setImageWithURL:[NSURL URLWithString:self.song.thumbnail.url]
@@ -102,7 +105,7 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
                                                destructiveButtonTitle:nil
                                                     otherButtonTitles:@"Email",@"Text", nil];
     
-    [actionSheet showFromBarButtonItem:shareBarButtonItem animated:YES];
+    [actionSheet showFromTabBar:self.tabBarController.tabBar];
 }
 
 - (void)configureView{
@@ -141,6 +144,21 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
     }
 }
 
+- (void)toggleFavorite:(UIBarButtonItem *)favBarButton{
+    if (self.song.favorite.boolValue) {
+        self.song.favorite = @NO;
+        [favBarButton setImage:[UIImage imageNamed:@"748-heart-gray"]];
+    } else {
+        self.song.favorite = @YES;
+        [favBarButton setImage:[UIImage imageNamed:@"726-star-gray"]];
+    }
+    NSError *error;
+    [SharedAppDelegate.coreDataStack.managedObjectContext save:&error];
+    if (error) {
+        NSLog(@"%@",error.debugDescription);
+    }
+}
+
 - (void)shareAsEmail{
     if ([MFMailComposeViewController canSendMail]) {
         MFMailComposeViewController *mailVC = [[MFMailComposeViewController alloc] init];
@@ -161,30 +179,28 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
     }
 }
 
-- (IBAction)infoButtonPressed:(id)sender {
-    self.transparencyView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.6];
-    
-    if (self.imageView.superview == self.containerView) {
-        [UIView transitionFromView:self.imageView
-                            toView:self.tableView
-                          duration:.5
-                           options:UIViewAnimationOptionTransitionFlipFromRight
-                        completion:^(BOOL finished) {
-                            [self.toggleInfoButton setImage:[UIImage imageNamed:@"767-photo-1-white"]
-                                                   forState:UIControlStateNormal];
-                        }];
-
+- (IBAction)infoButtonPressed:(UIBarButtonItem *)sender {
+    if (self.infoShown) {
+        [UIView animateWithDuration:.25
+                         animations:^{
+                             self.transparencyView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0];
+                             [sender setImage:[UIImage imageNamed:@"724-info-gray"]];
+                             self.tableView.alpha = 0;
+                         }
+                         completion:^(BOOL finished) {
+                             self.infoShown = NO;
+                         }];
     } else {
-        [UIView transitionFromView:self.tableView
-                            toView:self.imageView
-                          duration:.5
-                           options:UIViewAnimationOptionTransitionFlipFromRight
-                        completion:^(BOOL finished) {
-                            [self.toggleInfoButton setImage:[UIImage imageNamed:@"724-info-white"]
-                                                   forState:UIControlStateNormal];
-                        }];
+        [UIView animateWithDuration:.25
+                         animations:^{
+                             self.transparencyView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.6];
+                             [sender setImage:[UIImage imageNamed:@"767-photo-1-gray"]];
+                             self.tableView.alpha = 1;
+                         }
+                         completion:^(BOOL finished) {
+                             self.infoShown = YES;
+                         }];
     }
-
 }
 
 #pragma mark - Getters
@@ -195,10 +211,11 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
     }
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 250, 250)
                                               style:UITableViewStylePlain];
+    _tableView.backgroundColor = [UIColor clearColor];
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.allowsSelection = NO;
     _tableView.rowHeight = 41;
-    self.tableView.layer.borderWidth = 2;
-    self.tableView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    _tableView.center = self.imageView.center;
     _tableView.dataSource = self;
     return _tableView;
 }
