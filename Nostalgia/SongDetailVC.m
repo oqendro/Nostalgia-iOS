@@ -25,6 +25,8 @@
 @property (strong, nonatomic) AMRatingControl *ratingControl;
 @property (strong, nonatomic) IBOutlet UILabel *ratingLabel;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolBAr;
+@property (nonatomic, weak) UIBarButtonItem *favBarButtonItem;
+
 @property BOOL infoShown;
 
 @end
@@ -69,6 +71,8 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
     UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                                                                                target:nil
                                                                                action:nil];
+    
+    self.favBarButtonItem = favorites;
     [self.toolBAr setItems:@[flexSpace, share, flexSpace, info, flexSpace, favorites, flexSpace] animated:YES];
     
     self.view.backgroundColor = [UIColor blackColor];
@@ -113,6 +117,11 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
     [self.imageView setImageWithURL:[NSURL URLWithString:self.song.thumbnail.url]
                    placeholderImage:[UIImage imageNamed:@"767-photo-1-white"]];
     self.ratingControl.rating = 2.5;
+    if (self.song.favorite.boolValue) {
+        self.favBarButtonItem.image = [UIImage imageNamed:@"726-star-gray"];
+    } else {
+        self.favBarButtonItem.image = [UIImage imageNamed:@"748-heart-gray"];
+    }
     if ([PFUser currentUser]) {
         self.ratingControl.enabled = YES;
         self.ratingLabel.text = @"Tap a Star to Rate";
