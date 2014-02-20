@@ -33,9 +33,6 @@
 {
     [super viewDidLoad];    
     self.title = NSLocalizedString(@"TIME_MACHINE_TITLE", @"Title for time machine view controller");
-    UIBarButtonItem *next = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(showResults)];
-    next.enabled = NO;
-    self.navigationItem.rightBarButtonItem = next;
     self.selectableYears = [self yearsForUser];
     [self.tableView reloadData];
 }
@@ -59,11 +56,6 @@
     }
 }
 
-#pragma mark - Convenience
-
-- (void)showResults{
-    [self performSegueWithIdentifier:@"ResultsCVC" sender:nil];
-}
 
 #warning PUT IN CONSTANTS
 - (NSArray *)yearsForUser{
