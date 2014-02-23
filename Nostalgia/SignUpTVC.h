@@ -13,8 +13,21 @@ typedef NS_ENUM(NSInteger, SignUpTVCMode) {
     SignUpTVCModeLogin
 };
 
+typedef NS_ENUM(NSInteger, SignInResult) {
+    SignInResultSignedUp,
+    SignInResultLoggedIn,
+    SignInResultCancelled,
+    SignInResultFailed
+};
+
+typedef void (^SignInBlock)(SignInResult result, NSError *error);
+
 @interface SignUpTVC : UITableViewController
 
-@property SignUpTVCMode mode;
+@property BOOL hidesCancelButton;
+@property (nonatomic, copy) SignInBlock completionBlock;
+
+- (instancetype)initWithCompletionBlock:(SignInBlock)block;
 
 @end
+

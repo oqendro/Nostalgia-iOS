@@ -9,10 +9,8 @@
 #import "SignUpTVC.h"
 #import "TextFieldCell.h"
 #import "SignUpCell.h"
-#import "TimeMachineTVC.h"
-#import "DatePickerTVC.h"
 #import <SHEmailValidator.h>
-#import "FavoritesCVC.h"
+#import "DatePickerTVC.h"
 
 typedef NS_ENUM(NSInteger, SignUpCellType) {
     SignUpCellTypeUsername,
@@ -45,18 +43,41 @@ static NSInteger numberOfCharactersRequired = 1;
 @property (nonatomic, strong) SignUpCell *signUpLoginCell;
 @property (nonatomic, strong) NSDate *birthDate;
 @property (strong, nonatomic) IBOutlet UIButton *toggleButton;
+@property SignUpTVCMode mode;
 
 @end
 
+static NSString *signUpCellIdentifier = @"SignUpCell";
+static NSString *textFieldCellIdentifier = @"TextFieldCell";
+
 @implementation SignUpTVC
+
+- (instancetype)initWithCompletionBlock:(SignInBlock)block{
+    self = [super init];
+    if (self) {
+        if (block) {
+            self.completionBlock = block;
+        }
+    }
+    return self;
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.title = NSLocalizedString(@"SIGN_UP_VIEW_CONTROLLER_TITLE", @"Title for sign up view controller");
-    if ([PFUser currentUser]) {
-        [self showTimeMachineWithUser:[PFUser currentUser]];
+    [self.tableView registerNib:[UINib nibWithNibName:signUpCellIdentifier bundle:nil]
+         forCellReuseIdentifier:signUpCellIdentifier];
+    [self.tableView registerNib:[UINib nibWithNibName:textFieldCellIdentifier bundle:nil]
+         forCellReuseIdentifier:textFieldCellIdentifier];
+    
+    if (!self.hidesCancelButton) {
+        UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+                                                                                target:self
+                                                                                action:@selector(cancelSignUp)];
+        self.navigationItem.leftBarButtonItem = cancel;
     }
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -141,9 +162,6 @@ static NSInteger numberOfCharactersRequired = 1;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *signUpCellIdentifier = @"SignUpCell";
-    static NSString *textFieldCellIdentifier = @"TextFieldCell";
-    
     UITableViewCell *cell;
     
     switch (indexPath.section) {
@@ -275,33 +293,26 @@ static NSInteger numberOfCharactersRequired = 1;
     
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
-            [self showTimeMachineWithUser:user];
+            self.completionBlock(SignInResultSignedUp, nil);
         } else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ERROR_TITLE", @"Title for error alert view")
-                                                            message:error.localizedFailureReason
-                                                           delegate:nil
-                                                  cancelButtonTitle:nil
-                                                  otherButtonTitles:NSLocalizedString(@"OK", @"OK text for alert view confirmations"), nil];
-            [alert show];
+            self.completionBlock(SignInResultFailed, error);
         }
     }];
 }
 
 - (void)loginUser{
-    NSLog(@"%@- %@",self.userNameCell.textField.text, self.passwordCell.textField.text);
     [PFUser logInWithUsernameInBackground:self.userNameCell.textField.text password:self.passwordCell.textField.text
                                     block:^(PFUser *user, NSError *error) {
-                                        if (user) {
-                                            [self showTimeMachineWithUser:user];
+                                        if (!error) {
+                                            self.completionBlock(SignInResultLoggedIn, nil);
                                         } else {
-                                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ERROR_TITLE", @"Title for error alert view")
-                                                                                            message:error.localizedFailureReason
-                                                                                           delegate:nil
-                                                                                  cancelButtonTitle:nil
-                                                                                  otherButtonTitles:NSLocalizedString(@"OK", @"OK text for alert view confirmations"), nil];
-                                            [alert show];
+                                            self.completionBlock(SignInResultFailed, error);
                                         }
                                     }];
+}
+
+- (void)cancelSignUp{
+    self.completionBlock (SignInResultCancelled, nil);
 }
 
 - (void)configureCell:(TextFieldCell *)cell atIndexPath:(NSIndexPath *)path{
@@ -428,34 +439,6 @@ static NSInteger numberOfCharactersRequired = 1;
     }
 }
 
-- (void)showTimeMachineWithUser:(PFUser *)user{
-    UITabBarController *tabBarController = [self.storyboard instantiateViewControllerWithIdentifier:@"TabBarController"];
-    UITabBarItem *timeMachineTabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"TIME_MACHINE_TITLE", @"Title for time machine view controller")
-                                                                        image:[UIImage imageNamed:@"798-filter-gray"]
-                                                                          tag:0];
-    UITabBarItem *favoritesTabbarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"FAVORITES_TITLE", @"Title for favorites View Controller")
-                                                                      image:[UIImage imageNamed:@"726-star-gray"]
-                                                                        tag:1];
-    
-    TimeMachineTVC *timeMachineVC = (TimeMachineTVC *)[tabBarController.viewControllers[0] topViewController];
-    timeMachineVC.user = user;
-    timeMachineVC.tabBarItem = timeMachineTabBarItem;
-    
-    FavoritesCVC *favoritesVC = (FavoritesCVC *)tabBarController.viewControllers[1];
-    favoritesVC.tabBarItem = favoritesTabbarItem;
-    
-    [UIView transitionWithView:SharedAppDelegate.window
-                      duration:0.5
-                       options:UIViewAnimationOptionTransitionFlipFromLeft
-                    animations:^(void) {
-                        BOOL oldState = [UIView areAnimationsEnabled];
-                        [UIView setAnimationsEnabled:NO];
-                        SharedAppDelegate.window.rootViewController = tabBarController;
-                        [UIView setAnimationsEnabled:oldState];
-                    }
-                    completion:nil];
-
-}
 
 - (void)dealloc{
     for (NSObject *observer in self.localChangeObservers) {
