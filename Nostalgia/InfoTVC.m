@@ -31,25 +31,17 @@
 {
     [super viewDidLoad];
 #warning LOCALIZE
-    UIBarButtonItem *logout = [[UIBarButtonItem alloc] initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(toggleLogin:)];
+    UIBarButtonItem *logout = [[UIBarButtonItem alloc] initWithTitle:@"Logout"
+                                                               style:UIBarButtonItemStylePlain
+                                                              target:self
+                                                              action:@selector(toggleLogin:)];
     self.navigationItem.rightBarButtonItem = logout;
-    [[PFUser currentUser] addObserver:self
-                           forKeyPath:@"isAuthenticated"
-                              options:0
-                              context:NULL];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
-    NSLog(@"osberse");
-    if ([keyPath isEqualToString:@"isAuthenticated"]) {
-        NSLog(@"whoops");
-    }
 }
 
 /*
