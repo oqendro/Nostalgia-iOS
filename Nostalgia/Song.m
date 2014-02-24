@@ -2,7 +2,7 @@
 //  Song.m
 //  Nostalgia
 //
-//  Created by Walter M. Vargas-Pena on 2/14/14.
+//  Created by Walter M. Vargas-Pena on 2/24/14.
 //  Copyright (c) 2014 placeholder. All rights reserved.
 //
 
@@ -15,7 +15,6 @@
 @dynamic album;
 @dynamic artist;
 @dynamic genre;
-@dynamic rank;
 @dynamic thumbnail;
 
 @end

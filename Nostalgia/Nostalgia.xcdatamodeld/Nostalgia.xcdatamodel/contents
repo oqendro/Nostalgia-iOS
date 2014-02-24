@@ -5,16 +5,22 @@
         <attribute name="favorite" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mediaType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rank" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="year" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
-    <entity name="Movie" representedClassName="Movie" parentEntity="Media" syncable="YES"/>
+    <entity name="Movie" representedClassName="Movie" parentEntity="Media" syncable="YES">
+        <attribute name="cast" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="director" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="genre" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="movieDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="thumbnail" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Thumbnail" inverseName="movie" inverseEntity="Thumbnail" syncable="YES"/>
+    </entity>
     <entity name="Song" representedClassName="Song" parentEntity="Media">
         <attribute name="album" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="artist" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="genre" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="rank" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="thumbnail" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Thumbnail" inverseName="song" inverseEntity="Thumbnail" syncable="YES"/>
         <userInfo/>
     </entity>
@@ -23,12 +29,13 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="movie" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Movie" inverseName="thumbnail" inverseEntity="Movie" syncable="YES"/>
         <relationship name="song" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Song" inverseName="thumbnail" inverseEntity="Song" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Media" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Movie" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Song" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Thumbnail" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Media" positionX="61" positionY="-207" width="128" height="163"/>
+        <element name="Movie" positionX="-72" positionY="47" width="128" height="118"/>
+        <element name="Song" positionX="187" positionY="42" width="128" height="103"/>
+        <element name="Thumbnail" positionX="205" positionY="225" width="128" height="133"/>
     </elements>
 </model>

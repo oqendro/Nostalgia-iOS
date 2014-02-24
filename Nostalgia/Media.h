@@ -2,7 +2,7 @@
 //  Media.h
 //  Nostalgia
 //
-//  Created by Walter Vargas-Pena on 2/20/14.
+//  Created by Walter M. Vargas-Pena on 2/24/14.
 //  Copyright (c) 2014 placeholder. All rights reserved.
 //
 
@@ -13,11 +13,12 @@
 @interface Media : NSManagedObject
 
 @property (nonatomic, retain) NSDate * createdAt;
+@property (nonatomic, retain) NSNumber * favorite;
 @property (nonatomic, retain) NSString * identifier;
 @property (nonatomic, retain) NSString * mediaType;
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSDate * updatedAt;
 @property (nonatomic, retain) NSNumber * year;
-@property (nonatomic, retain) NSNumber * favorite;
+@property (nonatomic, retain) NSNumber * rank;
 
 @end

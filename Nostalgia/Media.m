@@ -2,7 +2,7 @@
 //  Media.m
 //  Nostalgia
 //
-//  Created by Walter Vargas-Pena on 2/20/14.
+//  Created by Walter M. Vargas-Pena on 2/24/14.
 //  Copyright (c) 2014 placeholder. All rights reserved.
 //
 
@@ -12,11 +12,12 @@
 @implementation Media
 
 @dynamic createdAt;
+@dynamic favorite;
 @dynamic identifier;
 @dynamic mediaType;
 @dynamic title;
 @dynamic updatedAt;
 @dynamic year;
-@dynamic favorite;
+@dynamic rank;
 
 @end

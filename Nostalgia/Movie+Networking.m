@@ -7,6 +7,7 @@
 //
 
 #import "Movie+Networking.h"
+#import "Thumbnail.h"
 
 @implementation Movie (Networking)
 
@@ -68,23 +69,28 @@
     }
     return Movies.lastObject;
 }
-#warning TODO
+
 + (void)updateMovieIfNeeded:(Movie *)movie withPFObject:(PFObject *)PFObject{
     NSComparisonResult comparisonResult = [movie.updatedAt compare:PFObject.updatedAt];
+    
     switch (comparisonResult) {
         case NSOrderedAscending: {
-//            movie.album = [PFObject objectForKey:albumKey];
-//            movie.artist = [PFObject objectForKey:artistKey];
-            movie.createdAt = [PFObject objectForKey:createdAtKey];
-//            movie.genre = [PFObject objectForKey:genreKey];
-            movie.identifier = PFObject.objectId;
-//            movie.rank = [PFObject objectForKey:rankKey];
-            movie.title = [PFObject objectForKey:titleKey];
+            movie.createdAt = PFObject.createdAt;
             movie.updatedAt = PFObject.updatedAt;
+            movie.identifier = PFObject.objectId;
+            
+            movie.title = [PFObject objectForKey:titleKey];
             movie.year = [PFObject objectForKey:yearKey];
-//            PFFile *thumbnail = [PFObject objectForKey:thumbnailKey];
-//            movie.thumbnail.name = thumbnail.name;
-//            movie.thumbnail.url = thumbnail.url;
+            movie.rank = [PFObject objectForKey:rankKey];
+            movie.genre = [PFObject objectForKey:genreKey];
+            movie.mediaType = movieMediaTypeKey;
+
+            movie.cast = [PFObject objectForKey:movieCastKey];
+            movie.director = [PFObject objectForKey:movieDirectorKey];
+            
+            PFFile *thumbnail = [PFObject objectForKey:thumbnailKey];
+            movie.thumbnail.name = thumbnail.name;
+            movie.thumbnail.url = thumbnail.url;
         }
             break;
         case NSOrderedDescending:
@@ -98,27 +104,30 @@
     }
 }
 
-+ (void)createNewMovieWithPFObject:(PFObject *)MovieObject{
-    
++ (void)createNewMovieWithPFObject:(PFObject *)movieObject{
+ 
     Movie *newMovie = [NSEntityDescription insertNewObjectForEntityForName:@"Movie"
                                                   inManagedObjectContext:SharedAppDelegate.coreDataStack.managedObjectContext];
-//    newMovie.album = [MovieObject objectForKey:albumKey];
-//    newMovie.artist = [MovieObject objectForKey:artistKey];
-    newMovie.createdAt = MovieObject.createdAt;
-//    newMovie.genre = [MovieObject objectForKey:genreKey];
-    newMovie.identifier = MovieObject.objectId;
-//    newMovie.rank = [MovieObject objectForKey:rankKey];
-    newMovie.title = [MovieObject objectForKey:titleKey];
-    newMovie.updatedAt = MovieObject.updatedAt;
-    newMovie.year = [MovieObject objectForKey:yearKey];
-    newMovie.mediaType = @"Movie";
+    newMovie.identifier = movieObject.objectId;
+    newMovie.createdAt = movieObject.createdAt;
+    newMovie.updatedAt = movieObject.updatedAt;
+
+    newMovie.title = [movieObject objectForKey:titleKey];
+    newMovie.year = [movieObject objectForKey:yearKey];
+    newMovie.rank = [movieObject objectForKey:rankKey];
+    newMovie.genre = [movieObject objectForKey:genreKey];
+    newMovie.mediaType = movieMediaTypeKey;
+
+    newMovie.cast = [movieObject objectForKey:movieCastKey];
+    newMovie.director = [movieObject objectForKey:movieDirectorKey];
+    newMovie.movieDescription = [movieObject objectForKey:movieDescriptionKey];
     
-//    PFFile *thumbnail = [MovieObject objectForKey:thumbnailKey];
-//    Thumbnail *managedThumbnail = [NSEntityDescription insertNewObjectForEntityForName:@"Thumbnail"
-//                                                                inManagedObjectContext:SharedAppDelegate.coreDataStack.managedObjectContext];
-//    managedThumbnail.name = thumbnail.name;
-//    managedThumbnail.url = thumbnail.url;
-//    [managedThumbnail addMovieObject:newMovie];
+    PFFile *thumbnail = [movieObject objectForKey:thumbnailKey];
+    Thumbnail *managedThumbnail = [NSEntityDescription insertNewObjectForEntityForName:@"Thumbnail"
+                                                                inManagedObjectContext:SharedAppDelegate.coreDataStack.managedObjectContext];
+    managedThumbnail.name = thumbnail.name;
+    managedThumbnail.url = thumbnail.url;
+    [managedThumbnail addMovieObject:newMovie];
 }
 
 

@@ -7,18 +7,12 @@
 //
 
 #import "Movie.h"
+#import "Media+Keys.h"
 
-static NSString *albumKey = @"Album";
-static NSString *artistKey = @"Artist";
-static NSString *genreKey = @"Genre";
-static NSString *rankKey = @"Rank";
-static NSString *thumbnailKey = @"Thumbnail";
-static NSString *titleKey = @"Title";
-static NSString *yearKey = @"Year";
-static NSString *objectIDKey = @"objectId";
-static NSString *createdAtKey = @"createdAt";
-static NSString *updatedAtKey = @"updatedAt";
-
+static NSString *movieCastKey = @"Cast";
+static NSString *movieDirectorKey = @"Director";
+static NSString *movieDescriptionKey = @"Description";
+static NSString *movieMediaTypeKey = @"Movie";
 
 @interface Movie (Networking)
 

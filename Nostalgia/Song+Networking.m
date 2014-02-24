@@ -73,15 +73,19 @@
     NSComparisonResult comparisonResult = [song.updatedAt compare:PFObject.updatedAt];
     switch (comparisonResult) {
         case NSOrderedAscending: {
-            song.album = [PFObject objectForKey:albumKey];
-            song.artist = [PFObject objectForKey:artistKey];
-            song.createdAt = [PFObject objectForKey:createdAtKey];
-            song.genre = [PFObject objectForKey:genreKey];
             song.identifier = PFObject.objectId;
+            song.updatedAt = PFObject.updatedAt;
+            song.createdAt = PFObject.createdAt;
+            song.mediaType = songMediaTypeKey;
+            
+            song.year = [PFObject objectForKey:yearKey];
+            song.genre = [PFObject objectForKey:genreKey];
             song.rank = [PFObject objectForKey:rankKey];
             song.title = [PFObject objectForKey:titleKey];
-            song.updatedAt = PFObject.updatedAt;
-            song.year = [PFObject objectForKey:yearKey];
+
+            song.album = [PFObject objectForKey:albumKey];
+            song.artist = [PFObject objectForKey:artistKey];
+            
             PFFile *thumbnail = [PFObject objectForKey:thumbnailKey];
             song.thumbnail.name = thumbnail.name;
             song.thumbnail.url = thumbnail.url;
@@ -102,16 +106,18 @@
     
     Song *newSong = [NSEntityDescription insertNewObjectForEntityForName:@"Song"
                                                   inManagedObjectContext:SharedAppDelegate.coreDataStack.managedObjectContext];
-    newSong.album = [songObject objectForKey:albumKey];
-    newSong.artist = [songObject objectForKey:artistKey];
-    newSong.createdAt = songObject.createdAt;
-    newSong.genre = [songObject objectForKey:genreKey];
     newSong.identifier = songObject.objectId;
+    newSong.createdAt = songObject.createdAt;
+    newSong.updatedAt = songObject.updatedAt;
+
+    newSong.genre = [songObject objectForKey:genreKey];
     newSong.rank = [songObject objectForKey:rankKey];
     newSong.title = [songObject objectForKey:titleKey];
-    newSong.updatedAt = songObject.updatedAt;
     newSong.year = [songObject objectForKey:yearKey];
-    newSong.mediaType = @"Song";
+    newSong.mediaType = songMediaTypeKey;
+
+    newSong.album = [songObject objectForKey:albumKey];
+    newSong.artist = [songObject objectForKey:artistKey];
     
     PFFile *thumbnail = [songObject objectForKey:thumbnailKey];
     Thumbnail *managedThumbnail = [NSEntityDescription insertNewObjectForEntityForName:@"Thumbnail"

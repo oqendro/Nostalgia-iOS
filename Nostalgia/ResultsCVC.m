@@ -8,6 +8,7 @@
 
 #import "ResultsCVC.h"
 #import "Song+Networking.h"
+#import "Movie+Networking.h"
 #import "SongCell.h"
 #import <UIImageView+AFNetworking.h>
 #import "SongDetailVC.h"
@@ -52,9 +53,19 @@ static NSString *musicCellIdentifier = @"SongCell";
     _objectChanges = [NSMutableArray array];
     _sectionChanges = [NSMutableArray array];
     self.collectionView.dataSource = self;
-    [Song loadSongsForYear:self.year withBlock:^(NSArray *songs, NSError *error) {
-        NSLog(@"songs %lu for %@",(unsigned long)songs.count, self.year);
-    }];
+    
+    
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:songsPreferenceKey] boolValue]) {
+        [Song loadSongsForYear:self.year withBlock:^(NSArray *songs, NSError *error) {
+            NSLog(@"songs %lu for %@",(unsigned long)songs.count, self.year);
+        }];
+    }
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:moviesPreferenceKey] boolValue]) {
+        [Movie loadMoviesForYear:self.year withBlock:^(NSArray *songs, NSError *error) {
+            NSLog(@"movies %lu for %@",(unsigned long)songs.count, self.year);
+        }];
+    }
+
 }
 
 - (void)didReceiveMemoryWarning

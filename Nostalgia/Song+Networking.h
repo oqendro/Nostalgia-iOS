@@ -8,17 +8,11 @@
 
 #import "Song.h"
 #import "Thumbnail.h"
+#import "Media+Keys.h"
 
 static NSString *albumKey = @"Album";
 static NSString *artistKey = @"Artist";
-static NSString *genreKey = @"Genre";
-static NSString *rankKey = @"Rank";
-static NSString *thumbnailKey = @"Thumbnail";
-static NSString *titleKey = @"Title";
-static NSString *yearKey = @"Year";
-static NSString *objectIDKey = @"objectId";
-static NSString *createdAtKey = @"createdAt";
-static NSString *updatedAtKey = @"updatedAt";
+static NSString *songMediaTypeKey = @"Song";
 
 @interface Song (Networking)
 
