@@ -25,7 +25,7 @@
 
 @end
 
-static NSString *musicCellIdentifier = @"SongCell";
+static NSString *songCellIdentifier = @"SongCell";
 
 @implementation FavoritesCVC
 
@@ -110,7 +110,7 @@ static NSString *musicCellIdentifier = @"SongCell";
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    SongCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:musicCellIdentifier forIndexPath:indexPath];
+    SongCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:songCellIdentifier forIndexPath:indexPath];
     
     Song *song = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.bottomLabel.text = song.title;

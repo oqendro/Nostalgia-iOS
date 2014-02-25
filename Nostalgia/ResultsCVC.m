@@ -10,11 +10,13 @@
 #import "Song+Networking.h"
 #import "Movie+Networking.h"
 #import "SongCell.h"
+#import "MovieCell.h"
+#import "HeaderView.h"
 #import <UIImageView+AFNetworking.h>
 #import "SongDetailVC.h"
 #import "FilterTVC.h"
 
-@interface ResultsCVC () <NSFetchedResultsControllerDelegate, FilterTVCDelegate>
+@interface ResultsCVC () <NSFetchedResultsControllerDelegate, UICollectionViewDelegateFlowLayout, FilterTVCDelegate>
 {
     NSMutableArray *_objectChanges;
     NSMutableArray *_sectionChanges;
@@ -24,7 +26,9 @@
 
 @end
 
-static NSString *musicCellIdentifier = @"SongCell";
+static NSString *songCellIdentifier = @"SongCell";
+static NSString *movieCellIdentifier = @"MovieCell";
+static NSString *headerViewIdentifier = @"HeaderView";
 
 @implementation ResultsCVC
 
@@ -53,7 +57,14 @@ static NSString *musicCellIdentifier = @"SongCell";
     _objectChanges = [NSMutableArray array];
     _sectionChanges = [NSMutableArray array];
     self.collectionView.dataSource = self;
-    
+
+    [self.collectionView registerNib:[UINib nibWithNibName:songCellIdentifier bundle:nil]
+          forCellWithReuseIdentifier:songCellIdentifier];
+    [self.collectionView registerNib:[UINib nibWithNibName:movieCellIdentifier bundle:nil]
+          forCellWithReuseIdentifier:movieCellIdentifier];
+    [self.collectionView registerNib:[UINib nibWithNibName:headerViewIdentifier bundle:nil]
+          forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
+                 withReuseIdentifier:headerViewIdentifier];
     
     if ([[[NSUserDefaults standardUserDefaults] objectForKey:songsPreferenceKey] boolValue]) {
         [Song loadSongsForYear:self.year withBlock:^(NSArray *songs, NSError *error) {
@@ -122,16 +133,66 @@ static NSString *musicCellIdentifier = @"SongCell";
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    SongCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:musicCellIdentifier forIndexPath:indexPath];
+    Media *media = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    Song *song = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.bottomLabel.text = song.title;
-    NSURL *imageURL = [NSURL URLWithString:song.thumbnail.url];
-    [cell.imageView setImageWithURL:imageURL
-                   placeholderImage:[UIImage imageNamed:@"767-photo-1-white"]];
+    if ([media.mediaType isEqualToString:songMediaTypeKey]) {
+        SongCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:songCellIdentifier forIndexPath:indexPath];
+        [self configureSongCell:cell atIndexPath:indexPath];
+        return cell;
+    } else {
+        MovieCell *movieCell = [collectionView dequeueReusableCellWithReuseIdentifier:movieCellIdentifier forIndexPath:indexPath];
+        [self configureMovieCell:movieCell atIndexPath:indexPath];
+        return movieCell;
+    }
+    
 #warning change to rating
-    cell.ratingLabel.text = song.rank.stringValue;
-    return cell;
+ //   cell.ratingLabel.text = song.rank.stringValue;
+//    return cell;
+}
+
+- (void)configureSongCell:(SongCell *)songCell atIndexPath:(NSIndexPath *)indexPath{
+    Song *song = [self.fetchedResultsController objectAtIndexPath:indexPath];
+
+    songCell.bottomLabel.text = song.title;
+    NSURL *imageURL = [NSURL URLWithString:song.thumbnail.url];
+    [songCell.imageView setImageWithURL:imageURL
+                       placeholderImage:[UIImage imageNamed:@"767-photo-1-white"]];
+}
+
+- (void)configureMovieCell:(MovieCell *)movieCell atIndexPath:(NSIndexPath *)indexPath{
+    Movie *movie = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    movieCell.bottomLabel.text = movie.title;
+    NSURL *imageURL = [NSURL URLWithString:movie.thumbnail.url];
+    [movieCell.imageView setImageWithURL:imageURL
+                       placeholderImage:[UIImage imageNamed:@"767-photo-1-white"]];
+
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
+    HeaderView *header = [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                                                          withReuseIdentifier:headerViewIdentifier
+                                                                                 forIndexPath:indexPath];
+    NSString *title = [[[self.fetchedResultsController sections] objectAtIndex:indexPath.section] name];
+    UILabel *titleLabel = (UILabel *)[header viewWithTag:187];
+    titleLabel.text = title;
+    return header;
+}
+
+#pragma mark - UICollectionViewDelegateFlowLayout
+
+#warning put in constants
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    Media *media = [self.fetchedResultsController objectAtIndexPath: indexPath];
+    if ([media.mediaType isEqualToString:songMediaTypeKey]) {
+        return CGSizeMake(100, 100);
+    } else {
+        return CGSizeMake(100, 156);
+    }
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
+    return CGSizeMake(320, 44);
 }
 
 #pragma mark - Fetched Results Controller
@@ -150,10 +211,14 @@ static NSString *musicCellIdentifier = @"SongCell";
     }
     NSPredicate *filtersPredicates = [NSCompoundPredicate orPredicateWithSubpredicates:filterPredicatesArray];
     songFetch.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[filtersPredicates, yearPredicate]];
-    songFetch.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES]];
+    
+    NSSortDescriptor *titleSD = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
+    NSSortDescriptor *mediaTypeSD = [NSSortDescriptor sortDescriptorWithKey:@"mediaType" ascending:YES];
+    songFetch.sortDescriptors = @[mediaTypeSD, titleSD];
+    
     NSFetchedResultsController *FRC = [[NSFetchedResultsController alloc] initWithFetchRequest:songFetch
                                                                           managedObjectContext:SharedAppDelegate.coreDataStack.managedObjectContext
-                                                                            sectionNameKeyPath:nil
+                                                                            sectionNameKeyPath:@"mediaType"
                                                                                      cacheName:nil];
     FRC.delegate = self;
     self.fetchedResultsController = FRC;
