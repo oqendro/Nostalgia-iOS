@@ -11,9 +11,9 @@
 
 @implementation Movie (Networking)
 
-+ (void)loadMoviesForYear:(NSNumber *)year withBlock:(void (^)(NSArray *movies, NSError *error))block{
++ (void)loadMoviesForYears:(NSArray *)years withBlock:(void (^)(NSArray *movies, NSError *error))block{
     PFQuery *movieQuery = [PFQuery queryWithClassName:@"Movie"];
-    [movieQuery whereKey:@"Year" equalTo:year];
+    [movieQuery whereKey:@"Year" containedIn:years];
     [movieQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         for (PFObject *movie in objects) {
             Movie *managedMovie = [self movieForIdentifier:movie.objectId];

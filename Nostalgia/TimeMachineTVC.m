@@ -50,9 +50,12 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([segue.identifier isEqualToString:@"ResultsCVC"]) {
         ResultsCVC *destinationVC = segue.destinationViewController;
+#warning REVIEW
+        /*
         destinationVC.year = [[self.selectableYears objectAtIndex:[self.tableView indexPathForSelectedRow].row] objectForKey:@"year"];
 #warning DATA fix
         destinationVC.managedObjectContext = SharedAppDelegate.coreDataStack.managedObjectContext;
+         */
     }
 }
 

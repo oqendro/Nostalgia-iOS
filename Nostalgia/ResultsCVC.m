@@ -32,6 +32,14 @@ static NSString *headerViewIdentifier = @"HeaderView";
 
 @implementation ResultsCVC
 
+- (id)initFromDefaultStoryboardWithYears:(NSArray *)years{
+    self = [SharedAppDelegate.storyboard instantiateViewControllerWithIdentifier:resultsCVCSegueIdentifier];
+    if (self) {
+        self.years = [NSMutableArray arrayWithArray:years];
+    }
+    return self;
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -44,6 +52,7 @@ static NSString *headerViewIdentifier = @"HeaderView";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     UIBarButtonItem *filter = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"798-filter-white"]
                                                                style:UIBarButtonItemStylePlain
                                                               target:self
@@ -67,16 +76,21 @@ static NSString *headerViewIdentifier = @"HeaderView";
                  withReuseIdentifier:headerViewIdentifier];
     
     if ([[[NSUserDefaults standardUserDefaults] objectForKey:songsPreferenceKey] boolValue]) {
-        [Song loadSongsForYear:self.year withBlock:^(NSArray *songs, NSError *error) {
-            NSLog(@"songs %lu for %@",(unsigned long)songs.count, self.year);
+        [Song loadSongsForYears:self.years withBlock:^(NSArray *songs, NSError *error) {
+            NSLog(@"songs %lu for %@",(unsigned long)songs.count, self.years);
         }];
     }
     if ([[[NSUserDefaults standardUserDefaults] objectForKey:moviesPreferenceKey] boolValue]) {
-        [Movie loadMoviesForYear:self.year withBlock:^(NSArray *songs, NSError *error) {
-            NSLog(@"movies %lu for %@",(unsigned long)songs.count, self.year);
+        [Movie loadMoviesForYears:self.years withBlock:^(NSArray *songs, NSError *error) {
+            NSLog(@"movies %lu for %@",(unsigned long)songs.count, self.years);
         }];
     }
 
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    NSLog(@"years %@",self.years);
 }
 
 - (void)didReceiveMemoryWarning
@@ -96,6 +110,38 @@ static NSString *headerViewIdentifier = @"HeaderView";
 
 #pragma mark - Convenience Methods
 
+- (void)setYears:(NSArray *)years{
+    _years = years;
+    
+    NSPredicate *yearPredicate = [NSPredicate predicateWithFormat:@"year IN %@",_years];
+
+    NSMutableArray *filterPredicatesArray = [[NSMutableArray alloc] init];
+    for (NSString *mediaType in [self filters]) {
+        NSPredicate *mediaTypePredicate = [NSPredicate predicateWithFormat:@"mediaType == %@",mediaType];
+        [filterPredicatesArray addObject:mediaTypePredicate];
+    }
+    NSPredicate *filtersPredicates = [NSCompoundPredicate orPredicateWithSubpredicates:filterPredicatesArray];
+    self.fetchedResultsController.fetchRequest.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[filtersPredicates, yearPredicate]];
+    NSError *error;
+    [self.fetchedResultsController performFetch:&error];
+    if (error) {
+        NSLog(@"%@",error.debugDescription);
+    }
+    [self.collectionView reloadData];
+}
+/*
+- (void)addYearsToShow:(NSArray *)years{
+    [self.years addObjectsFromArray:years];
+    NSSet *uniquingSet = [NSSet setWithArray:self.years];
+    self.years = [[NSMutableArray alloc] initWithArray:uniquingSet.allObjects];
+}
+
+- (void)removeYearsToShow:(NSArray *)years{
+    [self.years removeObjectsInArray:years];
+    NSSet *uniquingSet = [NSSet setWithArray:self.years];
+    self.years = [[NSMutableArray alloc] initWithArray:uniquingSet.allObjects];
+}
+*/
 - (void)filterBarButtonPressed:(UIBarButtonItem *)filterBarButton{
     FilterTVC *filterTVC = [[FilterTVC alloc] initWithStyle:UITableViewStylePlain];
     filterTVC.delegate = self;
@@ -202,7 +248,7 @@ static NSString *headerViewIdentifier = @"HeaderView";
         return _fetchedResultsController;
     }
     NSFetchRequest *songFetch = [NSFetchRequest fetchRequestWithEntityName:@"Media"];
-    NSPredicate *yearPredicate = [NSPredicate predicateWithFormat:@"year == %@",self.year];
+    NSPredicate *yearPredicate = [NSPredicate predicateWithFormat:@"year IN %@",self.years];
     
     NSMutableArray *filterPredicatesArray = [[NSMutableArray alloc] init];
     for (NSString *mediaType in [self filters]) {
@@ -395,7 +441,7 @@ static NSString *headerViewIdentifier = @"HeaderView";
         [filterPredicatesArray addObject:mediaTypePredicate];
     }
     NSPredicate *filtersPredicates = [NSCompoundPredicate orPredicateWithSubpredicates:filterPredicatesArray];
-    NSPredicate *yearPredicate = [NSPredicate predicateWithFormat:@"year == %@",self.year];
+    NSPredicate *yearPredicate = [NSPredicate predicateWithFormat:@"year IN %@",self.years];
     self.fetchedResultsController.fetchRequest.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[filtersPredicates, yearPredicate]];
     [self.fetchedResultsController performFetch:nil];
     [self.collectionView reloadData];

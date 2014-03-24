@@ -15,3 +15,6 @@ NSString *const firstLaunchKey = @"firstLaunch";
 NSString *const songsPreferenceKey = @"SongsPreference";
 NSString *const moviesPreferenceKey = @"MoviesPreference";
 
+NSString *const resultsCVCSegueIdentifier = @"ResultsCVC";
+NSString *const favoritesCVCSegueIdentifier = @"FavoritesCVC";
+NSString *const infoVCSegueIdentifier = @"InfoTVC";

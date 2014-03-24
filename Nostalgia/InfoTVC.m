@@ -18,11 +18,9 @@
 
 @implementation InfoTVC
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
+- (id)initFromStoryboard{
+    self = [SharedAppDelegate.storyboard instantiateViewControllerWithIdentifier:infoVCSegueIdentifier];
     if (self) {
-        // Custom initialization
     }
     return self;
 }
@@ -30,12 +28,23 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-#warning LOCALIZE
-    UIBarButtonItem *logout = [[UIBarButtonItem alloc] initWithTitle:@"Logout"
-                                                               style:UIBarButtonItemStylePlain
-                                                              target:self
-                                                              action:@selector(toggleLogin:)];
-    self.navigationItem.rightBarButtonItem = logout;
+    self.title = @"Info";
+    self.textView.editable = NO;
+    self.textView.backgroundColor = [UIColor darkGrayColor];
+    
+    NSDictionary *options = @{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
+                            NSCharacterEncodingDocumentAttribute: @(NSUTF8StringEncoding)};
+    NSString *htmlPath = [[NSBundle mainBundle] pathForResource:@"info" ofType:@"html"];
+    NSData *htmlData = [NSData dataWithContentsOfFile:htmlPath];
+    NSError *error;
+    NSAttributedString *infoString = [[NSAttributedString alloc] initWithData:htmlData
+                                                                      options:options
+                                                           documentAttributes:nil
+                                                                        error:&error];
+    if (error) {
+        NSLog(@"%@",error.debugDescription);
+    }
+    self.textView.attributedText = infoString;
 }
 
 - (void)didReceiveMemoryWarning
@@ -105,97 +114,5 @@
                                         }
                                     }];
 }
-
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
-}
-
-//#pragma mark - UIAlertView Delegate
-//
-//- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex{
-//    switch (buttonIndex) {
-//        case 0:
-//            NSLog(@"did dimiss 0");
-//            break;
-//        case 1:
-//            NSLog(@"did dismiss 1");
-//            break;
-//        default:
-//            break;
-//    }
-//}
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a story board-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-
- */
 
 @end

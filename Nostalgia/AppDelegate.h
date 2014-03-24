@@ -12,6 +12,9 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (readonly, strong, nonatomic) UIStoryboard *storyboard;
 @property (readonly, strong, nonatomic) DCTCoreDataStack *coreDataStack;
+
+- (void)showCallout;
 
 @end

@@ -7,7 +7,8 @@ target "Nostalgia" do
     pod "Parse", "~> 1.2.9"
     pod "SHEmailValidator"
     pod "UIImage+BlurredFrame"
-    pod "AMRatingControl", "~> 1.2.0"    
+    pod "AMRatingControl", "~> 1.2.0"
+    pod "RNFrostedSidebar", "~> 0.2.0"
 end
 
 target "NostalgiaTests" do

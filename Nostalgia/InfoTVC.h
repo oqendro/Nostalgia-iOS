@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface InfoTVC : UITableViewController
+@interface InfoTVC : UIViewController
+
+- (id)initFromStoryboard;
+
+@property (strong, nonatomic) IBOutlet UITextView *textView;
 
 @end

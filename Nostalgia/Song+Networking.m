@@ -10,9 +10,9 @@
 
 @implementation Song (Networking)
 
-+ (void)loadSongsForYear:(NSNumber *)year withBlock:(void (^)(NSArray *songs, NSError *error))block{
++ (void)loadSongsForYears:(NSArray *)years withBlock:(void (^)(NSArray *songs, NSError *error))block{
     PFQuery *songQuery = [PFQuery queryWithClassName:@"Song"];
-    [songQuery whereKey:@"Year" equalTo:year];
+    [songQuery whereKey:@"Year" containedIn:years];
     [songQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         for (PFObject *song in objects) {
             Song *managedSong = [self songForIdentifier:song.objectId];

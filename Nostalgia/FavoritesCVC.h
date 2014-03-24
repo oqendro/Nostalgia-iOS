@@ -10,4 +10,6 @@
 
 @interface FavoritesCVC : UICollectionViewController
 
+- (instancetype)initFromStoryboard;
+
 @end

@@ -49,7 +49,7 @@ static NSInteger numberOfCharactersRequired = 1;
 
 static NSString *signUpCellIdentifier = @"SignUpCell";
 static NSString *textFieldCellIdentifier = @"TextFieldCell";
-
+#warning USE HUD to disable view when login pushede
 @implementation SignUpTVC
 
 - (instancetype)initWithCompletionBlock:(SignInBlock)block{
