@@ -77,11 +77,6 @@ static NSString *headerViewIdentifier = @"HeaderView";
     [self loadMedia];
 }
 
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    NSLog(@"years %@",self.years);
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -101,12 +96,12 @@ static NSString *headerViewIdentifier = @"HeaderView";
 - (void)loadMedia{
     if ([[[NSUserDefaults standardUserDefaults] objectForKey:songsPreferenceKey] boolValue]) {
         [Song loadSongsForYears:self.years withBlock:^(NSArray *songs, NSError *error) {
-            NSLog(@"songs %lu for %@",(unsigned long)songs.count, self.years);
+//            NSLog(@"songs %lu for %@",(unsigned long)songs.count, self.years);
         }];
     }
     if ([[[NSUserDefaults standardUserDefaults] objectForKey:moviesPreferenceKey] boolValue]) {
         [Movie loadMoviesForYears:self.years withBlock:^(NSArray *songs, NSError *error) {
-            NSLog(@"movies %lu for %@",(unsigned long)songs.count, self.years);
+//            NSLog(@"movies %lu for %@",(unsigned long)songs.count, self.years);
         }];
     }
 }

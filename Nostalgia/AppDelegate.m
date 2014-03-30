@@ -27,7 +27,7 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
 
 @property (nonatomic, strong) NSMutableIndexSet *optionIndices;
 @property (nonatomic, strong) ResultsCVC *resultsCVC;
-
+@property BOOL resultsCVCVisible;
 @end
 
 @implementation AppDelegate
@@ -76,6 +76,21 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
 
 #pragma mark - Convenience
 
+- (NSArray *)yearsForIndexSex:(NSMutableIndexSet *)indexSet{
+    NSMutableArray *years = [NSMutableArray new];
+    if ([indexSet containsIndex:SideBarOption90s]) {
+        [years addObjectsFromArray:[self nineties]];
+    }
+    if ([indexSet containsIndex:SideBarOption80s]) {
+        [years addObjectsFromArray:[self eighties]];
+    }
+    if ([indexSet containsIndex:SideBarOption70s]) {
+        [years addObjectsFromArray:[self seventies]];
+    }
+    
+    return years;
+}
+
 - (NSArray *)nineties{
     return @[@1990, @1991, @1992, @1993, @1994, @1995, @1996, @1997, @1998, @1999];
 }
@@ -94,6 +109,7 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
     aResultsCVC.managedObjectContext = self.coreDataStack.managedObjectContext;
     [self addSideBarButtonItemToViewController:aResultsCVC];
     _resultsCVC = aResultsCVC;
+    self.resultsCVCVisible = YES;
     return _resultsCVC;
 }
 
@@ -141,7 +157,7 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
     }
     
     RNFrostedSidebar *callout = [[RNFrostedSidebar alloc] initWithImages:images selectedIndices:self.optionIndices borderColors:colors];
-    callout.itemSize = CGSizeMake(50, 50);
+    callout.itemSize = CGSizeMake(60, 60);
     callout.delegate = self;
     [callout showInViewController:self.window.rootViewController animated:YES];
 }
@@ -149,41 +165,60 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
 - (void)sidebar:(RNFrostedSidebar *)sidebar didEnable:(BOOL)itemEnabled itemAtIndex:(NSUInteger)index{
     switch (index) {
         case SideBarOption90s: {
-            if ([self isTopViewController:[ResultsCVC class]]) {
+            if (self.resultsCVCVisible) {
                 //modify fetch
-                self.resultsCVC.years = [self nineties];
+                if (itemEnabled) {
+                    [self.optionIndices addIndex:index];
+                } else {
+                    [self.optionIndices removeIndex:index];
+                }
+                self.resultsCVC.years = [self yearsForIndexSex:self.optionIndices];
             } else {
                 [self.optionIndices removeAllIndexes];
                 [self.optionIndices addIndex:index];
                 // set Results VC
                 [sidebar dismissAnimated:YES];
+                self.resultsCVCVisible = YES;
                 self.resultsCVC.years = [self nineties];
                 [self changeRootVCWithViewController:self.resultsCVC];
             }
         }
             break;
         case SideBarOption80s: {
-            if ([self isTopViewController:[ResultsCVC class]]) {
+            if (self.resultsCVCVisible) {
                 //modify fetch
-                self.resultsCVC.years = [self eighties];
+                if (itemEnabled) {
+                    [self.optionIndices addIndex:index];
+                } else {
+                    [self.optionIndices removeIndex:index];
+                }
+                self.resultsCVC.years = [self yearsForIndexSex:self.optionIndices];
             } else {
                 [self.optionIndices removeAllIndexes];
                 [self.optionIndices addIndex:index];
                 // set Results VC
                 [sidebar dismissAnimated:YES];
+                self.resultsCVCVisible = YES;
                 self.resultsCVC.years = [self eighties];
                 [self changeRootVCWithViewController:self.resultsCVC];
             }
         }
             break;
         case SideBarOption70s: {
-            if ([self isTopViewController:[ResultsCVC class]]) {
-                self.resultsCVC.years = [self seventies];
+            if (self.resultsCVCVisible) {
+                //modify fetch
+                if (itemEnabled) {
+                    [self.optionIndices addIndex:index];
+                } else {
+                    [self.optionIndices removeIndex:index];
+                }
+                self.resultsCVC.years = [self yearsForIndexSex:self.optionIndices];
             } else {
                 [self.optionIndices removeAllIndexes];
                 [self.optionIndices addIndex:index];
                 // set Results VC
                 [sidebar dismissAnimated:YES];
+                self.resultsCVCVisible = YES;
                 self.resultsCVC.years = [self seventies];
                 [self changeRootVCWithViewController:self.resultsCVC];
             }
@@ -194,6 +229,7 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
                 [self.optionIndices removeAllIndexes];
                 [self.optionIndices addIndex:index];
                 [sidebar dismissAnimated:YES];
+                self.resultsCVCVisible = NO;
                 FavoritesCVC *favoritesCVC = [[FavoritesCVC alloc] initFromStoryboard];
                 [self addSideBarButtonItemToViewController:favoritesCVC];
                 [self changeRootVCWithViewController:favoritesCVC];
@@ -213,6 +249,7 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
             [self.optionIndices addIndex:index];
             [sidebar dismissAnimated:YES];
             InfoTVC *favoritesCVC = [[InfoTVC alloc] initFromStoryboard];
+            self.resultsCVCVisible = NO;
             [self addSideBarButtonItemToViewController:favoritesCVC];
             [self changeRootVCWithViewController:favoritesCVC];
         }
@@ -260,6 +297,7 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
         default:
             break;
     }
+    NSLog(@"%@",self.resultsCVC.years);
 }
 
 #pragma mark - Setup/Nav
@@ -322,6 +360,7 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
 
 - (BOOL)isTopViewController:(Class)class{
     UINavigationController *navVC = (UINavigationController *)self.window.rootViewController;
+    NSLog(@"its %@",navVC.topViewController);
     if ([navVC.topViewController isKindOfClass:class]) {
         return YES;
     } else {
