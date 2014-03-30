@@ -74,18 +74,7 @@ static NSString *headerViewIdentifier = @"HeaderView";
     [self.collectionView registerNib:[UINib nibWithNibName:headerViewIdentifier bundle:nil]
           forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
                  withReuseIdentifier:headerViewIdentifier];
-    
-    if ([[[NSUserDefaults standardUserDefaults] objectForKey:songsPreferenceKey] boolValue]) {
-        [Song loadSongsForYears:self.years withBlock:^(NSArray *songs, NSError *error) {
-            NSLog(@"songs %lu for %@",(unsigned long)songs.count, self.years);
-        }];
-    }
-    if ([[[NSUserDefaults standardUserDefaults] objectForKey:moviesPreferenceKey] boolValue]) {
-        [Movie loadMoviesForYears:self.years withBlock:^(NSArray *songs, NSError *error) {
-            NSLog(@"movies %lu for %@",(unsigned long)songs.count, self.years);
-        }];
-    }
-
+    [self loadMedia];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -109,6 +98,19 @@ static NSString *headerViewIdentifier = @"HeaderView";
 
 #pragma mark - Convenience Methods
 
+- (void)loadMedia{
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:songsPreferenceKey] boolValue]) {
+        [Song loadSongsForYears:self.years withBlock:^(NSArray *songs, NSError *error) {
+            NSLog(@"songs %lu for %@",(unsigned long)songs.count, self.years);
+        }];
+    }
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:moviesPreferenceKey] boolValue]) {
+        [Movie loadMoviesForYears:self.years withBlock:^(NSArray *songs, NSError *error) {
+            NSLog(@"movies %lu for %@",(unsigned long)songs.count, self.years);
+        }];
+    }
+}
+
 - (void)setYears:(NSArray *)years{
     _years = years;
     
@@ -127,6 +129,7 @@ static NSString *headerViewIdentifier = @"HeaderView";
         NSLog(@"%@",error.debugDescription);
     }
     [self.collectionView reloadData];
+    [self loadMedia];
 }
 /*
 - (void)addYearsToShow:(NSArray *)years{

@@ -108,7 +108,7 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
                    [UIImage imageNamed:@"90s"],
                    [UIImage imageNamed:@"80s"],
                    [UIImage imageNamed:@"70s"],
-                   [UIImage imageNamed:@"726-star-white"],
+                   [UIImage imageNamed:@"726-star-filled-white"],
                    [UIImage imageNamed:@"724-info-white"],
                    [UIImage imageNamed:@"769-male-white"],
                     ];
@@ -126,7 +126,7 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
                    [UIImage imageNamed:@"90s"],
                    [UIImage imageNamed:@"80s"],
                    [UIImage imageNamed:@"70s"],
-                   [UIImage imageNamed:@"726-star-gray"],
+                   [UIImage imageNamed:@"726-star-filled-white"],
                    [UIImage imageNamed:@"724-info-white"],
                    [UIImage imageNamed:@"769-male-white"],
                    ];
@@ -141,7 +141,7 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
     }
     
     RNFrostedSidebar *callout = [[RNFrostedSidebar alloc] initWithImages:images selectedIndices:self.optionIndices borderColors:colors];
-    callout.itemSize = CGSizeMake(60, 60);
+    callout.itemSize = CGSizeMake(50, 50);
     callout.delegate = self;
     [callout showInViewController:self.window.rootViewController animated:YES];
 }
