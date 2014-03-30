@@ -64,7 +64,7 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
                                                               style:UIBarButtonItemStylePlain
                                                              target:self
                                                              action:@selector(infoButtonPressed:)];
-    UIBarButtonItem *favorites = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"748-heart-gray"]
+    UIBarButtonItem *favorites = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"726-star-gray"]
                                                                   style:UIBarButtonItemStylePlain
                                                                  target:self
                                                                  action:@selector(toggleFavorite:)];
@@ -118,9 +118,9 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
                    placeholderImage:[UIImage imageNamed:@"767-photo-1-white"]];
     self.ratingControl.rating = 2.5;
     if (self.song.favorite.boolValue) {
-        self.favBarButtonItem.image = [UIImage imageNamed:@"726-star-gray"];
+        self.favBarButtonItem.image = [UIImage imageNamed:@"726-star-filled-gray"];
     } else {
-        self.favBarButtonItem.image = [UIImage imageNamed:@"748-heart-gray"];
+        self.favBarButtonItem.image = [UIImage imageNamed:@"726-star-gray"];
     }
     if ([PFUser currentUser]) {
         self.ratingControl.enabled = YES;
@@ -156,10 +156,10 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
 - (void)toggleFavorite:(UIBarButtonItem *)favBarButton{
     if (self.song.favorite.boolValue) {
         self.song.favorite = @NO;
-        [favBarButton setImage:[UIImage imageNamed:@"748-heart-gray"]];
+        [favBarButton setImage:[UIImage imageNamed:@"726-star-gray"]];
     } else {
         self.song.favorite = @YES;
-        [favBarButton setImage:[UIImage imageNamed:@"726-star-gray"]];
+        [favBarButton setImage:[UIImage imageNamed:@"726-star-filled-gray"]];
     }
     NSError *error;
     [SharedAppDelegate.coreDataStack.managedObjectContext save:&error];

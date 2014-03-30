@@ -22,5 +22,7 @@ extern NSString *const songsPreferenceKey;
 extern NSString *const moviesPreferenceKey;
 
 extern NSString *const resultsCVCSegueIdentifier;
+extern NSString *const songDetailSegueIdentifier;
+extern NSString *const movieDetailSegueIdentifier;
 extern NSString *const favoritesCVCSegueIdentifier;
 extern NSString *const infoVCSegueIdentifier;

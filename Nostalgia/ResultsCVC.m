@@ -100,9 +100,8 @@ static NSString *headerViewIdentifier = @"HeaderView";
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    if ([segue.identifier isEqualToString:@"SongDetailVC"]) {
-        NSIndexPath *path = [self.collectionView indexPathForCell:sender];
-        Song *selectedSong = [self.fetchedResultsController objectAtIndexPath:path];
+    if ([segue.identifier isEqualToString:songDetailSegueIdentifier]) {
+        Song *selectedSong = [self.fetchedResultsController objectAtIndexPath:[self.collectionView indexPathsForSelectedItems].lastObject];
         SongDetailVC *detailVC = segue.destinationViewController;
         detailVC.song = selectedSong;
     }
@@ -239,6 +238,18 @@ static NSString *headerViewIdentifier = @"HeaderView";
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
     return CGSizeMake(320, 44);
+}
+
+#pragma mark - UICollectionView Delegate
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    NSManagedObject *selectedObject = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    if ([selectedObject isKindOfClass:[Song class]]) {
+        [self performSegueWithIdentifier:songDetailSegueIdentifier sender:nil];
+    }
+    if ([selectedObject isKindOfClass:[Movie class]]) {
+//        [self performSegueWithIdentifier:songDetailSegueIdentifier sender:nil];
+    }
 }
 
 #pragma mark - Fetched Results Controller
