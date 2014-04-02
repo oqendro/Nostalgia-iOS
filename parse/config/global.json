@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "Nostalgia": {
+            "applicationId": "WDw4yF7IQ4zgFEXAAxVcA2JWTUV9KbiqYnsLvNVR", 
+            "masterKey": "funEGB5uKdyiw5SF0fkSgiRSZq0MjSqXmYe5hOiK"
+        }, 
+        "_default": {
+            "link": "Nostalgia"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.2.18"
+    }
+}
