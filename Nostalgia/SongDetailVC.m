@@ -116,12 +116,15 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
     self.titleLabel.text = self.song.title;
     [self.imageView setImageWithURL:[NSURL URLWithString:self.song.thumbnail.url]
                    placeholderImage:[UIImage imageNamed:@"767-photo-1-white"]];
-    self.ratingControl.rating = 2.5;
+    
     if (self.song.favorite.boolValue) {
         self.favBarButtonItem.image = [UIImage imageNamed:@"726-star-filled-gray"];
     } else {
         self.favBarButtonItem.image = [UIImage imageNamed:@"726-star-gray"];
     }
+    
+    
+    //ratings
     if ([PFUser currentUser]) {
         self.ratingControl.enabled = YES;
         self.ratingLabel.text = @"Tap a Star to Rate";
@@ -129,6 +132,7 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
         self.ratingControl.enabled = NO;
         self.ratingLabel.text = @"Must Sign in to Rate";
     }
+    [self refreshLikes];
 }
 
 #warning PUT IN CONSTANTS & add html and pics
@@ -210,6 +214,18 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
                              self.infoShown = YES;
                          }];
     }
+}
+
+- (void)refreshLikes{
+    NSDictionary *params = @{@"songID": self.song.identifier};
+    [PFCloud callFunctionInBackground:@"averageStarsForSongId" withParameters:params block:^(id object, NSError *error) {
+        if (error) {
+            NSLog(@"%@",error.debugDescription);
+        }
+        NSLog(@"object is %@",object);
+        NSNumber *averageRating = object;
+        self.ratingControl.rating = averageRating.integerValue;
+    }];
 }
 
 #pragma mark - Getters

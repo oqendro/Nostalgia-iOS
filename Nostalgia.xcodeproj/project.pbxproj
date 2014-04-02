@@ -42,8 +42,8 @@
 		754BD99A18BBA2B20057EC38 /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 754BD99918BBA2B20057EC38 /* Song.m */; };
 		754BD99D18BBA2B30057EC38 /* Thumbnail.m in Sources */ = {isa = PBXBuildFile; fileRef = 754BD99C18BBA2B30057EC38 /* Thumbnail.m */; };
 		754BD9A618BBA5460057EC38 /* Media+Keys.m in Sources */ = {isa = PBXBuildFile; fileRef = 754BD9A518BBA5460057EC38 /* Media+Keys.m */; };
-		754BD9A918BBA6F20057EC38 /* Media.m in Sources */ = {isa = PBXBuildFile; fileRef = 754BD9A818BBA6F20057EC38 /* Media.m */; };
 		754BD9AC18BBA84C0057EC38 /* Movie.m in Sources */ = {isa = PBXBuildFile; fileRef = 754BD9AB18BBA84C0057EC38 /* Movie.m */; };
+		756A482318EB56EA007B2F97 /* Media.m in Sources */ = {isa = PBXBuildFile; fileRef = 756A482218EB56EA007B2F97 /* Media.m */; };
 		756DE87B18ADB3BB003A8518 /* SongAttributeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 756DE87A18ADB3BB003A8518 /* SongAttributeCell.xib */; };
 		756DE87E18ADC3E3003A8518 /* 724-info-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 756DE87C18ADC3E3003A8518 /* 724-info-white.png */; };
 		756DE87F18ADC3E3003A8518 /* 724-info-white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 756DE87D18ADC3E3003A8518 /* 724-info-white@2x.png */; };
@@ -169,10 +169,10 @@
 		754BD99C18BBA2B30057EC38 /* Thumbnail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Thumbnail.m; sourceTree = "<group>"; };
 		754BD9A418BBA5460057EC38 /* Media+Keys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Media+Keys.h"; sourceTree = "<group>"; };
 		754BD9A518BBA5460057EC38 /* Media+Keys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Media+Keys.m"; sourceTree = "<group>"; };
-		754BD9A718BBA6F20057EC38 /* Media.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Media.h; sourceTree = "<group>"; };
-		754BD9A818BBA6F20057EC38 /* Media.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Media.m; sourceTree = "<group>"; };
 		754BD9AA18BBA84C0057EC38 /* Movie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Movie.h; sourceTree = "<group>"; };
 		754BD9AB18BBA84C0057EC38 /* Movie.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Movie.m; sourceTree = "<group>"; };
+		756A482118EB56EA007B2F97 /* Media.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Media.h; sourceTree = "<group>"; };
+		756A482218EB56EA007B2F97 /* Media.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Media.m; sourceTree = "<group>"; };
 		756DE87A18ADB3BB003A8518 /* SongAttributeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SongAttributeCell.xib; sourceTree = "<group>"; };
 		756DE87C18ADC3E3003A8518 /* 724-info-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "724-info-white.png"; sourceTree = "<group>"; };
 		756DE87D18ADC3E3003A8518 /* 724-info-white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "724-info-white@2x.png"; sourceTree = "<group>"; };
@@ -491,10 +491,10 @@
 				75270ABE187CCBB700B49643 /* DataLoader.h */,
 				75270ABF187CCBB700B49643 /* DataLoader.m */,
 				75CA879A18821D24007A9F06 /* Nostalgia.xcdatamodeld */,
+				756A482118EB56EA007B2F97 /* Media.h */,
+				756A482218EB56EA007B2F97 /* Media.m */,
 				754BD9AA18BBA84C0057EC38 /* Movie.h */,
 				754BD9AB18BBA84C0057EC38 /* Movie.m */,
-				754BD9A718BBA6F20057EC38 /* Media.h */,
-				754BD9A818BBA6F20057EC38 /* Media.m */,
 				754BD99818BBA2B20057EC38 /* Song.h */,
 				754BD99918BBA2B20057EC38 /* Song.m */,
 				754BD9A418BBA5460057EC38 /* Media+Keys.h */,
@@ -722,7 +722,6 @@
 				754BD99A18BBA2B20057EC38 /* Song.m in Sources */,
 				7511EA0F18A0602800CE553B /* NSManagedObjectContext+DCTCoreDataStack.m in Sources */,
 				754BD9AC18BBA84C0057EC38 /* Movie.m in Sources */,
-				754BD9A918BBA6F20057EC38 /* Media.m in Sources */,
 				7511EA0D18A0602800CE553B /* _DCTCDSManagedObjectContext.m in Sources */,
 				75B729861882D81B00D0A695 /* Song+Networking.m in Sources */,
 				7519BA49188252900010D874 /* TimeMachineTVC.m in Sources */,
@@ -745,6 +744,7 @@
 				750A55A218B6B2D900E3BFA6 /* FavoritesCVC.m in Sources */,
 				75C735C41846E0260055F8C3 /* AppDelegate.m in Sources */,
 				75DC3D9418B9899B000A4778 /* InfoTVC.m in Sources */,
+				756A482318EB56EA007B2F97 /* Media.m in Sources */,
 				75C735C01846E0260055F8C3 /* main.m in Sources */,
 				758CDBB918BBEBE8005FD9E7 /* MovieCell.m in Sources */,
 				750A55B118B6C4EE00E3BFA6 /* SongAttributeCell.m in Sources */,

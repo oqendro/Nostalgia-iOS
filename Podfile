@@ -3,12 +3,11 @@
 
 target "Nostalgia" do
 
-    pod "AFNetworking", "~> 2.0"
-    pod "Parse", "~> 1.2.9"
-    pod "SHEmailValidator"
-    pod "UIImage+BlurredFrame"
-    pod "AMRatingControl", "~> 1.2.0"
-    pod "RNFrostedSidebar", "~> 0.2.0"
+    pod 'AFNetworking', '~> 2.2.1'
+    pod 'Parse', '~> 1.2.9'
+    pod 'SHEmailValidator', '~> 1.0.2'
+    pod 'RNFrostedSidebar', '~> 0.2.0'
+    pod 'AMRatingControl', '~> 1.3.0'
 end
 
 target "NostalgiaTests" do

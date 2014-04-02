@@ -18,29 +18,26 @@ PODS:
   - AFNetworking/UIKit (2.2.1):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - AMRatingControl (1.2.0)
+  - AMRatingControl (1.3.0)
   - Facebook-iOS-SDK (3.13.0)
   - Parse (1.2.18):
     - Facebook-iOS-SDK (~> 3.11)
   - RNFrostedSidebar (0.2.0)
   - SHEmailValidator (1.0.2)
-  - UIImage+BlurredFrame (0.0.4)
 
 DEPENDENCIES:
-  - AFNetworking (~> 2.0)
-  - AMRatingControl (~> 1.2.0)
+  - AFNetworking (~> 2.2.1)
+  - AMRatingControl (~> 1.3.0)
   - Parse (~> 1.2.9)
   - RNFrostedSidebar (~> 0.2.0)
-  - SHEmailValidator
-  - UIImage+BlurredFrame
+  - SHEmailValidator (~> 1.0.2)
 
 SPEC CHECKSUMS:
   AFNetworking: 0121f4b69be3fa58d1ab317866e036e12ac9651d
-  AMRatingControl: c77c587aeb78b4480b2da2f82aabea462c5bb833
+  AMRatingControl: e2d9fca24eaa00c18f08160d2ca29fdf489aa90c
   Facebook-iOS-SDK: 5788541337dc88265bc940cb5ffb05915f9b64e3
   Parse: 6dd57f2af9f89dc6facc755cec4e96f8b739b1fb
   RNFrostedSidebar: 36339438a07088fd3ee3926db03af499477ee048
   SHEmailValidator: 485a8ed44c3eda3bf25072f248818f81f8aecd3b
-  UIImage+BlurredFrame: 9f29c4796105b50742abc31a69e18e37afb080a0
 
 COCOAPODS: 0.29.0
