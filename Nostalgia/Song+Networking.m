@@ -26,7 +26,7 @@
             block(objects, error);
         }
         NSError *saveError;
-        [SharedAppDelegate.coreDataStack.managedObjectContext save:&saveError];
+        [[NSManagedObjectContext MR_defaultContext] save:&saveError];
         if (saveError) {
             NSLog(@"%@",error.debugDescription);
         }
@@ -59,7 +59,7 @@
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Song"];
     request.predicate = identifierPredicate;
 
-    songs = [SharedAppDelegate.coreDataStack.managedObjectContext executeFetchRequest:request error:&error];
+    songs = [[NSManagedObjectContext MR_defaultContext] executeFetchRequest:request error:&error];
     if (error) {
         NSLog(@"%@",error.debugDescription);
     }
@@ -105,7 +105,7 @@
 + (void)createNewSongWithPFObject:(PFObject *)songObject{
     
     Song *newSong = [NSEntityDescription insertNewObjectForEntityForName:@"Song"
-                                                  inManagedObjectContext:SharedAppDelegate.coreDataStack.managedObjectContext];
+                                                  inManagedObjectContext:[NSManagedObjectContext MR_defaultContext]];
     newSong.identifier = songObject.objectId;
     newSong.createdAt = songObject.createdAt;
     newSong.updatedAt = songObject.updatedAt;
@@ -121,7 +121,7 @@
     
     PFFile *thumbnail = [songObject objectForKey:thumbnailKey];
     Thumbnail *managedThumbnail = [NSEntityDescription insertNewObjectForEntityForName:@"Thumbnail"
-                                                                inManagedObjectContext:SharedAppDelegate.coreDataStack.managedObjectContext];
+                                                                inManagedObjectContext:[NSManagedObjectContext MR_defaultContext]];
     managedThumbnail.name = thumbnail.name;
     managedThumbnail.url = thumbnail.url;
     [managedThumbnail addSongObject:newSong];

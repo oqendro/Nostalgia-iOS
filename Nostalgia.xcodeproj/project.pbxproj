@@ -33,9 +33,6 @@
 		750F13A318DFB8470004BA86 /* 700-heart-filled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 750F139D18DFB8470004BA86 /* 700-heart-filled@2x.png */; };
 		750F13A418DFB8470004BA86 /* 700-info-filled.png in Resources */ = {isa = PBXBuildFile; fileRef = 750F139E18DFB8470004BA86 /* 700-info-filled.png */; };
 		750F13A518DFB8470004BA86 /* 700-info-filled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 750F139F18DFB8470004BA86 /* 700-info-filled@2x.png */; };
-		7511EA0D18A0602800CE553B /* _DCTCDSManagedObjectContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 7511EA0818A0602800CE553B /* _DCTCDSManagedObjectContext.m */; };
-		7511EA0E18A0602800CE553B /* DCTCoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 7511EA0A18A0602800CE553B /* DCTCoreDataStack.m */; };
-		7511EA0F18A0602800CE553B /* NSManagedObjectContext+DCTCoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 7511EA0C18A0602800CE553B /* NSManagedObjectContext+DCTCoreDataStack.m */; };
 		7519BA49188252900010D874 /* TimeMachineTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7519BA48188252900010D874 /* TimeMachineTVC.m */; };
 		7519BA4F18825BCD0010D874 /* SignUpCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7519BA4E18825BCD0010D874 /* SignUpCell.m */; };
 		75270AC0187CCBB700B49643 /* DataLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 75270ABF187CCBB700B49643 /* DataLoader.m */; };
@@ -73,7 +70,7 @@
 		758FF25D18E8B772008C010D /* 726-star-filled-gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 758FF25B18E8B772008C010D /* 726-star-filled-gray@2x.png */; };
 		758FF26018E8BC46008C010D /* 726-star-filled-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 758FF25E18E8BC46008C010D /* 726-star-filled-white.png */; };
 		758FF26118E8BC46008C010D /* 726-star-filled-white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 758FF25F18E8BC46008C010D /* 726-star-filled-white@2x.png */; };
-		75B0EB8A18AB154800673236 /* SongDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 75B0EB8918AB154800673236 /* SongDetailVC.m */; };
+		75B0EB8A18AB154800673236 /* MediaDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 75B0EB8918AB154800673236 /* MediaDetailVC.m */; };
 		75B729861882D81B00D0A695 /* Song+Networking.m in Sources */ = {isa = PBXBuildFile; fileRef = 75B729851882D81B00D0A695 /* Song+Networking.m */; };
 		75B729881882DBB900D0A695 /* MusicRanked.json in Resources */ = {isa = PBXBuildFile; fileRef = 75B729871882DBB900D0A695 /* MusicRanked.json */; };
 		75B7298B1882DFF200D0A695 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 75B7298A1882DFF200D0A695 /* Constants.m */; };
@@ -151,12 +148,6 @@
 		750F139D18DFB8470004BA86 /* 700-heart-filled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "700-heart-filled@2x.png"; sourceTree = "<group>"; };
 		750F139E18DFB8470004BA86 /* 700-info-filled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "700-info-filled.png"; sourceTree = "<group>"; };
 		750F139F18DFB8470004BA86 /* 700-info-filled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "700-info-filled@2x.png"; sourceTree = "<group>"; };
-		7511EA0718A0602800CE553B /* _DCTCDSManagedObjectContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _DCTCDSManagedObjectContext.h; sourceTree = "<group>"; };
-		7511EA0818A0602800CE553B /* _DCTCDSManagedObjectContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _DCTCDSManagedObjectContext.m; sourceTree = "<group>"; };
-		7511EA0918A0602800CE553B /* DCTCoreDataStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCTCoreDataStack.h; sourceTree = "<group>"; };
-		7511EA0A18A0602800CE553B /* DCTCoreDataStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCTCoreDataStack.m; sourceTree = "<group>"; };
-		7511EA0B18A0602800CE553B /* NSManagedObjectContext+DCTCoreDataStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectContext+DCTCoreDataStack.h"; sourceTree = "<group>"; };
-		7511EA0C18A0602800CE553B /* NSManagedObjectContext+DCTCoreDataStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+DCTCoreDataStack.m"; sourceTree = "<group>"; };
 		7519BA47188252900010D874 /* TimeMachineTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeMachineTVC.h; sourceTree = "<group>"; };
 		7519BA48188252900010D874 /* TimeMachineTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeMachineTVC.m; sourceTree = "<group>"; };
 		7519BA4D18825BCD0010D874 /* SignUpCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpCell.h; sourceTree = "<group>"; };
@@ -205,8 +196,8 @@
 		758FF25B18E8B772008C010D /* 726-star-filled-gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "726-star-filled-gray@2x.png"; sourceTree = "<group>"; };
 		758FF25E18E8BC46008C010D /* 726-star-filled-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "726-star-filled-white.png"; sourceTree = "<group>"; };
 		758FF25F18E8BC46008C010D /* 726-star-filled-white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "726-star-filled-white@2x.png"; sourceTree = "<group>"; };
-		75B0EB8818AB154800673236 /* SongDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SongDetailVC.h; sourceTree = "<group>"; };
-		75B0EB8918AB154800673236 /* SongDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SongDetailVC.m; sourceTree = "<group>"; };
+		75B0EB8818AB154800673236 /* MediaDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaDetailVC.h; sourceTree = "<group>"; };
+		75B0EB8918AB154800673236 /* MediaDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaDetailVC.m; sourceTree = "<group>"; };
 		75B729841882D81B00D0A695 /* Song+Networking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Song+Networking.h"; sourceTree = "<group>"; };
 		75B729851882D81B00D0A695 /* Song+Networking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Song+Networking.m"; sourceTree = "<group>"; };
 		75B729871882DBB900D0A695 /* MusicRanked.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = MusicRanked.json; sourceTree = "<group>"; };
@@ -290,19 +281,6 @@
 				756F50DB18AEA70B0068C7AC /* FilterTVC.m */,
 			);
 			name = Results;
-			sourceTree = "<group>";
-		};
-		7511EA0618A0602800CE553B /* DCTCoreDataStack */ = {
-			isa = PBXGroup;
-			children = (
-				7511EA0718A0602800CE553B /* _DCTCDSManagedObjectContext.h */,
-				7511EA0818A0602800CE553B /* _DCTCDSManagedObjectContext.m */,
-				7511EA0918A0602800CE553B /* DCTCoreDataStack.h */,
-				7511EA0A18A0602800CE553B /* DCTCoreDataStack.m */,
-				7511EA0B18A0602800CE553B /* NSManagedObjectContext+DCTCoreDataStack.h */,
-				7511EA0C18A0602800CE553B /* NSManagedObjectContext+DCTCoreDataStack.m */,
-			);
-			path = DCTCoreDataStack;
 			sourceTree = "<group>";
 		};
 		7519BA50188265970010D874 /* Sign Up */ = {
@@ -442,7 +420,6 @@
 		75CA879D18821D87007A9F06 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				7511EA0618A0602800CE553B /* DCTCoreDataStack */,
 				75B729871882DBB900D0A695 /* MusicRanked.json */,
 				75270ABE187CCBB700B49643 /* DataLoader.h */,
 				75270ABF187CCBB700B49643 /* DataLoader.m */,
@@ -468,8 +445,8 @@
 		75DC3D9018B988D4000A4778 /* Detail Screens */ = {
 			isa = PBXGroup;
 			children = (
-				75B0EB8818AB154800673236 /* SongDetailVC.h */,
-				75B0EB8918AB154800673236 /* SongDetailVC.m */,
+				75B0EB8818AB154800673236 /* MediaDetailVC.h */,
+				75B0EB8918AB154800673236 /* MediaDetailVC.m */,
 				756DE87A18ADB3BB003A8518 /* SongAttributeCell.xib */,
 				750A55AF18B6C4EE00E3BFA6 /* SongAttributeCell.h */,
 				750A55B018B6C4EE00E3BFA6 /* SongAttributeCell.m */,
@@ -728,16 +705,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				754BD99A18BBA2B20057EC38 /* Song.m in Sources */,
-				7511EA0F18A0602800CE553B /* NSManagedObjectContext+DCTCoreDataStack.m in Sources */,
 				754BD9AC18BBA84C0057EC38 /* Movie.m in Sources */,
-				7511EA0D18A0602800CE553B /* _DCTCDSManagedObjectContext.m in Sources */,
 				75B729861882D81B00D0A695 /* Song+Networking.m in Sources */,
 				7519BA49188252900010D874 /* TimeMachineTVC.m in Sources */,
 				756F50DC18AEA70B0068C7AC /* FilterTVC.m in Sources */,
 				75CA87A81882499D007A9F06 /* SignUpTVC.m in Sources */,
 				750065BB1895B26600778029 /* ResultsCVC.m in Sources */,
 				758CDBBE18BC1978005FD9E7 /* HeaderView.m in Sources */,
-				75B0EB8A18AB154800673236 /* SongDetailVC.m in Sources */,
+				75B0EB8A18AB154800673236 /* MediaDetailVC.m in Sources */,
 				75B7298B1882DFF200D0A695 /* Constants.m in Sources */,
 				754BD9A618BBA5460057EC38 /* Media+Keys.m in Sources */,
 				75CA879C18821D24007A9F06 /* Nostalgia.xcdatamodeld in Sources */,
@@ -746,7 +721,6 @@
 				75270AC0187CCBB700B49643 /* DataLoader.m in Sources */,
 				75B7298F1883920900D0A695 /* DatePickerTVC.m in Sources */,
 				75D4596218B1EBAF00E5144E /* Movie+Networking.m in Sources */,
-				7511EA0E18A0602800CE553B /* DCTCoreDataStack.m in Sources */,
 				75C735CA1846E0260055F8C3 /* PickerVC.m in Sources */,
 				754BD99D18BBA2B30057EC38 /* Thumbnail.m in Sources */,
 				750A55A218B6B2D900E3BFA6 /* FavoritesCVC.m in Sources */,

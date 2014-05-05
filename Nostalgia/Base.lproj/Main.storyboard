@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="BPo-jH-90O">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="BPo-jH-90O">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -176,10 +176,10 @@
             </objects>
             <point key="canvasLocation" x="3620" y="145"/>
         </scene>
-        <!--Song DetailVC-->
+        <!--Media DetailVC-->
         <scene sceneID="VYJ-0s-74L">
             <objects>
-                <viewController id="W4q-Bg-Ygw" customClass="SongDetailVC" sceneMemberID="viewController">
+                <viewController id="W4q-Bg-Ygw" customClass="MediaDetailVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nAM-bX-vgz"/>
                         <viewControllerLayoutGuide type="bottom" id="3ph-bo-20S"/>

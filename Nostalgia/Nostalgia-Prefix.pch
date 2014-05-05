@@ -15,6 +15,6 @@
     #import <Foundation/Foundation.h>
     #import <CoreData/CoreData.h>
     #import <Parse/Parse.h>
-    #import "DCTCoreDataStack.h"
+    #import <CoreData+MagicalRecord.h>
     #import "Constants.h"
 #endif

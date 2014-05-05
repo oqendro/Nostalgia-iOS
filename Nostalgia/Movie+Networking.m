@@ -27,7 +27,7 @@
             block(objects, error);
         }
         NSError *saveError;
-        [SharedAppDelegate.coreDataStack.managedObjectContext save:&saveError];
+        [[NSManagedObjectContext MR_defaultContext] save:&saveError];
         if (saveError) {
             NSLog(@"%@",error.debugDescription);
         }
@@ -60,7 +60,7 @@
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Movie"];
     request.predicate = identifierPredicate;
     
-    Movies = [SharedAppDelegate.coreDataStack.managedObjectContext executeFetchRequest:request error:&error];
+    Movies = [[NSManagedObjectContext MR_defaultContext] executeFetchRequest:request error:&error];
     if (error) {
         NSLog(@"%@",error.debugDescription);
     }
@@ -107,7 +107,7 @@
 + (void)createNewMovieWithPFObject:(PFObject *)movieObject{
  
     Movie *newMovie = [NSEntityDescription insertNewObjectForEntityForName:@"Movie"
-                                                  inManagedObjectContext:SharedAppDelegate.coreDataStack.managedObjectContext];
+                                                  inManagedObjectContext:[NSManagedObjectContext MR_defaultContext]];
     newMovie.identifier = movieObject.objectId;
     newMovie.createdAt = movieObject.createdAt;
     newMovie.updatedAt = movieObject.updatedAt;
@@ -124,7 +124,7 @@
     
     PFFile *thumbnail = [movieObject objectForKey:thumbnailKey];
     Thumbnail *managedThumbnail = [NSEntityDescription insertNewObjectForEntityForName:@"Thumbnail"
-                                                                inManagedObjectContext:SharedAppDelegate.coreDataStack.managedObjectContext];
+                                                                inManagedObjectContext:[NSManagedObjectContext MR_defaultContext]];
     managedThumbnail.name = thumbnail.name;
     managedThumbnail.url = thumbnail.url;
     [managedThumbnail addMovieObject:newMovie];

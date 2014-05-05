@@ -10,7 +10,7 @@
 #import "FilterTVC.h"
 #import "Song.h"
 #import "SongCell.h"
-#import "SongDetailVC.h"
+#import "MediaDetailVC.h"
 #import "Thumbnail.h"
 #import <UIImageView+AFNetworking.h>
 
@@ -74,7 +74,7 @@ static NSString *songCellIdentifier = @"SongCell";
     if ([segue.identifier isEqualToString:@"SongDetailVC"]) {
         NSIndexPath *path = [self.collectionView indexPathForCell:sender];
         Song *selectedSong = [self.fetchedResultsController objectAtIndexPath:path];
-        SongDetailVC *detailVC = segue.destinationViewController;
+        MediaDetailVC *detailVC = segue.destinationViewController;
         detailVC.song = selectedSong;
     }    
 }
@@ -148,7 +148,7 @@ static NSString *songCellIdentifier = @"SongCell";
     songFetch.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[filtersPredicates, yearPredicate]];
     songFetch.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES]];
     NSFetchedResultsController *FRC = [[NSFetchedResultsController alloc] initWithFetchRequest:songFetch
-                                                                          managedObjectContext:SharedAppDelegate.coreDataStack.managedObjectContext
+                                                                          managedObjectContext:[NSManagedObjectContext MR_defaultContext]
                                                                             sectionNameKeyPath:nil
                                                                                      cacheName:nil];
     FRC.delegate = self;

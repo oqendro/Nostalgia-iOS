@@ -40,38 +40,11 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-	_coreDataStack = [[DCTCoreDataStack alloc] initWithStoreFilename:@"Nostalgia"];
+    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"Nostalgia"];
     [DataLoader setupParseWithLaunchOptions:launchOptions];
     [self setupInitialVC];
  
     return YES;
-}
-
-- (void)applicationWillResignActive:(UIApplication *)application
-{
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-}
-
-- (void)applicationDidEnterBackground:(UIApplication *)application
-{
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-}
-
-- (void)applicationWillEnterForeground:(UIApplication *)application
-{
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application
-{
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
 #pragma mark - Convenience
@@ -106,7 +79,7 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
         return _resultsCVC;
     }
     ResultsCVC *aResultsCVC = [[ResultsCVC alloc] initFromDefaultStoryboardWithYears:[self nineties]];
-    aResultsCVC.managedObjectContext = self.coreDataStack.managedObjectContext;
+    aResultsCVC.managedObjectContext = [NSManagedObjectContext MR_defaultContext];
     [self addSideBarButtonItemToViewController:aResultsCVC];
     _resultsCVC = aResultsCVC;
     self.resultsCVCVisible = YES;
@@ -116,6 +89,7 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
 #pragma mark - RNFrostedSideBar
 
 - (void)showCallout{
+#warning TODO give differtn options for signed in vs signed out
     NSArray *images;
     NSArray *colors;
     if ([PFUser currentUser]) {
@@ -311,19 +285,26 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
         UINavigationController *navVC = (UINavigationController *)self.window.rootViewController;
         SignUpTVC *signUpVC = (SignUpTVC *)navVC.topViewController;
         [self addSideBarButtonItemToViewController:signUpVC];
+        // add ability to skip sign up
+        UIBarButtonItem *skipSignUp = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"SKIP_LOGIN", @"Title of skip login button")
+                                                                       style:UIBarButtonItemStylePlain
+                                                                      target:self
+                                                                      action:@selector(show90s)];
+        signUpVC.navigationItem.rightBarButtonItem = skipSignUp;
+        
         signUpVC.hidesCancelButton = YES;
         SignInBlock block = ^ void (SignInResult result, NSError *error) {
             switch (result) {
                 case SignInResultSignedUp: {
                     ResultsCVC *resultsCVC = [[ResultsCVC alloc] initFromDefaultStoryboardWithYears:[self nineties]];
-                    resultsCVC.managedObjectContext = self.coreDataStack.managedObjectContext;
+                    resultsCVC.managedObjectContext = [NSManagedObjectContext MR_defaultContext];
                     [self addSideBarButtonItemToViewController:resultsCVC];
                     [self changeRootVCWithViewController:resultsCVC];
                 }
                     break;
                 case SignInResultLoggedIn: {
                     ResultsCVC *resultsCVC = [[ResultsCVC alloc] initFromDefaultStoryboardWithYears:[self nineties]];
-                    resultsCVC.managedObjectContext = self.coreDataStack.managedObjectContext;
+                    resultsCVC.managedObjectContext = [NSManagedObjectContext MR_defaultContext];
                     [self addSideBarButtonItemToViewController:resultsCVC];
                     [self changeRootVCWithViewController:resultsCVC];
                 }
@@ -360,7 +341,7 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
 
 - (BOOL)isTopViewController:(Class)class{
     UINavigationController *navVC = (UINavigationController *)self.window.rootViewController;
-    NSLog(@"its %@",navVC.topViewController);
+
     if ([navVC.topViewController isKindOfClass:class]) {
         return YES;
     } else {
@@ -371,5 +352,9 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
 - (UIViewController *)topViewController{
     UINavigationController *navVC = (UINavigationController *)self.window.rootViewController;
     return navVC.topViewController;
+}
+
+- (void)show90s{
+    [self showCallout];
 }
 @end

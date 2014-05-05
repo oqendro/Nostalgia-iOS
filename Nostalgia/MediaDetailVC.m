@@ -6,14 +6,14 @@
 //  Copyright (c) 2014 placeholder. All rights reserved.
 //
 
-#import "SongDetailVC.h"
+#import "MediaDetailVC.h"
 #import <UIImageView+AFNetworking.h>
 #import "Thumbnail.h"
 #import <AMRatingControl.h>
 
 @import MessageUI;
 
-@interface SongDetailVC () <UITableViewDataSource, UIActionSheetDelegate, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate>
+@interface MediaDetailVC () <UITableViewDataSource, UIActionSheetDelegate, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UIView *containerView;
@@ -33,7 +33,7 @@
 
 static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
 #warning LOCALIZE
-@implementation SongDetailVC
+@implementation MediaDetailVC
 
 #pragma mark - UIViewController
 
@@ -166,7 +166,7 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
         [favBarButton setImage:[UIImage imageNamed:@"726-star-filled-gray"]];
     }
     NSError *error;
-    [SharedAppDelegate.coreDataStack.managedObjectContext save:&error];
+    [[NSManagedObjectContext MR_defaultContext] save:&error];
     if (error) {
         NSLog(@"%@",error.debugDescription);
     }
@@ -222,7 +222,6 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
         if (error) {
             NSLog(@"%@",error.debugDescription);
         }
-        NSLog(@"object is %@",object);
         NSNumber *averageRating = object;
         self.ratingControl.rating = averageRating.integerValue;
     }];
@@ -271,6 +270,27 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
     [_ratingControl setRating:2.5];
     [self.ratingContainerView addSubview:_ratingControl];
     _ratingControl.center = CGPointMake(self.ratingContainerView.frame.size.width / 2, self.ratingContainerView.frame.size.height / 2);
+    __block MediaDetailVC *weakSelf = self;
+    _ratingControl.editingDidEndBlock = ^(NSUInteger rating) {
+        PFQuery *query = [PFQuery queryWithClassName:@"Song" predicate:[NSPredicate predicateWithFormat:@"objectId = %@",weakSelf.song.identifier]];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            NSLog(@"count %lu",(unsigned long)objects.count);
+            PFObject *songFound = objects.lastObject;
+            PFObject *rating = [PFObject objectWithClassName:@"Rating"];
+            [rating setObject:songFound forKey:@"song"];
+            NSLog(@"user is %@",[PFUser currentUser]);
+            [rating setObject:[PFUser currentUser] forKey:@"user"];
+            [rating saveEventually:^(BOOL succeeded, NSError *error) {
+                if (error) {
+                    NSLog(@"%@",error.debugDescription);
+                }
+                if (succeeded) {
+                    NSLog(@"YAYYY");
+                }
+            }];
+        }];
+    };
+    
     return _ratingControl;
 }
 

@@ -170,7 +170,7 @@
     NSFetchRequest *songFetch = [NSFetchRequest fetchRequestWithEntityName:@"Song"];
     songFetch.predicate = [NSPredicate predicateWithFormat:@"identifier == %@",songIdentifier];
     NSError *error;
-    NSArray *songs = [SharedAppDelegate.coreDataStack.managedObjectContext executeFetchRequest:songFetch
+    NSArray *songs = [[NSManagedObjectContext MR_defaultContext] executeFetchRequest:songFetch
                                                                                                        error:&error];
    
     switch (songs.count) {

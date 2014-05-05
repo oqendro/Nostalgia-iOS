@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "Song.h"
-
-@interface SongDetailVC : UIViewController
+#warning TODO make this class handle both movies and songs 
+@interface MediaDetailVC : UIViewController
 
 @property (nonatomic, strong) Song *song;
 

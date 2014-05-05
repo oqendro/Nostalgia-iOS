@@ -7,13 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DCTCoreDataStack/DCTCoreDataStack.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (readonly, strong, nonatomic) UIStoryboard *storyboard;
-@property (readonly, strong, nonatomic) DCTCoreDataStack *coreDataStack;
 
 - (void)showCallout;
 

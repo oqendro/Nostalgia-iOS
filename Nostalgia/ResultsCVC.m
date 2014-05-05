@@ -13,7 +13,7 @@
 #import "MovieCell.h"
 #import "HeaderView.h"
 #import <UIImageView+AFNetworking.h>
-#import "SongDetailVC.h"
+#import "MediaDetailVC.h"
 #import "FilterTVC.h"
 
 @interface ResultsCVC () <NSFetchedResultsControllerDelegate, UICollectionViewDelegateFlowLayout, FilterTVCDelegate>
@@ -86,7 +86,7 @@ static NSString *headerViewIdentifier = @"HeaderView";
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([segue.identifier isEqualToString:songDetailSegueIdentifier]) {
         Song *selectedSong = [self.fetchedResultsController objectAtIndexPath:[self.collectionView indexPathsForSelectedItems].lastObject];
-        SongDetailVC *detailVC = segue.destinationViewController;
+        MediaDetailVC *detailVC = segue.destinationViewController;
         detailVC.song = selectedSong;
     }
 }
@@ -272,7 +272,7 @@ static NSString *headerViewIdentifier = @"HeaderView";
     songFetch.sortDescriptors = @[mediaTypeSD, titleSD];
     
     NSFetchedResultsController *FRC = [[NSFetchedResultsController alloc] initWithFetchRequest:songFetch
-                                                                          managedObjectContext:SharedAppDelegate.coreDataStack.managedObjectContext
+                                                                          managedObjectContext:[NSManagedObjectContext MR_defaultContext]
                                                                             sectionNameKeyPath:@"mediaType"
                                                                                      cacheName:nil];
     FRC.delegate = self;

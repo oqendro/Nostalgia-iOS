@@ -3,6 +3,7 @@
 
 target "Nostalgia" do
     inhibit_all_warnings!
+    pod 'MagicalRecord'
     pod 'AFNetworking', '~> 2.2.1'
     pod 'Parse', '~> 1.2.9'
     pod 'SHEmailValidator', '~> 1.0.2'
