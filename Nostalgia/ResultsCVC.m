@@ -13,8 +13,9 @@
 #import "MovieCell.h"
 #import "HeaderView.h"
 #import <UIImageView+AFNetworking.h>
-#import "MediaDetailVC.h"
+#import "SongDetailVC.h"
 #import "FilterTVC.h"
+#import "MovieDetailVC.h"
 
 @interface ResultsCVC () <NSFetchedResultsControllerDelegate, UICollectionViewDelegateFlowLayout, FilterTVCDelegate>
 {
@@ -86,8 +87,13 @@ static NSString *headerViewIdentifier = @"HeaderView";
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([segue.identifier isEqualToString:songDetailSegueIdentifier]) {
         Song *selectedSong = [self.fetchedResultsController objectAtIndexPath:[self.collectionView indexPathsForSelectedItems].lastObject];
-        MediaDetailVC *detailVC = segue.destinationViewController;
+        SongDetailVC *detailVC = segue.destinationViewController;
         detailVC.song = selectedSong;
+    }
+    if ([segue.identifier isEqualToString:movieDetailSegueIdentifier]) {
+        Movie *selectedMovie = [self.fetchedResultsController objectAtIndexPath:[self.collectionView indexPathsForSelectedItems].lastObject];
+        MovieDetailVC *movieVC = segue.destinationViewController;
+        movieVC.movie = selectedMovie;
     }
 }
 
@@ -246,7 +252,7 @@ static NSString *headerViewIdentifier = @"HeaderView";
         [self performSegueWithIdentifier:songDetailSegueIdentifier sender:nil];
     }
     if ([selectedObject isKindOfClass:[Movie class]]) {
-//        [self performSegueWithIdentifier:songDetailSegueIdentifier sender:nil];
+        [self performSegueWithIdentifier:movieDetailSegueIdentifier sender:nil];
     }
 }
 

@@ -1,19 +1,19 @@
 //
-//  SongDetailVC.m
+//  MovieDetailVC.m
 //  Nostalgia
 //
-//  Created by Walter M. Vargas-Pena on 2/11/14.
+//  Created by Walter M. Vargas-Pena on 5/7/14.
 //  Copyright (c) 2014 placeholder. All rights reserved.
 //
 
-#import "MediaDetailVC.h"
+#import "MovieDetailVC.h"
 #import <UIImageView+AFNetworking.h>
 #import "Thumbnail.h"
 #import <AMRatingControl.h>
 
 @import MessageUI;
 
-@interface MediaDetailVC () <UITableViewDataSource, UIActionSheetDelegate, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate>
+@interface MovieDetailVC () <UITableViewDataSource, UIActionSheetDelegate, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UIView *containerView;
@@ -32,25 +32,8 @@
 @end
 
 static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
-#warning LOCALIZE
-@implementation MediaDetailVC
 
-#pragma mark - UIViewController
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (void)awakeFromNib{
-    [super awakeFromNib];
-    [self view];
-    self.ratingLabel.font = HelveticaNeueLight12;
-}
+@implementation MovieDetailVC
 
 - (void)viewDidLoad
 {
@@ -61,9 +44,9 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
                                                              target:self
                                                              action:@selector(showShareActionSheet:)];
     UIBarButtonItem *info = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"724-info-gray"]
-                                                              style:UIBarButtonItemStylePlain
-                                                             target:self
-                                                             action:@selector(infoButtonPressed:)];
+                                                             style:UIBarButtonItemStylePlain
+                                                            target:self
+                                                            action:@selector(infoButtonPressed:)];
     UIBarButtonItem *favorites = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"726-star-gray"]
                                                                   style:UIBarButtonItemStylePlain
                                                                  target:self
@@ -85,13 +68,14 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
     self.tableView.alpha = 0;
     [self.tableView registerNib:[UINib nibWithNibName:songAttributeCellIdentifier bundle:nil]
          forCellReuseIdentifier:songAttributeCellIdentifier];
-    [self.imageView setImageWithURL:[NSURL URLWithString:self.song.thumbnail.url]
+    [self.imageView setImageWithURL:[NSURL URLWithString:self.movie.thumbnail.url]
                    placeholderImage:nil];
 }
 
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    [self configureView];
+- (void)awakeFromNib{
+    [super awakeFromNib];
+    [self view];
+    self.ratingLabel.font = HelveticaNeueLight12;
 }
 
 - (void)didReceiveMemoryWarning
@@ -99,7 +83,6 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 #pragma mark - Convenience Methods
 
 - (void)showShareActionSheet:(UIBarButtonItem *)shareBarButtonItem{
@@ -113,11 +96,11 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
 }
 
 - (void)configureView{
-    self.titleLabel.text = self.song.title;
-    [self.imageView setImageWithURL:[NSURL URLWithString:self.song.thumbnail.url]
+    self.titleLabel.text = self.movie.title;
+    [self.imageView setImageWithURL:[NSURL URLWithString:self.movie.thumbnail.url]
                    placeholderImage:[UIImage imageNamed:@"767-photo-1-white"]];
     
-    if (self.song.favorite.boolValue) {
+    if (self.movie.favorite.boolValue) {
         self.favBarButtonItem.image = [UIImage imageNamed:@"726-star-filled-gray"];
     } else {
         self.favBarButtonItem.image = [UIImage imageNamed:@"726-star-gray"];
@@ -140,10 +123,10 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
     if ([MFMessageComposeViewController canSendText]) {
         NSString *first = [PFUser currentUser][@"firstName"];
         NSString *last = [PFUser currentUser][@"lastName"];
-
+        
         MFMessageComposeViewController *messageVC = [[MFMessageComposeViewController alloc] init];
         messageVC.messageComposeDelegate = self;
-        NSString *textBody = [NSString stringWithFormat:@"%@ %@ wanted to share %@ by %@ with you", first, last, self.song.title, self.song.artist];
+        NSString *textBody = [NSString stringWithFormat:@"%@ %@ wanted to share %@ by %@ with you", first, last, self.movie.title, self.movie.director];
         NSString *linkToApp = @"www.nostaligia.com";
         messageVC.body = [NSString stringWithFormat:@"%@ \n %@",textBody, linkToApp];
         [self presentViewController:messageVC animated:YES completion:NULL];
@@ -158,11 +141,11 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
 }
 
 - (void)toggleFavorite:(UIBarButtonItem *)favBarButton{
-    if (self.song.favorite.boolValue) {
-        self.song.favorite = @NO;
+    if (self.movie.favorite.boolValue) {
+        self.movie.favorite = @NO;
         [favBarButton setImage:[UIImage imageNamed:@"726-star-gray"]];
     } else {
-        self.song.favorite = @YES;
+        self.movie.favorite = @YES;
         [favBarButton setImage:[UIImage imageNamed:@"726-star-filled-gray"]];
     }
     NSError *error;
@@ -178,7 +161,7 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
         mailVC.mailComposeDelegate = self;
         NSString *first = [PFUser currentUser][@"firstName"];
         NSString *last = [PFUser currentUser][@"lastName"];
-        NSString *textBody = [NSString stringWithFormat:@"%@ %@ wanted to share %@ by %@ with you", first, last, self.song.title, self.song.artist];
+        NSString *textBody = [NSString stringWithFormat:@"%@ %@ wanted to share %@ by %@ with you", first, last, self.movie.title, self.movie.director];
         NSString *linkToApp = @"www.nostaligia.com";
         [mailVC setMessageBody:[NSString stringWithFormat:@"%@ \n %@",textBody, linkToApp] isHTML:NO];
         [self presentViewController:mailVC animated:YES completion:NULL];
@@ -217,8 +200,8 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
 }
 
 - (void)refreshLikes{
-    NSDictionary *params = @{@"songID": self.song.identifier};
-    [PFCloud callFunctionInBackground:@"averageStarsForSongId" withParameters:params block:^(id object, NSError *error) {
+    NSDictionary *params = @{@"movieID": self.movie.identifier};
+    [PFCloud callFunctionInBackground:@"averageStarsForMovieId" withParameters:params block:^(id object, NSError *error) {
         if (error) {
             NSLog(@"%@",error.debugDescription);
         }
@@ -266,18 +249,18 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
     _ratingControl = [[AMRatingControl alloc] initWithLocation:CGPointZero
                                                     emptyColor:[UIColor darkGrayColor]
                                                     solidColor:[UIColor yellowColor]
-                                                    andMaxRating:5];;
+                                                  andMaxRating:5];;
     [_ratingControl setRating:2.5];
     [self.ratingContainerView addSubview:_ratingControl];
     _ratingControl.center = CGPointMake(self.ratingContainerView.frame.size.width / 2, self.ratingContainerView.frame.size.height / 2);
-    __block MediaDetailVC *weakSelf = self;
+    __block MovieDetailVC *weakSelf = self;
     _ratingControl.editingDidEndBlock = ^(NSUInteger rating) {
-        PFQuery *query = [PFQuery queryWithClassName:@"Song" predicate:[NSPredicate predicateWithFormat:@"objectId = %@",weakSelf.song.identifier]];
+        PFQuery *query = [PFQuery queryWithClassName:@"Movie" predicate:[NSPredicate predicateWithFormat:@"objectId = %@",weakSelf.movie.identifier]];
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             NSLog(@"count %lu",(unsigned long)objects.count);
             PFObject *songFound = objects.lastObject;
             PFObject *rating = [PFObject objectWithClassName:@"Rating"];
-            [rating setObject:songFound forKey:@"song"];
+            [rating setObject:songFound forKey:@"movie"];
             NSLog(@"user is %@",[PFUser currentUser]);
             [rating setObject:[PFUser currentUser] forKey:@"user"];
             [rating saveEventually:^(BOOL succeeded, NSError *error) {
@@ -316,27 +299,27 @@ typedef NS_ENUM(NSInteger, SongAttributeType) {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:songAttributeCellIdentifier forIndexPath:indexPath];
-
+    
     switch (indexPath.row) {
         case SongAttributeTypeYearReleased:
             cell.textLabel.text = @"Year Released";
-            cell.detailTextLabel.text = self.song.year.stringValue;
+            cell.detailTextLabel.text = self.movie.year.stringValue;
             break;
         case SongAttributeTypeGenre:
             cell.textLabel.text = @"Genre";
-            cell.detailTextLabel.text = self.song.genre;
+            cell.detailTextLabel.text = self.movie.genre;
             break;
         case SongAttributeTypeArtist:
-            cell.textLabel.text = @"Artist";
-            cell.detailTextLabel.text = self.song.artist;
+            cell.textLabel.text = @"Director";
+            cell.detailTextLabel.text = self.movie.director;
             break;
         case SongAttributeTypeAlbum:
-            cell.textLabel.text = @"Album";
-            cell.detailTextLabel.text = self.song.album;
+            cell.textLabel.text = @"Cast";
+            cell.detailTextLabel.text = self.movie.cast;
             break;
         case SongAttributeTypeRank:
             cell.textLabel.text = @"Rank";
-            cell.detailTextLabel.text = self.song.rank.stringValue;
+            cell.detailTextLabel.text = self.movie.rank.stringValue;
             break;
         case SongAttributeTypeRating:
             cell.textLabel.text = @"Rating";
@@ -348,7 +331,7 @@ typedef NS_ENUM(NSInteger, SongAttributeType) {
     return cell;
 }
 
-#pragma mark - UIActionSheet Delegte 
+#pragma mark - UIActionSheet Delegte
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex{
     switch (buttonIndex) {
@@ -404,4 +387,5 @@ typedef NS_ENUM(NSInteger, SongAttributeType) {
     }
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
+
 @end

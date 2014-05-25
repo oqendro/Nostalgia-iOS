@@ -10,7 +10,7 @@
 #import "FilterTVC.h"
 #import "Song.h"
 #import "SongCell.h"
-#import "MediaDetailVC.h"
+#import "SongDetailVC.h"
 #import "Thumbnail.h"
 #import <UIImageView+AFNetworking.h>
 
@@ -74,7 +74,7 @@ static NSString *songCellIdentifier = @"SongCell";
     if ([segue.identifier isEqualToString:@"SongDetailVC"]) {
         NSIndexPath *path = [self.collectionView indexPathForCell:sender];
         Song *selectedSong = [self.fetchedResultsController objectAtIndexPath:path];
-        MediaDetailVC *detailVC = segue.destinationViewController;
+        SongDetailVC *detailVC = segue.destinationViewController;
         detailVC.song = selectedSong;
     }    
 }

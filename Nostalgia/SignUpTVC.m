@@ -65,6 +65,7 @@ static NSString *textFieldCellIdentifier = @"TextFieldCell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self setupUI];
     self.title = NSLocalizedString(@"SIGN_UP_VIEW_CONTROLLER_TITLE", @"Title for sign up view controller");
     [self.tableView registerNib:[UINib nibWithNibName:signUpCellIdentifier bundle:nil]
          forCellReuseIdentifier:signUpCellIdentifier];
@@ -115,7 +116,6 @@ static NSString *textFieldCellIdentifier = @"TextFieldCell";
     self.passwordCell.textField.returnKeyType = UIReturnKeyDone;
     self.passwordCell.textField.enablesReturnKeyAutomatically = YES;
     self.passwordCell.textField.delegate = self;
-    
 }
 
 #pragma mark - Table view data source
