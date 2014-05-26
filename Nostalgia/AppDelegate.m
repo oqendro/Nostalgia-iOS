@@ -291,7 +291,6 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
     } else {
         UINavigationController *navVC = (UINavigationController *)self.window.rootViewController;
         SignUpTVC *signUpVC = (SignUpTVC *)navVC.topViewController;
-        [self addSideBarButtonItemToViewController:signUpVC];
         // add ability to skip sign up
         UIBarButtonItem *skipSignUp = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"SKIP_LOGIN", @"Title of skip login button")
                                                                        style:UIBarButtonItemStylePlain

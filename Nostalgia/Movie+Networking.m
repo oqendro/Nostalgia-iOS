@@ -15,23 +15,13 @@
     PFQuery *movieQuery = [PFQuery queryWithClassName:@"Movie"];
     [movieQuery whereKey:@"Year" containedIn:years];
     [movieQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        for (PFObject *movie in objects) {
-            Movie *managedMovie = [self movieForIdentifier:movie.objectId];
-            if (managedMovie) {
-                [self updateMovieIfNeeded:managedMovie withPFObject:movie];
-            } else {
-                [self createNewMovieWithPFObject:movie];
+        [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+            [self updateMoviesWithPFArray:objects usingContext:localContext];
+        } completion:^(BOOL success, NSError *error) {
+            if (block) {
+                block(objects, error);
             }
-        }
-        if (block) {
-            block(objects, error);
-        }
-        NSError *saveError;
-        [[NSManagedObjectContext MR_defaultContext] save:&saveError];
-        if (saveError) {
-            NSLog(@"%@",error.debugDescription);
-        }
-        
+        }];
     }];
 }
 
@@ -39,35 +29,43 @@
     PFQuery *MovieQuery = [PFQuery queryWithClassName:@"Movie"];
     [MovieQuery setLimit: 1000];
     [MovieQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        for (PFObject *movie in objects) {
-            Movie *managedMovie = [self movieForIdentifier:movie.objectId];
-            if (managedMovie) {
-                [self updateMovieIfNeeded:managedMovie withPFObject:movie];
-            } else {
-                [self createNewMovieWithPFObject:movie];
+        [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+            [self updateMoviesWithPFArray:objects usingContext:localContext];
+        } completion:^(BOOL success, NSError *error) {
+            if (block) {
+                block(objects, error);
             }
-        }
-        if (block) {
-            block(objects, error);
+        }];
+    }];
+}
+
++ (void)updateMoviesWithPFArray:(NSArray *)PFArray usingContext:(NSManagedObjectContext *)localContext {
+    [PFArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        PFObject *pfMovie = obj;
+        Movie *movie = [self movieForIdentifier:pfMovie.objectId usingContext:localContext];
+        if (movie) {
+            [self updateMovieIfNeeded:movie withPFObject:pfMovie];
+        } else {
+            [self createNewMovieWithPFObject:pfMovie usingContext:localContext];
         }
     }];
 }
 
-+ (Movie *)movieForIdentifier:(NSString *)identifier{
-    __block NSArray *Movies;
++ (Movie *)movieForIdentifier:(NSString *)identifier usingContext:(NSManagedObjectContext *)localContext {
+    __block NSArray *movies;
     NSError *error;
     NSPredicate *identifierPredicate = [NSPredicate predicateWithFormat:@"identifier == %@",identifier];
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Movie"];
     request.predicate = identifierPredicate;
     
-    Movies = [[NSManagedObjectContext MR_defaultContext] executeFetchRequest:request error:&error];
+    movies = [localContext executeFetchRequest:request error:&error];
     if (error) {
         NSLog(@"%@",error.debugDescription);
     }
-    if (Movies.count > 1) {
+    if (movies.count > 1) {
         NSLog(@"ERROR IN Movie NETWORKING");
     }
-    return Movies.lastObject;
+    return movies.lastObject;
 }
 
 + (void)updateMovieIfNeeded:(Movie *)movie withPFObject:(PFObject *)PFObject{
@@ -104,10 +102,9 @@
     }
 }
 
-+ (void)createNewMovieWithPFObject:(PFObject *)movieObject{
++ (void)createNewMovieWithPFObject:(PFObject *)movieObject usingContext:(NSManagedObjectContext *)localContext {
  
-    Movie *newMovie = [NSEntityDescription insertNewObjectForEntityForName:@"Movie"
-                                                  inManagedObjectContext:[NSManagedObjectContext MR_defaultContext]];
+    Movie *newMovie = [Movie MR_createInContext:localContext];
     newMovie.identifier = movieObject.objectId;
     newMovie.createdAt = movieObject.createdAt;
     newMovie.updatedAt = movieObject.updatedAt;
@@ -123,8 +120,7 @@
     newMovie.movieDescription = [movieObject objectForKey:movieDescriptionKey];
     
     PFFile *thumbnail = [movieObject objectForKey:thumbnailKey];
-    Thumbnail *managedThumbnail = [NSEntityDescription insertNewObjectForEntityForName:@"Thumbnail"
-                                                                inManagedObjectContext:[NSManagedObjectContext MR_defaultContext]];
+    Thumbnail *managedThumbnail = [Thumbnail MR_createInContext:localContext];
     managedThumbnail.name = thumbnail.name;
     managedThumbnail.url = thumbnail.url;
     [managedThumbnail addMovieObject:newMovie];
