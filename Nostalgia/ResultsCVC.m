@@ -206,6 +206,7 @@ static NSString *headerViewIdentifier = @"HeaderView";
     NSURL *imageURL = [NSURL URLWithString:song.thumbnail.url];
     [songCell.imageView setImageWithURL:imageURL
                        placeholderImage:[UIImage imageNamed:@"767-photo-1-white"]];
+    songCell.ratingLabel.text = song.rank.stringValue;
 }
 
 - (void)configureMovieCell:(MovieCell *)movieCell atIndexPath:(NSIndexPath *)indexPath{
@@ -214,6 +215,7 @@ static NSString *headerViewIdentifier = @"HeaderView";
     NSURL *imageURL = [NSURL URLWithString:movie.thumbnail.url];
     [movieCell.imageView setImageWithURL:imageURL
                        placeholderImage:[UIImage imageNamed:@"767-photo-1-white"]];
+    movieCell.ratingLabel.text = movie.rank.stringValue;
 
 }
 

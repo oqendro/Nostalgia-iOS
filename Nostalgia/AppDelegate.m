@@ -64,13 +64,16 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
     return years;
 }
 
-- (NSArray *)nineties{
+- (NSArray *)twoThousands {
+    return @[@2000, @2001, @2002, @2003, @2004, @2005, @2006, @2007, @2008, @2009];
+}
+- (NSArray *)nineties {
     return @[@1990, @1991, @1992, @1993, @1994, @1995, @1996, @1997, @1998, @1999];
 }
-- (NSArray *)eighties{
+- (NSArray *)eighties {
     return @[@1980, @1981, @1982, @1983, @1984, @1985, @1986, @1987, @1988, @1989];
 }
-- (NSArray *)seventies{
+- (NSArray *)seventies {
     return @[@1970, @1971, @1972, @1973, @1974, @1975, @1976, @1977, @1978, @1979];
 }
 
@@ -95,6 +98,7 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
     if ([PFUser currentUser]) {
         NSLog(@"cuurent user %@",[[PFUser currentUser] objectForKey:@"firstName"]);
         images = @[
+                   [UIImage imageNamed:@"00s"],
                    [UIImage imageNamed:@"90s"],
                    [UIImage imageNamed:@"80s"],
                    [UIImage imageNamed:@"70s"],
@@ -106,6 +110,7 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
                    [UIColor colorWithRed:240/255.f green:159/255.f blue:254/255.f alpha:1],
                    [UIColor colorWithRed:240/255.f green:159/255.f blue:254/255.f alpha:1],
                    [UIColor colorWithRed:240/255.f green:159/255.f blue:254/255.f alpha:1],
+                   [UIColor colorWithRed:240/255.f green:159/255.f blue:254/255.f alpha:1],
                    [UIColor colorWithRed:255/255.f green:137/255.f blue:167/255.f alpha:1],
                    [UIColor colorWithRed:126/255.f green:242/255.f blue:195/255.f alpha:1],
                    [UIColor colorWithRed:119/255.f green:152/255.f blue:255/255.f alpha:1],
@@ -113,6 +118,7 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
 
     } else {
         images = @[
+                   [UIImage imageNamed:@"00s"],
                    [UIImage imageNamed:@"90s"],
                    [UIImage imageNamed:@"80s"],
                    [UIImage imageNamed:@"70s"],
@@ -121,6 +127,7 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
                    [UIImage imageNamed:@"769-male-white"],
                    ];
         colors = @[
+                   [UIColor colorWithRed:240/255.f green:159/255.f blue:254/255.f alpha:1],
                    [UIColor colorWithRed:240/255.f green:159/255.f blue:254/255.f alpha:1],
                    [UIColor colorWithRed:240/255.f green:159/255.f blue:254/255.f alpha:1],
                    [UIColor colorWithRed:240/255.f green:159/255.f blue:254/255.f alpha:1],
