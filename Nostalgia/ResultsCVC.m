@@ -41,15 +41,6 @@ static NSString *headerViewIdentifier = @"HeaderView";
     return self;
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -114,7 +105,7 @@ static NSString *headerViewIdentifier = @"HeaderView";
 
 - (void)setYears:(NSArray *)years{
     _years = years;
-    
+    NSLog(@"setting %@",_years);
     NSPredicate *yearPredicate = [NSPredicate predicateWithFormat:@"year IN %@",_years];
 
     NSMutableArray *filterPredicatesArray = [[NSMutableArray alloc] init];

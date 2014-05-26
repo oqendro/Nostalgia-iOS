@@ -14,23 +14,13 @@
     PFQuery *songQuery = [PFQuery queryWithClassName:@"Song"];
     [songQuery whereKey:@"Year" containedIn:years];
     [songQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        for (PFObject *song in objects) {
-            Song *managedSong = [self songForIdentifier:song.objectId];
-            if (managedSong) {
-                [self updateSongIfNeeded:managedSong withPFObject:song];
-            } else {
-                [self createNewSongWithPFObject:song];
+        [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+            [self updateSongsWithPFArray:objects usingContext:localContext];
+        } completion:^(BOOL success, NSError *error) {
+            if (block) {
+                block(objects, error);
             }
-        }
-        if (block) {
-            block(objects, error);
-        }
-        NSError *saveError;
-        [[NSManagedObjectContext MR_defaultContext] save:&saveError];
-        if (saveError) {
-            NSLog(@"%@",error.debugDescription);
-        }
-
+        }];
     }];
 }
 
@@ -38,38 +28,48 @@
     PFQuery *songQuery = [PFQuery queryWithClassName:@"Song"];
     [songQuery setLimit: 1000];
     [songQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        for (PFObject *song in objects) {
-            Song *managedSong = [self songForIdentifier:song.objectId];
-            if (managedSong) {
-                [self updateSongIfNeeded:managedSong withPFObject:song];
-            } else {
-                [self createNewSongWithPFObject:song];
+        [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+            [self updateSongsWithPFArray:objects usingContext:localContext];
+        } completion:^(BOOL success, NSError *error) {
+            if (block) {
+                block(objects, error);
             }
-        }
-        if (block) {
-            block(objects, error);
+        }];
+    }];
+}
+
++ (void)updateSongsWithPFArray:(NSArray *)PFArray usingContext:(NSManagedObjectContext *)localContext {
+    
+    [PFArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        PFObject *pfSong = obj;
+        Song *song = [self songForIdentifier:pfSong.objectId usingContext:localContext];
+        if (song) {
+            [self updateSongIfNeeded:song withPFObject:pfSong];
+        } else {
+            [self createNewSongWithPFObject:pfSong usingContext:localContext];
         }
     }];
 }
 
-+ (Song *)songForIdentifier:(NSString *)identifier{
++ (Song *)songForIdentifier:(NSString *)identifier usingContext:(NSManagedObjectContext *)localContext {
     __block NSArray *songs;
     NSError *error;
     NSPredicate *identifierPredicate = [NSPredicate predicateWithFormat:@"identifier == %@",identifier];
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Song"];
     request.predicate = identifierPredicate;
 
-    songs = [[NSManagedObjectContext MR_defaultContext] executeFetchRequest:request error:&error];
+    songs = [localContext executeFetchRequest:request error:&error];
     if (error) {
         NSLog(@"%@",error.debugDescription);
     }
     if (songs.count > 1) {
-        NSLog(@"ERROR IN SONG NETWORKING");
+        NSAssert(0, @"More than 1 song found for identifier");
     }
     return songs.lastObject;
 }
 
-+ (void)updateSongIfNeeded:(Song *)song withPFObject:(PFObject *)PFObject{
++ (void)updateSongIfNeeded:(Song *)song withPFObject:(PFObject *)PFObject {
+    
     NSComparisonResult comparisonResult = [song.updatedAt compare:PFObject.updatedAt];
     switch (comparisonResult) {
         case NSOrderedAscending: {
@@ -102,10 +102,9 @@
     }
 }
 
-+ (void)createNewSongWithPFObject:(PFObject *)songObject{
++ (void)createNewSongWithPFObject:(PFObject *)songObject usingContext:(NSManagedObjectContext *)localContext {
     
-    Song *newSong = [NSEntityDescription insertNewObjectForEntityForName:@"Song"
-                                                  inManagedObjectContext:[NSManagedObjectContext MR_defaultContext]];
+    Song *newSong = [Song MR_createInContext:localContext];
     newSong.identifier = songObject.objectId;
     newSong.createdAt = songObject.createdAt;
     newSong.updatedAt = songObject.updatedAt;
@@ -120,8 +119,7 @@
     newSong.artist = [songObject objectForKey:artistKey];
     
     PFFile *thumbnail = [songObject objectForKey:thumbnailKey];
-    Thumbnail *managedThumbnail = [NSEntityDescription insertNewObjectForEntityForName:@"Thumbnail"
-                                                                inManagedObjectContext:[NSManagedObjectContext MR_defaultContext]];
+    Thumbnail *managedThumbnail = [Thumbnail MR_createInContext:localContext];
     managedThumbnail.name = thumbnail.name;
     managedThumbnail.url = thumbnail.url;
     [managedThumbnail addSongObject:newSong];
