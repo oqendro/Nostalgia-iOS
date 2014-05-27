@@ -144,8 +144,7 @@ static NSString *headerViewIdentifier = @"HeaderView";
                      completion:NULL];
 }
 
-- (NSArray *)filters{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+- (NSArray *)filters{       NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSArray *filters = [NSArray array];
     if ([[defaults objectForKey:songsPreferenceKey] boolValue]) {
         filters = [filters arrayByAddingObject:@"Song"];

@@ -5,7 +5,6 @@
 //  Created by Walter M. Vargas-Pena on 2/14/14.
 //  Copyright (c) 2014 placeholder. All rights reserved.
 //
-#warning LOCALIZE
 
 #import "FilterTVC.h"
 
@@ -18,19 +17,10 @@
 
 @implementation FilterTVC
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"Filter";
+    self.title = NSLocalizedString(@"FILTER", @"Title for filter barbutton item");
     self.defaults = [NSUserDefaults standardUserDefaults];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
 
@@ -55,13 +45,11 @@
 }
 
 - (void)done{
-#warning REDO
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSArray *filters = [NSArray array];
-    if ([[defaults objectForKey:songsPreferenceKey] boolValue]) {
+    if ([[self.defaults objectForKey:songsPreferenceKey] boolValue]) {
         filters = [filters arrayByAddingObject:@"Song"];
     }
-    if ([[defaults objectForKey:moviesPreferenceKey] boolValue]) {
+    if ([[self.defaults objectForKey:moviesPreferenceKey] boolValue]) {
         filters = [filters arrayByAddingObject:@"Movie"];
     }
 
