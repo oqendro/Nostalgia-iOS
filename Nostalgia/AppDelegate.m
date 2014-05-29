@@ -159,7 +159,6 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
             if ([PFUser currentUser]) {
                 [self.optionIndices removeAllIndexes];
                 [self.optionIndices addIndex:index];
-                [sidebar dismissAnimated:YES];
                 FavoritesCVC *favoritesCVC = [[FavoritesCVC alloc] initFromStoryboard];
                 [self addSideBarButtonItemToViewController:favoritesCVC];
                 [self changeRootVCWithViewController:favoritesCVC];
@@ -176,7 +175,6 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
         case SideBarOptionInfo: {
             [self.optionIndices removeAllIndexes];
             [self.optionIndices addIndex:index];
-            [sidebar dismissAnimated:YES];
             InfoTVC *favoritesCVC = [[InfoTVC alloc] initFromStoryboard];
             [self addSideBarButtonItemToViewController:favoritesCVC];
             [self changeRootVCWithViewController:favoritesCVC];
@@ -235,7 +233,6 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
                 signupTVC.hidesCancelButton = YES;
                 [self changeRootVCWithViewController:signupTVC];
                 [self addSideBarButtonItemToViewController:signupTVC];
-                [sidebar dismissAnimated:YES];
             }
         }
             break;

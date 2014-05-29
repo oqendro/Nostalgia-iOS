@@ -97,7 +97,7 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
                                                destructiveButtonTitle:nil
                                                     otherButtonTitles:@"Email",@"Text", nil];
     
-    [actionSheet showFromTabBar:self.tabBarController.tabBar];
+    [actionSheet showInView:self.view];
 }
 
 - (void)configureView{
