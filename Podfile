@@ -9,9 +9,6 @@ target "Nostalgia" do
     pod 'SHEmailValidator', '~> 1.0.2'
     pod 'RNFrostedSidebar', '~> 0.2.0'
     pod 'AMRatingControl', '~> 1.3.0'
-end
-
-target "NostalgiaTests" do
-
+    pod 'BlocksKit'
 end
 

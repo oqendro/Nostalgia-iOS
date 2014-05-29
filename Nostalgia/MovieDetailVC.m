@@ -35,6 +35,12 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
 
 @implementation MovieDetailVC
 
+- (void)awakeFromNib{
+    [super awakeFromNib];
+    [self view];
+    self.ratingLabel.font = HelveticaNeueLight12;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -72,10 +78,9 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
                    placeholderImage:nil];
 }
 
-- (void)awakeFromNib{
-    [super awakeFromNib];
-    [self view];
-    self.ratingLabel.font = HelveticaNeueLight12;
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self configureView];
 }
 
 - (void)didReceiveMemoryWarning

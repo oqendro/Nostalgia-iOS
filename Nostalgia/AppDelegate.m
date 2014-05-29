@@ -13,6 +13,7 @@
 #import "FavoritesCVC.h"
 #import "InfoTVC.h"
 #import <RNFrostedSidebar.h>
+#import <UIAlertView+BlocksKit.h>
 
 typedef NS_ENUM(NSInteger, SideBarOption) {
     SideBarOption00s,
@@ -28,7 +29,6 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
 
 @property (nonatomic, strong) NSMutableIndexSet *optionIndices;
 @property (nonatomic, strong) ResultsCVC *resultsCVC;
-@property BOOL resultsCVCVisible;
 
 @end
 
@@ -87,7 +87,6 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
     aResultsCVC.managedObjectContext = [NSManagedObjectContext MR_defaultContext];
     [self addSideBarButtonItemToViewController:aResultsCVC];
     _resultsCVC = aResultsCVC;
-    self.resultsCVCVisible = YES;
     return _resultsCVC;
 }
 
@@ -122,56 +121,38 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
     [callout showInViewController:self.window.rootViewController animated:YES];
 }
 
-- (void)sidebar:(RNFrostedSidebar *)sidebar didEnable:(BOOL)itemEnabled itemAtIndex:(NSUInteger)index{
+- (void)sidebar:(RNFrostedSidebar *)sidebar didTapItemAtIndex:(NSUInteger)index{
     switch (index) {
         case SideBarOption00s: {
-            if (itemEnabled) {
-                [self.optionIndices addIndex:index];
-                self.resultsCVC.filterOptions = self.resultsCVC.filterOptions & ResultsCVCFilterOption00s;
-            } else {
-                [self.optionIndices removeIndex:index];
-                self.resultsCVC.filterOptions = self.resultsCVC.filterOptions & ~ResultsCVCFilterOption00s;
-            }
-            if (!self.resultsCVCVisible) {
-                [self changeRootVCWithViewController:self.resultsCVC];
-            }
+            NSLog(@"switch 00's");
+            [self.optionIndices removeAllIndexes];
+            [self.optionIndices addIndex:index];
+//                self.resultsCVC.filterOptions = self.resultsCVC.filterOptions & ResultsCVCFilterOption00s;
+            self.resultsCVC.filterOptions = ResultsCVCFilterOption00s;
+            [self changeRootVCWithViewController:self.resultsCVC];
         }
+            break;
         case SideBarOption90s: {
-            if (itemEnabled) {
-                [self.optionIndices addIndex:index];
-                self.resultsCVC.filterOptions = self.resultsCVC.filterOptions & ResultsCVCFilterOption90s;
-            } else {
-                [self.optionIndices removeIndex:index];
-                self.resultsCVC.filterOptions = self.resultsCVC.filterOptions & ~ResultsCVCFilterOption90s;
-            }
-            if (!self.resultsCVCVisible) {
-                [self changeRootVCWithViewController:self.resultsCVC];
-            }
+            NSLog(@"switch 90's");
+            [self.optionIndices removeAllIndexes];
+            [self.optionIndices addIndex:index];
+            self.resultsCVC.filterOptions = ResultsCVCFilterOption90s;
+            [self changeRootVCWithViewController:self.resultsCVC];
         }            break;
         case SideBarOption80s: {
-            if (itemEnabled) {
-                [self.optionIndices addIndex:index];
-                self.resultsCVC.filterOptions = self.resultsCVC.filterOptions & ResultsCVCFilterOption80s;
-            } else {
-                [self.optionIndices removeIndex:index];
-                self.resultsCVC.filterOptions = self.resultsCVC.filterOptions & ~ResultsCVCFilterOption80s;
-            }
-            if (!self.resultsCVCVisible) {
-                [self changeRootVCWithViewController:self.resultsCVC];
-            }
+            NSLog(@"switch 80's");
+            [self.optionIndices removeAllIndexes];
+            [self.optionIndices addIndex:index];
+            self.resultsCVC.filterOptions = ResultsCVCFilterOption80s;
+            [self changeRootVCWithViewController:self.resultsCVC];
         }
             break;
         case SideBarOption70s: {
-            if (itemEnabled) {
-                [self.optionIndices addIndex:index];
-                self.resultsCVC.filterOptions = self.resultsCVC.filterOptions & ResultsCVCFilterOption70s;
-            } else {
-                [self.optionIndices removeIndex:index];
-                self.resultsCVC.filterOptions = self.resultsCVC.filterOptions & ~ResultsCVCFilterOption70s;
-            }
-            if (!self.resultsCVCVisible) {
-                [self changeRootVCWithViewController:self.resultsCVC];
-            }
+            NSLog(@"switch 70's");
+            [self.optionIndices removeAllIndexes];
+            [self.optionIndices addIndex:index];
+            self.resultsCVC.filterOptions = ResultsCVCFilterOption70s;
+            [self changeRootVCWithViewController:self.resultsCVC];
         }
             break;
         case SideBarOptionFavorites: {
@@ -179,16 +160,14 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
                 [self.optionIndices removeAllIndexes];
                 [self.optionIndices addIndex:index];
                 [sidebar dismissAnimated:YES];
-                self.resultsCVCVisible = NO;
                 FavoritesCVC *favoritesCVC = [[FavoritesCVC alloc] initFromStoryboard];
                 [self addSideBarButtonItemToViewController:favoritesCVC];
                 [self changeRootVCWithViewController:favoritesCVC];
             } else {
-#warning LOCALIZE
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Not Available"
-                                                                message:@"You must sign in to be able to use the Favorites feature."
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"NOT_AVAILABLE_TITLE", nil)
+                                                                message:NSLocalizedString(@"SIGNIN_REQUIRED_MESSAGE", nil)
                                                                delegate:nil
-                                                      cancelButtonTitle:@"OK"
+                                                      cancelButtonTitle:NSLocalizedString(@"OK", nil)
                                                       otherButtonTitles:nil, nil];
                 [alert show];
             }
@@ -199,7 +178,6 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
             [self.optionIndices addIndex:index];
             [sidebar dismissAnimated:YES];
             InfoTVC *favoritesCVC = [[InfoTVC alloc] initFromStoryboard];
-            self.resultsCVCVisible = NO;
             [self addSideBarButtonItemToViewController:favoritesCVC];
             [self changeRootVCWithViewController:favoritesCVC];
         }
@@ -208,7 +186,20 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
             [self.optionIndices removeAllIndexes];
             [self.optionIndices addIndex:index];
             if ([PFUser currentUser]) {
-                NSLog(@"lougout");
+                [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"LOGOUT", nil)
+                                               message:NSLocalizedString(@"LOGOUT_MESSAGE", nil)
+                                     cancelButtonTitle:nil
+                                     otherButtonTitles:@[NSLocalizedString(@"LOGOUT", nil), NSLocalizedString(@"CANCEL", comment)]
+                                               handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                                                   switch (buttonIndex) {
+                                                       case 0: {
+                                                           [PFUser logOut];
+                                                       }
+                                                           break;
+                                                       default:
+                                                           break;
+                                                   }
+                                               }];
             } else {
                 SignUpTVC *signupTVC = [[SignUpTVC alloc] initWithCompletionBlock:^(SignInResult result, NSError *error) {
                     switch (result) {
@@ -219,19 +210,15 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
                             break;
                         case SignInResultLoggedIn: {
                             [self.optionIndices removeAllIndexes];
-                            [self.optionIndices addIndex:index];
-                            // set Results VC
-                            [self.optionIndices addIndex:index];
-                            self.resultsCVC.filterOptions = self.resultsCVC.filterOptions & ResultsCVCFilterOption00s;
+                            [self.optionIndices addIndex:ResultsCVCFilterOption00s];
+                            self.resultsCVC.filterOptions = ResultsCVCFilterOption00s;
                             [self changeRootVCWithViewController:self.resultsCVC];
                         }
                             break;
                         case SignInResultSignedUp: {
                             [self.optionIndices removeAllIndexes];
-                            [self.optionIndices addIndex:index];
-                            // set Results VC
-                            [self.optionIndices addIndex:index];
-                            self.resultsCVC.filterOptions = self.resultsCVC.filterOptions & ResultsCVCFilterOption00s;
+                            [self.optionIndices addIndex:ResultsCVCFilterOption00s];
+                            self.resultsCVC.filterOptions = ResultsCVCFilterOption00s;
                             [self changeRootVCWithViewController:self.resultsCVC];
                         }
                             break;
@@ -249,6 +236,8 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
         default:
             break;
     }
+    [sidebar dismissAnimated:YES];
+
 }
 
 #pragma mark - Setup/Nav
@@ -257,6 +246,8 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
     self.optionIndices = [NSMutableIndexSet indexSet];
 
     if ([PFUser currentUser]) {
+        [self.optionIndices addIndex:ResultsCVCFilterOption00s];
+        self.resultsCVC.filterOptions = ResultsCVCFilterOption00s;
         [self changeRootVCWithViewController:self.resultsCVC];
     } else {
         UINavigationController *navVC = (UINavigationController *)self.window.rootViewController;
@@ -304,6 +295,10 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
 
 - (void)changeRootVCWithViewController:(UIViewController *)viewController{
     UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+    if (viewController == navController.topViewController) {
+        return;
+    }
+
     [navController setViewControllers:@[viewController] animated:NO];
 }
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="BPo-jH-90O">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="BPo-jH-90O">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -170,6 +170,7 @@
                     <navigationItem key="navigationItem" id="3dG-2j-F4C"/>
                     <connections>
                         <segue destination="W4q-Bg-Ygw" kind="push" identifier="SongDetailVC" id="n10-bB-k28"/>
+                        <segue destination="96s-zR-7RR" kind="push" identifier="MovieDetailVC" id="P3V-gi-ROO"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="35F-A3-XYQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -652,8 +653,11 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                     <navigationItem key="navigationItem" id="H5P-9l-6JX"/>
                     <connections>
                         <outlet property="imageView" destination="NUc-Nm-njt" id="gLa-qt-nqG"/>
+                        <outlet property="ratingContainerView" destination="iBK-7l-9jj" id="fSG-tK-P6w"/>
+                        <outlet property="ratingLabel" destination="jld-Zm-z72" id="9cC-Qe-VQv"/>
                         <outlet property="titleLabel" destination="J7O-oe-bdo" id="SXx-BO-NNl"/>
                         <outlet property="toolBAr" destination="pmR-H2-R1p" id="as3-w1-SNs"/>
+                        <outlet property="transparencyView" destination="sMs-YT-OrV" id="ik2-Dn-zj7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1ot-UV-Djk" userLabel="First Responder" sceneMemberID="firstResponder"/>

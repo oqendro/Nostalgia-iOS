@@ -213,8 +213,14 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
         if (error) {
             NSLog(@"%@",error.debugDescription);
         }
-        NSNumber *averageRating = object;
-        self.ratingControl.rating = averageRating.integerValue;
+        if ([object isKindOfClass:[NSNumber class]]) {
+            NSNumber *averageRating = object;
+            self.ratingControl.rating = averageRating.integerValue;
+        }
+        if ([object isKindOfClass:[NSArray class]]) {
+            NSArray *array = object;
+            NSLog(@"cloud funtion returned array %@",array);
+        }
     }];
 }
 

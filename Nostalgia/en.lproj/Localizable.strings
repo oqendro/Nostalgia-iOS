@@ -65,3 +65,8 @@
 /* Title of detail view controllers that says Info */
 "INFO_TITLE" = "Info";
 "FILTER" = "Filter";
+"NOT_AVAILABLE_TITLE" = "Not Available";
+"SIGNIN_REQUIRED_MESSAGE" = "You must sign in to be able to use the Favorites feature.";
+"LOGOUT" = "Logout";
+"LOGOUT_MESSAGE" = "Are you sure you want to logout?";
+"CANCEL" = "Cancel";

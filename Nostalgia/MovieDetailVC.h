@@ -13,4 +13,6 @@
 
 @property (nonatomic, strong) Movie *movie;
 
+- (IBAction)infoButtonPressed:(id)sender;
+
 @end
