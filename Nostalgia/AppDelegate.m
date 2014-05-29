@@ -183,8 +183,8 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
         }
             break;
         case SideBarOptionLoginLogout: {
+            NSInteger tempInt = [self.optionIndices firstIndex];
             [self.optionIndices removeAllIndexes];
-            [self.optionIndices addIndex:index];
             if ([PFUser currentUser]) {
                 [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"LOGOUT", nil)
                                                message:NSLocalizedString(@"LOGOUT_MESSAGE", nil)
@@ -194,13 +194,19 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
                                                    switch (buttonIndex) {
                                                        case 0: {
                                                            [PFUser logOut];
+                                                           [self.optionIndices addIndex:tempInt];
                                                        }
                                                            break;
+                                                       case 1: {
+                                                           [self.optionIndices addIndex:tempInt];
+                                                       }
                                                        default:
                                                            break;
                                                    }
                                                }];
             } else {
+                [self.optionIndices removeAllIndexes];
+                [self.optionIndices addIndex:index];
                 SignUpTVC *signupTVC = [[SignUpTVC alloc] initWithCompletionBlock:^(SignInResult result, NSError *error) {
                     switch (result) {
                         case SignInResultCancelled:
