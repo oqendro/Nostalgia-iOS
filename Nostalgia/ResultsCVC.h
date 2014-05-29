@@ -8,19 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_OPTIONS(NSUInteger, ResultsCVCFilterOptions) {
+    ResultsCVCFilterOption00s = 1 << 0,
+    ResultsCVCFilterOption90s = 1 << 1,
+    ResultsCVCFilterOption80s = 1 << 2,
+    ResultsCVCFilterOption70s = 1 << 3,
+};
+
 @interface ResultsCVC : UICollectionViewController
 
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic) ResultsCVCFilterOptions filterOptions;
 
 - (id)initFromDefaultStoryboardWithYears:(NSArray *)years;
-/*
-    pass in array of years to show
-*/
 
-@property (nonatomic, strong) NSArray *years;
-
-/*
-- (void)addYearsToShow:(NSArray *)years;
-- (void)removeYearsToShow:(NSArray *)years;
- */
 @end

@@ -24,6 +24,7 @@
 }
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic) NSArray *years;
 
 @end
 
@@ -103,11 +104,12 @@ static NSString *headerViewIdentifier = @"HeaderView";
     }
 }
 
-- (void)setYears:(NSArray *)years{
-    _years = years;
-    NSLog(@"setting %@",_years);
-    NSPredicate *yearPredicate = [NSPredicate predicateWithFormat:@"year IN %@",_years];
-
+- (void)setFilterOptions:(ResultsCVCFilterOptions)filterOptions {
+    
+    _filterOptions = filterOptions;
+    
+    NSPredicate *yearPredicate = [NSPredicate predicateWithFormat:@"year IN %@",self.years];
+    
     NSMutableArray *filterPredicatesArray = [[NSMutableArray alloc] init];
     for (NSString *mediaType in [self filters]) {
         NSPredicate *mediaTypePredicate = [NSPredicate predicateWithFormat:@"mediaType == %@",mediaType];
@@ -122,20 +124,30 @@ static NSString *headerViewIdentifier = @"HeaderView";
     }
     [self.collectionView reloadData];
     [self loadMedia];
-}
-/*
-- (void)addYearsToShow:(NSArray *)years{
-    [self.years addObjectsFromArray:years];
-    NSSet *uniquingSet = [NSSet setWithArray:self.years];
-    self.years = [[NSMutableArray alloc] initWithArray:uniquingSet.allObjects];
+
 }
 
-- (void)removeYearsToShow:(NSArray *)years{
-    [self.years removeObjectsInArray:years];
-    NSSet *uniquingSet = [NSSet setWithArray:self.years];
-    self.years = [[NSMutableArray alloc] initWithArray:uniquingSet.allObjects];
+- (NSArray *)years {
+    NSArray *years = @[];
+    if ((self.filterOptions & ResultsCVCFilterOption00s) ) {
+        // add 00s
+        years = [years arrayByAddingObjectsFromArray:@[@2000, @2001, @2002, @2003, @2004, @2005, @2006, @2007, @2008, @2009]];
+    }
+    if ((self.filterOptions & ResultsCVCFilterOption90s)) {
+        //add 90s
+        years = [years arrayByAddingObjectsFromArray:@[@1990, @1991, @1992, @1993, @1994, @1995, @1996, @1997, @1998, @1999]];
+    }
+    if ((self.filterOptions & ResultsCVCFilterOption80s)) {
+        //add 80s
+        years = [years arrayByAddingObjectsFromArray:@[@1980, @1981, @1982, @1983, @1984, @1985, @1986, @1987, @1988, @1989]];
+    }
+    if ((self.filterOptions & ResultsCVCFilterOption70s)) {
+        //add 70s
+        years = [years arrayByAddingObjectsFromArray:@[@1970, @1971, @1972, @1973, @1974, @1975, @1976, @1977, @1978, @1979]];
+    }
+    return years;
 }
-*/
+
 - (void)filterBarButtonPressed:(UIBarButtonItem *)filterBarButton{
     FilterTVC *filterTVC = [[FilterTVC alloc] initWithStyle:UITableViewStylePlain];
     filterTVC.delegate = self;
@@ -144,7 +156,8 @@ static NSString *headerViewIdentifier = @"HeaderView";
                      completion:NULL];
 }
 
-- (NSArray *)filters{       NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+- (NSArray *)filters{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSArray *filters = [NSArray array];
     if ([[defaults objectForKey:songsPreferenceKey] boolValue]) {
         filters = [filters arrayByAddingObject:@"Song"];

@@ -15,6 +15,7 @@
 #import <RNFrostedSidebar.h>
 
 typedef NS_ENUM(NSInteger, SideBarOption) {
+    SideBarOption00s,
     SideBarOption90s,
     SideBarOption80s,
     SideBarOption70s,
@@ -28,6 +29,7 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
 @property (nonatomic, strong) NSMutableIndexSet *optionIndices;
 @property (nonatomic, strong) ResultsCVC *resultsCVC;
 @property BOOL resultsCVCVisible;
+
 @end
 
 @implementation AppDelegate
@@ -92,51 +94,28 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
 #pragma mark - RNFrostedSideBar
 
 - (void)showCallout{
-#warning TODO give differtn options for signed in vs signed out
     NSArray *images;
     NSArray *colors;
-    if ([PFUser currentUser]) {
-        NSLog(@"cuurent user %@",[[PFUser currentUser] objectForKey:@"firstName"]);
-        images = @[
-                   [UIImage imageNamed:@"00s"],
-                   [UIImage imageNamed:@"90s"],
-                   [UIImage imageNamed:@"80s"],
-                   [UIImage imageNamed:@"70s"],
-                   [UIImage imageNamed:@"726-star-filled-white"],
-                   [UIImage imageNamed:@"724-info-white"],
-                   [UIImage imageNamed:@"769-male-white"],
-                    ];
-        colors = @[
-                   [UIColor colorWithRed:240/255.f green:159/255.f blue:254/255.f alpha:1],
-                   [UIColor colorWithRed:240/255.f green:159/255.f blue:254/255.f alpha:1],
-                   [UIColor colorWithRed:240/255.f green:159/255.f blue:254/255.f alpha:1],
-                   [UIColor colorWithRed:240/255.f green:159/255.f blue:254/255.f alpha:1],
-                   [UIColor colorWithRed:255/255.f green:137/255.f blue:167/255.f alpha:1],
-                   [UIColor colorWithRed:126/255.f green:242/255.f blue:195/255.f alpha:1],
-                   [UIColor colorWithRed:119/255.f green:152/255.f blue:255/255.f alpha:1],
-                   ];
-
-    } else {
-        images = @[
-                   [UIImage imageNamed:@"00s"],
-                   [UIImage imageNamed:@"90s"],
-                   [UIImage imageNamed:@"80s"],
-                   [UIImage imageNamed:@"70s"],
-                   [UIImage imageNamed:@"726-star-filled-white"],
-                   [UIImage imageNamed:@"724-info-white"],
-                   [UIImage imageNamed:@"769-male-white"],
-                   ];
-        colors = @[
-                   [UIColor colorWithRed:240/255.f green:159/255.f blue:254/255.f alpha:1],
-                   [UIColor colorWithRed:240/255.f green:159/255.f blue:254/255.f alpha:1],
-                   [UIColor colorWithRed:240/255.f green:159/255.f blue:254/255.f alpha:1],
-                   [UIColor colorWithRed:240/255.f green:159/255.f blue:254/255.f alpha:1],
-                   [UIColor colorWithRed:255/255.f green:137/255.f blue:167/255.f alpha:1],
-                   [UIColor colorWithRed:126/255.f green:242/255.f blue:195/255.f alpha:1],
-                   [UIColor colorWithRed:119/255.f green:152/255.f blue:255/255.f alpha:1],
-                   ];
-    }
     
+    images = @[
+               [UIImage imageNamed:@"00s"],
+               [UIImage imageNamed:@"90s"],
+               [UIImage imageNamed:@"80s"],
+               [UIImage imageNamed:@"70s"],
+               [UIImage imageNamed:@"726-star-filled-white"],
+               [UIImage imageNamed:@"724-info-white"],
+               [UIImage imageNamed:@"769-male-white"],
+               ];
+    colors = @[
+               [UIColor colorWithRed:240/255.f green:159/255.f blue:254/255.f alpha:1],
+               [UIColor colorWithRed:240/255.f green:159/255.f blue:254/255.f alpha:1],
+               [UIColor colorWithRed:240/255.f green:159/255.f blue:254/255.f alpha:1],
+               [UIColor colorWithRed:240/255.f green:159/255.f blue:254/255.f alpha:1],
+               [UIColor colorWithRed:255/255.f green:137/255.f blue:167/255.f alpha:1],
+               [UIColor colorWithRed:126/255.f green:242/255.f blue:195/255.f alpha:1],
+               [UIColor colorWithRed:119/255.f green:152/255.f blue:255/255.f alpha:1],
+               ];
+
     RNFrostedSidebar *callout = [[RNFrostedSidebar alloc] initWithImages:images selectedIndices:self.optionIndices borderColors:colors];
     callout.itemSize = CGSizeMake(60, 60);
     callout.delegate = self;
@@ -145,62 +124,52 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
 
 - (void)sidebar:(RNFrostedSidebar *)sidebar didEnable:(BOOL)itemEnabled itemAtIndex:(NSUInteger)index{
     switch (index) {
-        case SideBarOption90s: {
-            if (self.resultsCVCVisible) {
-                //modify fetch
-                if (itemEnabled) {
-                    [self.optionIndices addIndex:index];
-                } else {
-                    [self.optionIndices removeIndex:index];
-                }
-                self.resultsCVC.years = [self yearsForIndexSex:self.optionIndices];
-            } else {
-                [self.optionIndices removeAllIndexes];
+        case SideBarOption00s: {
+            if (itemEnabled) {
                 [self.optionIndices addIndex:index];
-                // set Results VC
-                [sidebar dismissAnimated:YES];
-                self.resultsCVCVisible = YES;
-                self.resultsCVC.years = [self nineties];
+                self.resultsCVC.filterOptions = self.resultsCVC.filterOptions & ResultsCVCFilterOption00s;
+            } else {
+                [self.optionIndices removeIndex:index];
+                self.resultsCVC.filterOptions = self.resultsCVC.filterOptions & ~ResultsCVCFilterOption00s;
+            }
+            if (!self.resultsCVCVisible) {
                 [self changeRootVCWithViewController:self.resultsCVC];
             }
         }
-            break;
-        case SideBarOption80s: {
-            if (self.resultsCVCVisible) {
-                //modify fetch
-                if (itemEnabled) {
-                    [self.optionIndices addIndex:index];
-                } else {
-                    [self.optionIndices removeIndex:index];
-                }
-                self.resultsCVC.years = [self yearsForIndexSex:self.optionIndices];
-            } else {
-                [self.optionIndices removeAllIndexes];
+        case SideBarOption90s: {
+            if (itemEnabled) {
                 [self.optionIndices addIndex:index];
-                // set Results VC
-                [sidebar dismissAnimated:YES];
-                self.resultsCVCVisible = YES;
-                self.resultsCVC.years = [self eighties];
+                self.resultsCVC.filterOptions = self.resultsCVC.filterOptions & ResultsCVCFilterOption90s;
+            } else {
+                [self.optionIndices removeIndex:index];
+                self.resultsCVC.filterOptions = self.resultsCVC.filterOptions & ~ResultsCVCFilterOption90s;
+            }
+            if (!self.resultsCVCVisible) {
+                [self changeRootVCWithViewController:self.resultsCVC];
+            }
+        }            break;
+        case SideBarOption80s: {
+            if (itemEnabled) {
+                [self.optionIndices addIndex:index];
+                self.resultsCVC.filterOptions = self.resultsCVC.filterOptions & ResultsCVCFilterOption80s;
+            } else {
+                [self.optionIndices removeIndex:index];
+                self.resultsCVC.filterOptions = self.resultsCVC.filterOptions & ~ResultsCVCFilterOption80s;
+            }
+            if (!self.resultsCVCVisible) {
                 [self changeRootVCWithViewController:self.resultsCVC];
             }
         }
             break;
         case SideBarOption70s: {
-            if (self.resultsCVCVisible) {
-                //modify fetch
-                if (itemEnabled) {
-                    [self.optionIndices addIndex:index];
-                } else {
-                    [self.optionIndices removeIndex:index];
-                }
-                self.resultsCVC.years = [self yearsForIndexSex:self.optionIndices];
-            } else {
-                [self.optionIndices removeAllIndexes];
+            if (itemEnabled) {
                 [self.optionIndices addIndex:index];
-                // set Results VC
-                [sidebar dismissAnimated:YES];
-                self.resultsCVCVisible = YES;
-                self.resultsCVC.years = [self seventies];
+                self.resultsCVC.filterOptions = self.resultsCVC.filterOptions & ResultsCVCFilterOption70s;
+            } else {
+                [self.optionIndices removeIndex:index];
+                self.resultsCVC.filterOptions = self.resultsCVC.filterOptions & ~ResultsCVCFilterOption70s;
+            }
+            if (!self.resultsCVCVisible) {
                 [self changeRootVCWithViewController:self.resultsCVC];
             }
         }
@@ -252,7 +221,8 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
                             [self.optionIndices removeAllIndexes];
                             [self.optionIndices addIndex:index];
                             // set Results VC
-                            self.resultsCVC.years = [self nineties];
+                            [self.optionIndices addIndex:index];
+                            self.resultsCVC.filterOptions = self.resultsCVC.filterOptions & ResultsCVCFilterOption00s;
                             [self changeRootVCWithViewController:self.resultsCVC];
                         }
                             break;
@@ -260,7 +230,8 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
                             [self.optionIndices removeAllIndexes];
                             [self.optionIndices addIndex:index];
                             // set Results VC
-                            self.resultsCVC.years = [self nineties];
+                            [self.optionIndices addIndex:index];
+                            self.resultsCVC.filterOptions = self.resultsCVC.filterOptions & ResultsCVCFilterOption00s;
                             [self changeRootVCWithViewController:self.resultsCVC];
                         }
                             break;
@@ -278,13 +249,12 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
         default:
             break;
     }
-    NSLog(@"%@",self.resultsCVC.years);
 }
 
 #pragma mark - Setup/Nav
 
 - (void)setupInitialVC{
-    self.optionIndices = [NSMutableIndexSet indexSetWithIndex:SideBarOption90s];
+    self.optionIndices = [NSMutableIndexSet indexSet];
 
     if ([PFUser currentUser]) {
         [self changeRootVCWithViewController:self.resultsCVC];
@@ -295,7 +265,7 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
         UIBarButtonItem *skipSignUp = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"SKIP_LOGIN", @"Title of skip login button")
                                                                        style:UIBarButtonItemStylePlain
                                                                       target:self
-                                                                      action:@selector(show90s)];
+                                                                      action:@selector(showCallout)];
         signUpVC.navigationItem.rightBarButtonItem = skipSignUp;
         
         signUpVC.hidesCancelButton = YES;
@@ -360,7 +330,4 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
     return navVC.topViewController;
 }
 
-- (void)show90s{
-    [self showCallout];
-}
 @end
