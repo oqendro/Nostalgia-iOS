@@ -125,7 +125,6 @@ static NSString *songCellIdentifier = @"SongCell";
     NSURL *imageURL = [NSURL URLWithString:song.thumbnail.url];
     [cell.imageView setImageWithURL:imageURL
                    placeholderImage:[UIImage imageNamed:@"767-photo-1-white"]];
-#warning change to rating
     cell.ratingLabel.text = song.rank.stringValue;
     return cell;
 }
