@@ -8,7 +8,7 @@
 
 #import "Movie+Networking.h"
 #import "Thumbnail.h"
-
+#warning DUPES ARE BEING CREATED
 @implementation Movie (Networking)
 
 + (void)loadMoviesForYears:(NSArray *)years withBlock:(void (^)(NSArray *movies, NSError *error))block{

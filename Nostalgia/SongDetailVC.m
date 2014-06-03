@@ -129,12 +129,18 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
 #warning PUT IN CONSTANTS & add html and pics
 - (void)shareAsText{
     if ([MFMessageComposeViewController canSendText]) {
-        NSString *first = [PFUser currentUser][@"firstName"];
-        NSString *last = [PFUser currentUser][@"lastName"];
-
         MFMessageComposeViewController *messageVC = [[MFMessageComposeViewController alloc] init];
         messageVC.messageComposeDelegate = self;
-        NSString *textBody = [NSString stringWithFormat:@"%@ %@ wanted to share %@ by %@ with you", first, last, self.song.title, self.song.artist];
+        
+        NSString *textBody;
+        if ([PFUser currentUser]) {
+            NSString *first = [PFUser currentUser][@"firstName"];
+            NSString *last = [PFUser currentUser][@"lastName"];
+             textBody = [NSString stringWithFormat:@"%@ %@ wanted to share %@ by %@ with you", first, last, self.song.title, self.song.artist];
+        } else {
+            textBody = [NSString stringWithFormat:@"Check out %@ by %@", self.song.title, self.song.artist];
+        }
+        
         NSString *linkToApp = @"www.nostaligia.com";
         messageVC.body = [NSString stringWithFormat:@"%@ \n %@",textBody, linkToApp];
         [self presentViewController:messageVC animated:YES completion:NULL];
@@ -167,9 +173,14 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
     if ([MFMailComposeViewController canSendMail]) {
         MFMailComposeViewController *mailVC = [[MFMailComposeViewController alloc] init];
         mailVC.mailComposeDelegate = self;
-        NSString *first = [PFUser currentUser][@"firstName"];
-        NSString *last = [PFUser currentUser][@"lastName"];
-        NSString *textBody = [NSString stringWithFormat:@"%@ %@ wanted to share %@ by %@ with you", first, last, self.song.title, self.song.artist];
+        NSString *textBody;
+        if ([PFUser currentUser]) {
+            NSString *first = [PFUser currentUser][@"firstName"];
+            NSString *last = [PFUser currentUser][@"lastName"];
+            textBody = [NSString stringWithFormat:@"%@ %@ wanted to share %@ by %@ with you", first, last, self.song.title, self.song.artist];
+        } else {
+            textBody = [NSString stringWithFormat:@"Check out %@ by %@", self.song.title, self.song.artist];
+        }
         NSString *linkToApp = @"www.nostaligia.com";
         [mailVC setMessageBody:[NSString stringWithFormat:@"%@ \n %@",textBody, linkToApp] isHTML:NO];
         [self presentViewController:mailVC animated:YES completion:NULL];

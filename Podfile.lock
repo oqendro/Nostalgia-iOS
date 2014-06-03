@@ -44,6 +44,7 @@ PODS:
     - Facebook-iOS-SDK (~> 3.11)
   - RNFrostedSidebar (0.2.0)
   - SHEmailValidator (1.0.2)
+  - UIColor+iOS7Colors (1.0.0)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.2.1)
@@ -53,6 +54,7 @@ DEPENDENCIES:
   - Parse (~> 1.2.9)
   - RNFrostedSidebar (~> 0.2.0)
   - SHEmailValidator (~> 1.0.2)
+  - UIColor+iOS7Colors
 
 SPEC CHECKSUMS:
   AFNetworking: ab63e259fe91eef4519b371ef0a4955af0e73e64
@@ -64,5 +66,6 @@ SPEC CHECKSUMS:
   Parse: ffebaecaddd32cb52671010f81567c298ff93d04
   RNFrostedSidebar: f1d95d9b2627f13cc10e75d36e751a623eec079c
   SHEmailValidator: 04e1a7590a536dcf6bd6ac6ecf54cfc25794fbac
+  UIColor+iOS7Colors: 224067b86964f56b54fdd199c4f5295ef50d9f78
 
-COCOAPODS: 0.32.1
+COCOAPODS: 0.33.1

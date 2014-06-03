@@ -256,6 +256,10 @@ static NSString *headerViewIdentifier = @"HeaderView";
                                                                           withReuseIdentifier:headerViewIdentifier
                                                                                  forIndexPath:indexPath];
     NSString *title = [[[self.fetchedResultsController sections] objectAtIndex:indexPath.section] name];
+    // little hack to make plural
+    title = [title stringByAppendingString:@"s"];
+    
+    
     UILabel *titleLabel = (UILabel *)[header viewWithTag:187];
     titleLabel.text = title;
     return header;
@@ -263,7 +267,6 @@ static NSString *headerViewIdentifier = @"HeaderView";
 
 #pragma mark - UICollectionViewDelegateFlowLayout
 
-#warning put in constants
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     Media *media = [self.fetchedResultsController objectAtIndexPath: indexPath];

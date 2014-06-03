@@ -10,5 +10,6 @@ target "Nostalgia" do
     pod 'RNFrostedSidebar', '~> 0.2.0'
     pod 'AMRatingControl', '~> 1.3.0'
     pod 'BlocksKit'
+    pod 'UIColor+iOS7Colors'
 end
 

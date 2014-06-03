@@ -10,6 +10,7 @@
 #import "TextFieldCell.h"
 #import "SignUpCell.h"
 #import <SHEmailValidator.h>
+#import <UIColor+iOS7Colors.h>
 #import "DatePickerTVC.h"
 
 typedef NS_ENUM(NSInteger, SignUpCellType) {
@@ -413,7 +414,7 @@ static NSString *textFieldCellIdentifier = @"TextFieldCell";
                 
                 weakSelf.signUpLoginCell.label.enabled = YES;
                 weakSelf.signUpLoginCell.userInteractionEnabled = YES;
-                weakSelf.signUpLoginCell.backgroundColor = [UIColor orangeColor];
+                weakSelf.signUpLoginCell.backgroundColor = [UIColor iOS7greenColor];
             } else {
                 weakSelf.signUpLoginCell.label.enabled = NO;;
                 weakSelf.signUpLoginCell.userInteractionEnabled = NO;
@@ -426,7 +427,7 @@ static NSString *textFieldCellIdentifier = @"TextFieldCell";
                 weakSelf.passwordCell.textField.text.length >= numberOfCharactersRequired) {
                 weakSelf.signUpLoginCell.label.enabled = YES;
                 weakSelf.signUpLoginCell.userInteractionEnabled = YES;
-                weakSelf.signUpLoginCell.backgroundColor = [UIColor orangeColor];
+                weakSelf.signUpLoginCell.backgroundColor = [UIColor iOS7greenColor];
             } else {
                 weakSelf.signUpLoginCell.label.enabled = NO;;
                 weakSelf.signUpLoginCell.userInteractionEnabled = NO;
