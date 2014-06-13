@@ -310,10 +310,11 @@ static NSString *headerViewIdentifier = @"HeaderView";
     NSPredicate *filtersPredicates = [NSCompoundPredicate orPredicateWithSubpredicates:filterPredicatesArray];
     songFetch.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[filtersPredicates, yearPredicate]];
     
+    NSSortDescriptor *ratingSD = [NSSortDescriptor sortDescriptorWithKey:@"rating" ascending:YES];
     NSSortDescriptor *rankSD = [NSSortDescriptor sortDescriptorWithKey:@"rank" ascending:YES];
     NSSortDescriptor *titleSD = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
     NSSortDescriptor *mediaTypeSD = [NSSortDescriptor sortDescriptorWithKey:@"mediaType" ascending:YES];
-    songFetch.sortDescriptors = @[mediaTypeSD, rankSD, titleSD];
+    songFetch.sortDescriptors = @[ratingSD ,mediaTypeSD, rankSD, titleSD];
     
     NSFetchedResultsController *FRC = [[NSFetchedResultsController alloc] initWithFetchRequest:songFetch
                                                                           managedObjectContext:[NSManagedObjectContext MR_defaultContext]
