@@ -138,7 +138,6 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
         self.ratingControl.enabled = NO;
         self.ratingLabel.text = @"Must Sign in to Rate";
     }
-    [self refreshLikes];
 }
 
 #warning PUT IN CONSTANTS & add html and pics
@@ -233,17 +232,6 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
     }
 }
 
-- (void)refreshLikes{
-    NSDictionary *params = @{@"movieID": self.movie.identifier};
-    [PFCloud callFunctionInBackground:@"averageStarsForMovieId" withParameters:params block:^(id object, NSError *error) {
-        if (error) {
-            NSLog(@"%@",error.debugDescription);
-        }
-        NSNumber *averageRating = object;
-        self.ratingControl.rating = averageRating.integerValue;
-    }];
-}
-
 #pragma mark - Getters
 
 - (UITableView *)tableView{
@@ -298,7 +286,7 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
                 [rating setObject:object forKey:@"movie"];
                 [rating saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                     if (!error) {
-                        NSLog(@"title %@ now has been added a rating of %@",[[rating objectForKey:@"song"] objectForKey:titleKey], [rating objectForKey:@"stars"]);
+                        NSLog(@"title %@ now has been added a rating of %@",[[rating objectForKey:@"movie"] objectForKey:titleKey], [rating objectForKey:@"stars"]);
                         [weakSelf updateMovie];
                     } else {
                         NSLog(@"%@",[error.userInfo objectForKey:NSLocalizedDescriptionKey]);
