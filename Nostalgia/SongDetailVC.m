@@ -10,6 +10,7 @@
 #import <UIImageView+AFNetworking.h>
 #import "Thumbnail.h"
 #import <AMRatingControl.h>
+#import "Song+Networking.h"
 
 @import MessageUI;
 
@@ -41,6 +42,7 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
     [super awakeFromNib];
     [self view];
     self.ratingLabel.font = HelveticaNeueLight12;
+    self.ratingLabel.textColor = [UIColor whiteColor];
 }
 
 - (void)viewDidLoad
@@ -93,6 +95,19 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
 
 #pragma mark - Convenience Methods
 
+- (void)updateSong {
+    PFObject *pfSong = [PFObject objectWithoutDataWithClassName:@"Song" objectId:self.song.identifier];
+    [pfSong fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        if (!error) {
+            [Song updateSongIfNeeded:self.song withPFObject:object];
+            [self.song.managedObjectContext save:nil];
+            [self configureView];
+        } else {
+            NSLog(@"%@",[error.userInfo objectForKey:NSLocalizedDescriptionKey]);
+        }
+    }];
+}
+
 - (void)showShareActionSheet:(UIBarButtonItem *)shareBarButtonItem{
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Share"
                                                              delegate:self
@@ -116,6 +131,8 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
     
     
     //ratings
+    self.ratingControl.rating = self.song.rating.integerValue;
+
     if ([PFUser currentUser]) {
         self.ratingControl.enabled = YES;
         self.ratingLabel.text = @"Tap a Star to Rate";
@@ -123,7 +140,6 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
         self.ratingControl.enabled = NO;
         self.ratingLabel.text = @"Must Sign in to Rate";
     }
-    [self refreshLikes];
 }
 
 #warning PUT IN CONSTANTS & add html and pics
@@ -218,23 +234,6 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
     }
 }
 
-- (void)refreshLikes{
-    NSDictionary *params = @{@"songID": self.song.identifier};
-    [PFCloud callFunctionInBackground:@"averageStarsForSongId" withParameters:params block:^(id object, NSError *error) {
-        if (error) {
-            NSLog(@"%@",error.debugDescription);
-        }
-        if ([object isKindOfClass:[NSNumber class]]) {
-            NSNumber *averageRating = object;
-            self.ratingControl.rating = averageRating.integerValue;
-        }
-        if ([object isKindOfClass:[NSArray class]]) {
-            NSArray *array = object;
-            NSLog(@"cloud funtion returned array %@",array);
-        }
-    }];
-}
-
 #pragma mark - Getters
 
 - (UITableView *)tableView{
@@ -280,22 +279,24 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
     _ratingControl.center = CGPointMake(self.ratingContainerView.frame.size.width / 2, self.ratingContainerView.frame.size.height / 2);
     __block SongDetailVC *weakSelf = self;
     _ratingControl.editingDidEndBlock = ^(NSUInteger rating) {
-        PFQuery *query = [PFQuery queryWithClassName:@"Song" predicate:[NSPredicate predicateWithFormat:@"objectId = %@",weakSelf.song.identifier]];
-        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-            NSLog(@"count %lu",(unsigned long)objects.count);
-            PFObject *songFound = objects.lastObject;
-            PFObject *rating = [PFObject objectWithClassName:@"Rating"];
-            [rating setObject:songFound forKey:@"song"];
-            NSLog(@"user is %@",[PFUser currentUser]);
-            [rating setObject:[PFUser currentUser] forKey:@"user"];
-            [rating saveEventually:^(BOOL succeeded, NSError *error) {
-                if (error) {
-                    NSLog(@"%@",error.debugDescription);
-                }
-                if (succeeded) {
-                    NSLog(@"YAYYY");
-                }
-            }];
+        PFObject *pfSong = [PFObject objectWithoutDataWithClassName:@"Song" objectId:weakSelf.song.identifier];
+        [pfSong fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+            if (!error) {
+                PFObject *rating = [PFObject objectWithClassName:@"SongRating"];
+                [rating setObject:[PFUser currentUser] forKey:@"user"];
+                [rating setObject:[NSNumber numberWithInteger:weakSelf.ratingControl.rating] forKey:@"stars"];
+                [rating setObject:object forKey:@"song"];
+                [rating saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    if (!error) {
+                        NSLog(@"title %@ now has been added a rating of %@",[[rating objectForKey:@"song"] objectForKey:titleKey], [rating objectForKey:@"stars"]);
+                        [weakSelf updateSong];
+                    } else {
+                        NSLog(@"%@",[error.userInfo objectForKey:NSLocalizedDescriptionKey]);
+                    }
+                }];
+            } else {
+                NSLog(@"%@",[error.userInfo objectForKey:NSLocalizedDescriptionKey]);
+            }
         }];
     };
     

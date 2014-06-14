@@ -5,6 +5,46 @@ Parse.Cloud.define("hello", function(request, response) {
   response.success("Hello world!");
 });
 
+// After Saving a Rating object update the rating on the Song object itself
+
+Parse.Cloud.afterSave("SongRating", function(request) {
+  var songQuery = new Parse.Query("Song");	
+		
+  songQuery.get(request.object.get("song").id, {
+    success: function(song) {
+    	var ratingQuery = new Parse.Query("SongRating");
+		ratingQuery.equalTo("song",song);
+		ratingQuery.find({
+			success: function(songRatings) {
+				//get all ratings
+				var ratingCount = songRatings.length;
+				console.log("count of ratings is " + ratingCount + " for song" + song.get("Title"));
+				//calculate average rating
+				var sum = 0;
+				for (var i = 0; i < songRatings.length; ++i) {
+					sum += songRatings[i].get("stars");
+					}
+				var averageRating = sum / songRatings.length;
+				console.log("average rating of" + song.get('Title') + " is " + averageRating);
+				song.set("rating",averageRating, 0);
+				song.save();
+			},
+			error: function(error) {
+      			console.error("Got an error " + error.code + " : " + error.message);
+			}
+		});
+    
+     	song.save();
+    },
+    error: function(error) {
+      console.error("Got an error " + error.code + " : " + error.message);
+    }
+  });
+
+
+});
+
+
 
 Parse.Cloud.define("averageStarsForSongId", function(request, response) {
 
@@ -64,7 +104,7 @@ Parse.Cloud.define("songForId", function(request, response) {
     }
   });
 });
-
+/*
 Parse.Cloud.define("averageStars", function(request, response) {
   var query = new Parse.Query("Review");
   query.equalTo("song", request.params.movie);
@@ -81,3 +121,4 @@ Parse.Cloud.define("averageStars", function(request, response) {
     }
   });
 });
+*/

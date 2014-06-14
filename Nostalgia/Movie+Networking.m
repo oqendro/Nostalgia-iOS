@@ -55,10 +55,8 @@
     __block NSArray *movies;
     NSError *error;
     NSPredicate *identifierPredicate = [NSPredicate predicateWithFormat:@"identifier == %@",identifier];
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Movie"];
-    request.predicate = identifierPredicate;
-    
-    movies = [localContext executeFetchRequest:request error:&error];
+    movies = [Movie MR_findAllWithPredicate:identifierPredicate
+                                  inContext:localContext];
     if (error) {
         NSLog(@"%@",error.debugDescription);
     }
@@ -82,7 +80,8 @@
             movie.rank = [PFObject objectForKey:rankKey];
             movie.genre = [PFObject objectForKey:genreKey];
             movie.mediaType = movieMediaTypeKey;
-
+            movie.rating = [PFObject objectForKey:ratingKey];
+            
             movie.cast = [PFObject objectForKey:movieCastKey];
             movie.director = [PFObject objectForKey:movieDirectorKey];
             
@@ -114,6 +113,7 @@
     newMovie.rank = [movieObject objectForKey:rankKey];
     newMovie.genre = [movieObject objectForKey:genreKey];
     newMovie.mediaType = movieMediaTypeKey;
+    newMovie.rating = [movieObject objectForKey:ratingKey];
 
     newMovie.cast = [movieObject objectForKey:movieCastKey];
     newMovie.director = [movieObject objectForKey:movieDirectorKey];

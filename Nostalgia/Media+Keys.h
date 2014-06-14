@@ -17,6 +17,7 @@ static NSString *thumbnailKey = @"Thumbnail";
 static NSString *titleKey = @"Title";
 static NSString *yearKey = @"Year";
 static NSString *genreKey = @"Genre";
+static NSString *ratingKey = @"rating";
 
 @interface Media (Keys)
 

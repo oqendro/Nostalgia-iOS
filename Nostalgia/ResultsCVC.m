@@ -238,7 +238,7 @@ static NSString *headerViewIdentifier = @"HeaderView";
     NSURL *imageURL = [NSURL URLWithString:song.thumbnail.url];
     [songCell.imageView setImageWithURL:imageURL
                        placeholderImage:[UIImage imageNamed:@"767-photo-1-white"]];
-    songCell.ratingLabel.text = song.rank.stringValue;
+    songCell.ratingLabel.text = song.rating.stringValue;
 }
 
 - (void)configureMovieCell:(MovieCell *)movieCell atIndexPath:(NSIndexPath *)indexPath{
@@ -247,7 +247,7 @@ static NSString *headerViewIdentifier = @"HeaderView";
     NSURL *imageURL = [NSURL URLWithString:movie.thumbnail.url];
     [movieCell.imageView setImageWithURL:imageURL
                        placeholderImage:[UIImage imageNamed:@"767-photo-1-white"]];
-    movieCell.ratingLabel.text = movie.rank.stringValue;
+    movieCell.ratingLabel.text = movie.rating.stringValue;
 
 }
 
@@ -310,11 +310,12 @@ static NSString *headerViewIdentifier = @"HeaderView";
     NSPredicate *filtersPredicates = [NSCompoundPredicate orPredicateWithSubpredicates:filterPredicatesArray];
     songFetch.predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[filtersPredicates, yearPredicate]];
     
-    NSSortDescriptor *ratingSD = [NSSortDescriptor sortDescriptorWithKey:@"rating" ascending:YES];
+    
+    NSSortDescriptor *mediaTypeSD = [NSSortDescriptor sortDescriptorWithKey:@"mediaType" ascending:YES];
+    NSSortDescriptor *ratingSD = [NSSortDescriptor sortDescriptorWithKey:@"rating" ascending:NO];
     NSSortDescriptor *rankSD = [NSSortDescriptor sortDescriptorWithKey:@"rank" ascending:YES];
     NSSortDescriptor *titleSD = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
-    NSSortDescriptor *mediaTypeSD = [NSSortDescriptor sortDescriptorWithKey:@"mediaType" ascending:YES];
-    songFetch.sortDescriptors = @[ratingSD ,mediaTypeSD, rankSD, titleSD];
+    songFetch.sortDescriptors = @[mediaTypeSD, ratingSD, rankSD, titleSD];
     
     NSFetchedResultsController *FRC = [[NSFetchedResultsController alloc] initWithFetchRequest:songFetch
                                                                           managedObjectContext:[NSManagedObjectContext MR_defaultContext]

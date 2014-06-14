@@ -55,10 +55,7 @@
     __block NSArray *songs;
     NSError *error;
     NSPredicate *identifierPredicate = [NSPredicate predicateWithFormat:@"identifier == %@",identifier];
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Song"];
-    request.predicate = identifierPredicate;
-
-    songs = [localContext executeFetchRequest:request error:&error];
+    songs = [Song MR_findAllWithPredicate:identifierPredicate inContext:localContext];
     if (error) {
         NSLog(@"%@",error.debugDescription);
     }
@@ -82,9 +79,9 @@
             song.genre = [PFObject objectForKey:genreKey];
             song.rank = [PFObject objectForKey:rankKey];
             song.title = [PFObject objectForKey:titleKey];
-
             song.album = [PFObject objectForKey:albumKey];
             song.artist = [PFObject objectForKey:artistKey];
+            song.rating = [PFObject objectForKey:ratingKey];
             
             PFFile *thumbnail = [PFObject objectForKey:thumbnailKey];
             song.thumbnail.name = thumbnail.name;
@@ -114,6 +111,7 @@
     newSong.title = [songObject objectForKey:titleKey];
     newSong.year = [songObject objectForKey:yearKey];
     newSong.mediaType = songMediaTypeKey;
+    newSong.rating = [songObject objectForKey:ratingKey];
 
     newSong.album = [songObject objectForKey:albumKey];
     newSong.artist = [songObject objectForKey:artistKey];

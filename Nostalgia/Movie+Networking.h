@@ -17,7 +17,9 @@ static NSString *movieMediaTypeKey = @"Movie";
 @interface Movie (Networking)
 
 + (void)loadMoviesForYears:(NSArray *)years withBlock:(void (^)(NSArray *songs, NSError *error))block;
-+ (void)loadMoviesWithBlock:(void (^)(NSArray *songs, NSError *error))block;
++ (void)updateMovieIfNeeded:(Movie *)movie withPFObject:(PFObject *)PFObject;
+
+//+ (void)loadMoviesWithBlock:(void (^)(NSArray *songs, NSError *error))block;
 //+ (NSURLSessionDataTask *)songsModifiedAfterDate:(NSDate *)date withBlock:(void (^)(NSArray *posts, NSError *error))block;
 
 @end

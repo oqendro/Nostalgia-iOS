@@ -10,6 +10,7 @@
 #import <UIImageView+AFNetworking.h>
 #import "Thumbnail.h"
 #import <AMRatingControl.h>
+#import "Movie+Networking.h"
 
 @import MessageUI;
 
@@ -39,6 +40,7 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
     [super awakeFromNib];
     [self view];
     self.ratingLabel.font = HelveticaNeueLight12;
+    self.ratingLabel.textColor = [UIColor whiteColor];
 }
 
 - (void)viewDidLoad
@@ -88,7 +90,21 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 #pragma mark - Convenience Methods
+
+- (void)updateMovie {
+    PFObject *pfmovie = [PFObject objectWithoutDataWithClassName:@"Movie" objectId:self.movie.identifier];
+    [pfmovie fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        if (!error) {
+            [Movie updateMovieIfNeeded:self.movie withPFObject:object];
+            [self.movie.managedObjectContext save:nil];
+            [self configureView];
+        } else {
+            NSLog(@"%@",[error.userInfo objectForKey:NSLocalizedDescriptionKey]);
+        }
+    }];
+}
 
 - (void)showShareActionSheet:(UIBarButtonItem *)shareBarButtonItem{
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Share"
@@ -113,6 +129,8 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
     
     
     //ratings
+    self.ratingControl.rating = self.movie.rating.integerValue;
+
     if ([PFUser currentUser]) {
         self.ratingControl.enabled = YES;
         self.ratingLabel.text = @"Tap a Star to Rate";
@@ -271,22 +289,24 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
     _ratingControl.center = CGPointMake(self.ratingContainerView.frame.size.width / 2, self.ratingContainerView.frame.size.height / 2);
     __block MovieDetailVC *weakSelf = self;
     _ratingControl.editingDidEndBlock = ^(NSUInteger rating) {
-        PFQuery *query = [PFQuery queryWithClassName:@"Movie" predicate:[NSPredicate predicateWithFormat:@"objectId = %@",weakSelf.movie.identifier]];
-        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-            NSLog(@"count %lu",(unsigned long)objects.count);
-            PFObject *songFound = objects.lastObject;
-            PFObject *rating = [PFObject objectWithClassName:@"Rating"];
-            [rating setObject:songFound forKey:@"movie"];
-            NSLog(@"user is %@",[PFUser currentUser]);
-            [rating setObject:[PFUser currentUser] forKey:@"user"];
-            [rating saveEventually:^(BOOL succeeded, NSError *error) {
-                if (error) {
-                    NSLog(@"%@",error.debugDescription);
-                }
-                if (succeeded) {
-                    NSLog(@"YAYYY");
-                }
-            }];
+        PFObject *pfMovie = [PFObject objectWithoutDataWithClassName:@"Movie" objectId:weakSelf.movie.identifier];
+        [pfMovie fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+            if (!error) {
+                PFObject *rating = [PFObject objectWithClassName:@"MovieRating"];
+                [rating setObject:[PFUser currentUser] forKey:@"user"];
+                [rating setObject:[NSNumber numberWithInteger:weakSelf.ratingControl.rating] forKey:@"stars"];
+                [rating setObject:object forKey:@"movie"];
+                [rating saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    if (!error) {
+                        NSLog(@"title %@ now has been added a rating of %@",[[rating objectForKey:@"song"] objectForKey:titleKey], [rating objectForKey:@"stars"]);
+                        [weakSelf updateMovie];
+                    } else {
+                        NSLog(@"%@",[error.userInfo objectForKey:NSLocalizedDescriptionKey]);
+                    }
+                }];
+            } else {
+                NSLog(@"%@",[error.userInfo objectForKey:NSLocalizedDescriptionKey]);
+            }
         }];
     };
     
