@@ -192,7 +192,7 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
         if ([PFUser currentUser]) {
             NSString *first = [PFUser currentUser][@"firstName"];
             NSString *last = [PFUser currentUser][@"lastName"];
-             textBody = [NSString stringWithFormat:@"%@ %@ wanted to share %@ by %@ with you", first, last, self.song.title, self.song.artist];
+             textBody = [NSString stringWithFormat:@"%@ %@ would like to share %@ by %@ with you", first, last, self.song.title, self.song.artist];
         } else {
             textBody = [NSString stringWithFormat:@"Check out %@ by %@", self.song.title, self.song.artist];
         }
@@ -245,7 +245,7 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
         if ([PFUser currentUser]) {
             NSString *first = [PFUser currentUser][@"firstName"];
             NSString *last = [PFUser currentUser][@"lastName"];
-            textBody = [NSString stringWithFormat:@"%@ %@ wanted to share %@ by %@ with you.", first, last, self.song.title, self.song.artist];
+            textBody = [NSString stringWithFormat:@"%@ %@ would like to share %@ by %@ with you on Looking Back.", first, last, self.song.title, self.song.artist];
         } else {
             textBody = [NSString stringWithFormat:@"Check out %@ by %@.", self.song.title, self.song.artist];
         }

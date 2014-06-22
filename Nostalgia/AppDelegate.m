@@ -192,6 +192,11 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
                                                    switch (buttonIndex) {
                                                        case 0: {
                                                            [PFUser logOut];
+                                                           [UIAlertView bk_showAlertViewWithTitle:@"Logged Off"
+                                                                                          message:@"You have successfully logged out."
+                                                                                cancelButtonTitle:@"OK"
+                                                                                otherButtonTitles:nil
+                                                                                          handler:NULL];
                                                            [self.optionIndices addIndex:tempInt];
                                                        }
                                                            break;

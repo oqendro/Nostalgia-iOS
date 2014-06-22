@@ -239,7 +239,7 @@ static NSString *headerViewIdentifier = @"HeaderView";
     [songCell.imageView setImageWithURL:imageURL
                        placeholderImage:[UIImage imageNamed:@"767-photo-1-white"]];
     if (song.rating.integerValue == 0 || !song.rating) {
-        songCell.ratingLabel.text = @"N/A";
+        songCell.ratingLabel.text = @"★";
     } else {
         songCell.ratingLabel.text = song.rating.stringValue;
     }
@@ -252,7 +252,7 @@ static NSString *headerViewIdentifier = @"HeaderView";
     [movieCell.imageView setImageWithURL:imageURL
                        placeholderImage:[UIImage imageNamed:@"767-photo-1-white"]];
     if (movie.rating.integerValue == 0 || !movie.rating) {
-        movieCell.ratingLabel.text = @"N/A";
+        movieCell.ratingLabel.text = @"★";
     } else {
         movieCell.ratingLabel.text = movie.rating.stringValue;
     }
@@ -260,17 +260,30 @@ static NSString *headerViewIdentifier = @"HeaderView";
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
-    HeaderView *header = [collectionView dequeueReusableSupplementaryViewOfKind:kind
-                                                                          withReuseIdentifier:headerViewIdentifier
-                                                                                 forIndexPath:indexPath];
-    NSString *title = [[[self.fetchedResultsController sections] objectAtIndex:indexPath.section] name];
-    // little hack to make plural
-    title = [title stringByAppendingString:@"s"];
     
-    
-    UILabel *titleLabel = (UILabel *)[header viewWithTag:187];
-    titleLabel.text = title;
-    return header;
+    if (kind == UICollectionElementKindSectionHeader) {
+        HeaderView *header = [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                                                withReuseIdentifier:headerViewIdentifier
+                                                                       forIndexPath:indexPath];
+        NSString *title = [[[self.fetchedResultsController sections] objectAtIndex:indexPath.section] name];
+        // little hack to make plural
+        title = [title stringByAppendingString:@"s"];
+        
+        
+        UILabel *titleLabel = (UILabel *)[header viewWithTag:187];
+        titleLabel.text = title;
+        return header;
+    }
+
+    if (kind == UICollectionElementKindSectionFooter && indexPath.section == 1) {
+        UICollectionReusableView *footerview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FooterView" forIndexPath:indexPath];
+        UIImageView *imageView = footerview.subviews.lastObject;
+        imageView.layer.cornerRadius = 9;
+        imageView.layer.masksToBounds = YES;
+        return footerview;
+    }
+    UICollectionReusableView *footerview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FooterView" forIndexPath:indexPath];
+    return footerview;
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout
@@ -285,8 +298,16 @@ static NSString *headerViewIdentifier = @"HeaderView";
     }
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     return CGSizeMake(320, 44);
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
+    if (section == 1) {
+        return CGSizeMake(320, 120);
+    } else {
+        return CGSizeMake(0, 0);
+    }
 }
 
 #pragma mark - UICollectionView Delegate
