@@ -281,6 +281,7 @@ static NSString *textFieldCellIdentifier = @"TextFieldCell";
 
 #warning PUT IN CONSTANTS
 - (void)signUpUser{
+    NSLog(@"sign up");
     PFUser *user = [PFUser user];
     user.username = self.userNameCell.textField.text;
     user.password = self.passwordCell.textField.text;
@@ -479,6 +480,7 @@ static NSString *textFieldCellIdentifier = @"TextFieldCell";
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    NSLog(@"should");
     switch (self.mode) {
         case SignUpTVCModeSignUp: {
             if (textField == self.userNameCell.textField) {
@@ -496,6 +498,7 @@ static NSString *textFieldCellIdentifier = @"TextFieldCell";
                 [self.passwordCell.textField becomeFirstResponder];
             }
             if (textField == self.passwordCell.textField) {
+                NSLog(@"df");
                 [textField resignFirstResponder];
                 [self signUpUser];
             }

@@ -238,7 +238,11 @@ static NSString *headerViewIdentifier = @"HeaderView";
     NSURL *imageURL = [NSURL URLWithString:song.thumbnail.url];
     [songCell.imageView setImageWithURL:imageURL
                        placeholderImage:[UIImage imageNamed:@"767-photo-1-white"]];
-    songCell.ratingLabel.text = song.rating.stringValue;
+    if (song.rating.integerValue == 0 || !song.rating) {
+        songCell.ratingLabel.text = @"N/A";
+    } else {
+        songCell.ratingLabel.text = song.rating.stringValue;
+    }
 }
 
 - (void)configureMovieCell:(MovieCell *)movieCell atIndexPath:(NSIndexPath *)indexPath{
@@ -247,7 +251,11 @@ static NSString *headerViewIdentifier = @"HeaderView";
     NSURL *imageURL = [NSURL URLWithString:movie.thumbnail.url];
     [movieCell.imageView setImageWithURL:imageURL
                        placeholderImage:[UIImage imageNamed:@"767-photo-1-white"]];
-    movieCell.ratingLabel.text = movie.rating.stringValue;
+    if (movie.rating.integerValue == 0 || !movie.rating) {
+        movieCell.ratingLabel.text = @"N/A";
+    } else {
+        movieCell.ratingLabel.text = movie.rating.stringValue;
+    }
 
 }
 

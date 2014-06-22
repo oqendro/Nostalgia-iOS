@@ -25,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UIView *transparencyView;
 @property (strong, nonatomic) IBOutlet UIButton *toggleInfoButton;
 @property (strong, nonatomic) AMRatingControl *ratingControl;
+@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *ratingTapGR;
 @property (strong, nonatomic) IBOutlet UILabel *ratingLabel;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolBAr;
 @property (nonatomic, weak) UIBarButtonItem *favBarButtonItem;
@@ -95,17 +96,15 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
 }
 
 #pragma mark - Convenience Methods
-- (void)showPopup {
+
+- (void)showRatingPopup {
     UIAlertView *ratingAV = [UIAlertView bk_alertViewWithTitle:@"Rate"message:@"Rate the song according to your liking."];
-    
+    [ratingAV addButtonWithTitle:NSLocalizedString(@"CANCEL", nil)];
     AMRatingControl *ratingControl = [[AMRatingControl alloc] initWithLocation:CGPointZero
                                                                     emptyColor:[UIColor darkGrayColor]
                                                                     solidColor:[UIColor yellowColor]
                                                                   andMaxRating:5];
-//    ratingControl.frame = CGRectMake(0, 0, 200, 100);
-    ratingAV.visible;
-    
-
+    __block AMRatingControl *weakControl = ratingControl;
     [ratingControl setRating:0];
     [ratingAV setValue:ratingControl forKey:@"accessoryView"];
 
@@ -113,27 +112,26 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
      ratingControl.editingDidEndBlock = ^(NSUInteger rating) {
      PFObject *pfSong = [PFObject objectWithoutDataWithClassName:@"Song" objectId:weakSelf.song.identifier];
      [pfSong fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-     if (!error) {
-     PFObject *rating = [PFObject objectWithClassName:@"SongRating"];
-     [rating setObject:[PFUser currentUser] forKey:@"user"];
-     [rating setObject:[NSNumber numberWithInteger:weakSelf.ratingControl.rating] forKey:@"stars"];
-     [rating setObject:object forKey:@"song"];
-     [rating saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-     if (!error) {
-     NSLog(@"title %@ now has been added a rating of %@",[[rating objectForKey:@"song"] objectForKey:titleKey], [rating objectForKey:@"stars"]);
-     [weakSelf updateSong];
-     } else {
-     NSLog(@"%@",[error.userInfo objectForKey:NSLocalizedDescriptionKey]);
-     }
-     }];
-     } else {
-     NSLog(@"%@",[error.userInfo objectForKey:NSLocalizedDescriptionKey]);
-     }
-     }];
-     
+         if (!error) {
+             PFObject *rating = [PFObject objectWithClassName:@"SongRating"];
+             [rating setObject:[PFUser currentUser] forKey:@"user"];
+             [rating setObject:[NSNumber numberWithInteger:weakControl.rating] forKey:@"stars"];
+             [rating setObject:object forKey:@"song"];
+             [rating saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                 if (!error) {
+                     NSLog(@"title %@ now has been added a rating of %@",[[rating objectForKey:@"song"] objectForKey:titleKey], [rating objectForKey:@"stars"]);
+                     [weakSelf updateSong];
+                 } else {
+                     NSLog(@"%@",[error.userInfo objectForKey:NSLocalizedDescriptionKey]);
+                 }
+             }];
+         } else {
+             NSLog(@"%@",[error.userInfo objectForKey:NSLocalizedDescriptionKey]);
+         }
+        }];
+         [ratingAV dismissWithClickedButtonIndex:-1 animated:YES];
      };
     [ratingAV show];
-    NSLog(@"dd");
 }
 
 - (void)updateSong {
@@ -173,12 +171,14 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
     
     //ratings
     self.ratingControl.rating = self.song.rating.integerValue;
-
+    self.ratingLabel.textAlignment = NSTextAlignmentCenter;
+    [self.ratingTapGR addTarget:self action:@selector(showRatingPopup)];
+    
     if ([PFUser currentUser]) {
-        self.ratingControl.enabled = YES;
+        self.ratingTapGR.enabled = YES;
         self.ratingLabel.text = @"Tap to Rate";
     } else {
-        self.ratingControl.enabled = NO;
+        self.ratingTapGR.enabled = NO;
         self.ratingLabel.text = @"Must Sign in to Rate";
     }
 }
@@ -328,35 +328,11 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
                                                     emptyColor:[UIColor darkGrayColor]
                                                     solidColor:[UIColor yellowColor]
                                                     andMaxRating:5];;
-    [_ratingControl setRating:2.5];
+    [_ratingControl setRating:self.song.rating.integerValue];
     [self.ratingContainerView addSubview:_ratingControl];
     _ratingControl.center = CGPointMake(self.ratingContainerView.frame.size.width / 2, self.ratingContainerView.frame.size.height / 2);
-    __block SongDetailVC *weakSelf = self;
-    [_ratingControl addTarget:self action:@selector(showPopup) forControlEvents:UIControlEventTouchUpInside];
-    /*
-    _ratingControl.editingDidEndBlock = ^(NSUInteger rating) {
-        PFObject *pfSong = [PFObject objectWithoutDataWithClassName:@"Song" objectId:weakSelf.song.identifier];
-        [pfSong fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-            if (!error) {
-                PFObject *rating = [PFObject objectWithClassName:@"SongRating"];
-                [rating setObject:[PFUser currentUser] forKey:@"user"];
-                [rating setObject:[NSNumber numberWithInteger:weakSelf.ratingControl.rating] forKey:@"stars"];
-                [rating setObject:object forKey:@"song"];
-                [rating saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                    if (!error) {
-                        NSLog(@"title %@ now has been added a rating of %@",[[rating objectForKey:@"song"] objectForKey:titleKey], [rating objectForKey:@"stars"]);
-                        [weakSelf updateSong];
-                    } else {
-                        NSLog(@"%@",[error.userInfo objectForKey:NSLocalizedDescriptionKey]);
-                    }
-                }];
-            } else {
-                NSLog(@"%@",[error.userInfo objectForKey:NSLocalizedDescriptionKey]);
-            }
-        }];
-     
-    };
-    */
+    [_ratingControl addTarget:self action:@selector(showRatingPopup) forControlEvents:UIControlEventTouchUpInside];
+    _ratingControl.enabled = NO;
     return _ratingControl;
 }
 

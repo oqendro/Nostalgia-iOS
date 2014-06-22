@@ -136,8 +136,8 @@
                                 <rect key="frame" x="146" y="273" width="28" height="23"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B6O-ff-hT5">
-                                <rect key="frame" x="0.0" y="64" width="320" height="505"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B6O-ff-hT5">
+                                <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xak-Mv-Z2g">
@@ -164,8 +164,8 @@
                                     <constraint firstItem="xak-Mv-Z2g" firstAttribute="top" secondItem="B6O-ff-hT5" secondAttribute="top" id="tLv-yW-54A"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dQx-IB-MR6">
-                                <rect key="frame" x="35" y="463" width="250" height="56"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dQx-IB-MR6">
+                                <rect key="frame" x="35" y="462" width="250" height="56"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tap a Star to Rate" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iar-Nl-35g">
@@ -177,10 +177,14 @@
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="69y-cE-bOI"/>
                                     <constraint firstAttribute="height" constant="56" id="J74-p8-7HR"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="Q6Y-RK-QBL" appends="YES" id="8Tb-YA-R4Q"/>
+                                </connections>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -200,12 +204,14 @@
                         <outlet property="imageView" destination="t0W-mg-o5c" id="HUK-FQ-3k0"/>
                         <outlet property="ratingContainerView" destination="dQx-IB-MR6" id="XQw-nU-eMg"/>
                         <outlet property="ratingLabel" destination="Iar-Nl-35g" id="7Gh-Vh-Iwq"/>
+                        <outlet property="ratingTapGR" destination="Q6Y-RK-QBL" id="PTM-ot-xzX"/>
                         <outlet property="titleLabel" destination="JVH-Iq-vU3" id="nUQ-Iz-jpp"/>
                         <outlet property="toolBAr" destination="xak-Mv-Z2g" id="2V4-jj-z9p"/>
                         <outlet property="transparencyView" destination="B6O-ff-hT5" id="lAa-JH-AAE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q16-dG-AWI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="Q6Y-RK-QBL"/>
             </objects>
             <point key="canvasLocation" x="4133" y="-233"/>
         </scene>
@@ -480,8 +486,8 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 <rect key="frame" x="146" y="273" width="28" height="23"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sMs-YT-OrV">
-                                <rect key="frame" x="0.0" y="64" width="320" height="505"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sMs-YT-OrV">
+                                <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pmR-H2-R1p">
@@ -508,8 +514,8 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                     <constraint firstAttribute="trailing" secondItem="pmR-H2-R1p" secondAttribute="trailing" id="tCb-m6-b4j"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iBK-7l-9jj">
-                                <rect key="frame" x="35" y="463" width="250" height="56"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iBK-7l-9jj">
+                                <rect key="frame" x="35" y="462" width="250" height="56"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tap a Star to Rate" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jld-Zm-z72">
@@ -521,10 +527,14 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="LA9-JK-U79"/>
                                     <constraint firstAttribute="height" constant="56" id="Zbk-M5-8hO"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="hg7-Sn-VT4" appends="YES" id="TRU-qE-Qly"/>
+                                </connections>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -544,12 +554,14 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <outlet property="imageView" destination="NUc-Nm-njt" id="gLa-qt-nqG"/>
                         <outlet property="ratingContainerView" destination="iBK-7l-9jj" id="fSG-tK-P6w"/>
                         <outlet property="ratingLabel" destination="jld-Zm-z72" id="9cC-Qe-VQv"/>
+                        <outlet property="ratingTapGR" destination="hg7-Sn-VT4" id="d5y-0Q-J8a"/>
                         <outlet property="titleLabel" destination="J7O-oe-bdo" id="SXx-BO-NNl"/>
                         <outlet property="toolBAr" destination="pmR-H2-R1p" id="as3-w1-SNs"/>
                         <outlet property="transparencyView" destination="sMs-YT-OrV" id="ik2-Dn-zj7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1ot-UV-Djk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="hg7-Sn-VT4"/>
             </objects>
             <point key="canvasLocation" x="4133" y="437"/>
         </scene>
