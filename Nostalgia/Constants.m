@@ -20,3 +20,5 @@ NSString *const songDetailSegueIdentifier = @"SongDetailVC";
 NSString *const movieDetailSegueIdentifier = @"MovieDetailVC";
 NSString *const favoritesCVCSegueIdentifier = @"FavoritesCVC";
 NSString *const infoVCSegueIdentifier = @"InfoTVC";
+
+NSString *const linkToApp = @"https://itunes.apple.com/us/app/lookingback/id885670123?ls=1&mt=8";

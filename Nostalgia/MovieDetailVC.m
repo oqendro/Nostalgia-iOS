@@ -133,14 +133,13 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
 
     if ([PFUser currentUser]) {
         self.ratingControl.enabled = YES;
-        self.ratingLabel.text = @"Tap a Star to Rate";
+        self.ratingLabel.text = @"Tap  to Rate";
     } else {
         self.ratingControl.enabled = NO;
         self.ratingLabel.text = @"Must Sign in to Rate";
     }
 }
 
-#warning PUT IN CONSTANTS & add html and pics
 - (void)shareAsText{
     if ([MFMessageComposeViewController canSendText]) {
         MFMessageComposeViewController *messageVC = [[MFMessageComposeViewController alloc] init];
@@ -154,8 +153,7 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
         } else {
             textBody = [NSString stringWithFormat:@"Check out %@ by %@", self.movie.title, self.movie.director];
         }
-
-        NSString *linkToApp = @"www.nostaligia.com";
+        messageVC.subject = @"Someone shared a movie with you!";
         messageVC.body = [NSString stringWithFormat:@"%@ \n %@",textBody, linkToApp];
         [self presentViewController:messageVC animated:YES completion:NULL];
     } else {
@@ -188,6 +186,19 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
         MFMailComposeViewController *mailVC = [[MFMailComposeViewController alloc] init];
         mailVC.mailComposeDelegate = self;
         NSString *textBody;
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"AppStoreBadge" ofType:@"png"];
+        NSData *imageData = [NSData dataWithContentsOfFile:path];
+        NSString *base64 = [imageData base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithCarriageReturn];
+        
+        
+        NSString *htmlPath = [[NSBundle mainBundle] pathForResource:@"Share" ofType:@"html"];
+        NSError *error;
+        NSString *htmlString = [NSString stringWithContentsOfFile:htmlPath
+                                                         encoding:NSUTF8StringEncoding
+                                                            error:&error];
+        htmlString = [htmlString stringByReplacingOccurrencesOfString:@"*!*@*#*$"
+                                                           withString:base64];
+
         if ([PFUser currentUser]) {
             NSString *first = [PFUser currentUser][@"firstName"];
             NSString *last = [PFUser currentUser][@"lastName"];
@@ -195,8 +206,11 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
         } else {
             textBody = [NSString stringWithFormat:@"Check out %@ by %@", self.movie.title, self.movie.director];
         }
-        NSString *linkToApp = @"www.nostaligia.com";
-        [mailVC setMessageBody:[NSString stringWithFormat:@"%@ \n %@",textBody, linkToApp] isHTML:NO];
+        htmlString =[htmlString stringByReplacingOccurrencesOfString:@"!@#$%^&*()_+"
+                                                          withString:textBody];
+        mailVC.subject = @"Someone shared a movie with you!";
+
+        [mailVC setMessageBody:htmlString isHTML:YES];
         [self presentViewController:mailVC animated:YES completion:NULL];
     } else {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"

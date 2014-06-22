@@ -44,6 +44,44 @@ Parse.Cloud.afterSave("SongRating", function(request) {
 
 });
 
+// After Saving a Rating object update the rating on the Movie object itself
+
+Parse.Cloud.afterSave("MovieRating", function(request) {
+  var movieQuery = new Parse.Query("Movie");	
+		
+  movieQuery.get(request.object.get("movie").id, {
+    success: function(movie) {
+    	var ratingQuery = new Parse.Query("MovieRating");
+		ratingQuery.equalTo("movie",movie);
+		ratingQuery.find({
+			success: function(movieRatings) {
+				//get all ratings
+				var ratingCount = movieRatings.length;
+				console.log("count of ratings is " + ratingCount + " for movie" + movie.get("Title"));
+				//calculate average rating
+				var sum = 0;
+				for (var i = 0; i < movieRatings.length; ++i) {
+					sum += movieRatings[i].get("stars");
+					}
+				var averageRating = sum / movieRatings.length;
+				console.log("average rating of" + movie.get('Title') + " is " + averageRating);
+				movie.set("rating",averageRating, 0);
+				movie.save();
+			},
+			error: function(error) {
+      			console.error("Got an error " + error.code + " : " + error.message);
+			}
+		});
+    
+     	movie.save();
+    },
+    error: function(error) {
+      console.error("Got an error " + error.code + " : " + error.message);
+    }
+  });
+
+
+});
 
 
 Parse.Cloud.define("averageStarsForSongId", function(request, response) {

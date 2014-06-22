@@ -11,6 +11,7 @@
 #import "Thumbnail.h"
 #import <AMRatingControl.h>
 #import "Song+Networking.h"
+#import <BlocksKit+UIKit.h>
 
 @import MessageUI;
 
@@ -94,6 +95,46 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
 }
 
 #pragma mark - Convenience Methods
+- (void)showPopup {
+    UIAlertView *ratingAV = [UIAlertView bk_alertViewWithTitle:@"Rate"message:@"Rate the song according to your liking."];
+    
+    AMRatingControl *ratingControl = [[AMRatingControl alloc] initWithLocation:CGPointZero
+                                                                    emptyColor:[UIColor darkGrayColor]
+                                                                    solidColor:[UIColor yellowColor]
+                                                                  andMaxRating:5];
+//    ratingControl.frame = CGRectMake(0, 0, 200, 100);
+    ratingAV.visible;
+    
+
+    [ratingControl setRating:0];
+    [ratingAV setValue:ratingControl forKey:@"accessoryView"];
+
+    __block SongDetailVC *weakSelf = self;
+     ratingControl.editingDidEndBlock = ^(NSUInteger rating) {
+     PFObject *pfSong = [PFObject objectWithoutDataWithClassName:@"Song" objectId:weakSelf.song.identifier];
+     [pfSong fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+     if (!error) {
+     PFObject *rating = [PFObject objectWithClassName:@"SongRating"];
+     [rating setObject:[PFUser currentUser] forKey:@"user"];
+     [rating setObject:[NSNumber numberWithInteger:weakSelf.ratingControl.rating] forKey:@"stars"];
+     [rating setObject:object forKey:@"song"];
+     [rating saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+     if (!error) {
+     NSLog(@"title %@ now has been added a rating of %@",[[rating objectForKey:@"song"] objectForKey:titleKey], [rating objectForKey:@"stars"]);
+     [weakSelf updateSong];
+     } else {
+     NSLog(@"%@",[error.userInfo objectForKey:NSLocalizedDescriptionKey]);
+     }
+     }];
+     } else {
+     NSLog(@"%@",[error.userInfo objectForKey:NSLocalizedDescriptionKey]);
+     }
+     }];
+     
+     };
+    [ratingAV show];
+    NSLog(@"dd");
+}
 
 - (void)updateSong {
     PFObject *pfSong = [PFObject objectWithoutDataWithClassName:@"Song" objectId:self.song.identifier];
@@ -135,14 +176,13 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
 
     if ([PFUser currentUser]) {
         self.ratingControl.enabled = YES;
-        self.ratingLabel.text = @"Tap a Star to Rate";
+        self.ratingLabel.text = @"Tap to Rate";
     } else {
         self.ratingControl.enabled = NO;
         self.ratingLabel.text = @"Must Sign in to Rate";
     }
 }
 
-#warning PUT IN CONSTANTS & add html and pics
 - (void)shareAsText{
     if ([MFMessageComposeViewController canSendText]) {
         MFMessageComposeViewController *messageVC = [[MFMessageComposeViewController alloc] init];
@@ -156,8 +196,7 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
         } else {
             textBody = [NSString stringWithFormat:@"Check out %@ by %@", self.song.title, self.song.artist];
         }
-        
-        NSString *linkToApp = @"www.nostaligia.com";
+        messageVC.subject = @"Someone shared a song with you!";
         messageVC.body = [NSString stringWithFormat:@"%@ \n %@",textBody, linkToApp];
         [self presentViewController:messageVC animated:YES completion:NULL];
     } else {
@@ -190,15 +229,30 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
         MFMailComposeViewController *mailVC = [[MFMailComposeViewController alloc] init];
         mailVC.mailComposeDelegate = self;
         NSString *textBody;
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"AppStoreBadge" ofType:@"png"];
+        NSData *imageData = [NSData dataWithContentsOfFile:path];
+        NSString *base64 = [imageData base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithCarriageReturn];
+        
+        
+        NSString *htmlPath = [[NSBundle mainBundle] pathForResource:@"Share" ofType:@"html"];
+        NSError *error;
+        NSString *htmlString = [NSString stringWithContentsOfFile:htmlPath
+                                                         encoding:NSUTF8StringEncoding
+                                                            error:&error];
+        htmlString = [htmlString stringByReplacingOccurrencesOfString:@"*!*@*#*$"
+                                                           withString:base64];
+
         if ([PFUser currentUser]) {
             NSString *first = [PFUser currentUser][@"firstName"];
             NSString *last = [PFUser currentUser][@"lastName"];
-            textBody = [NSString stringWithFormat:@"%@ %@ wanted to share %@ by %@ with you", first, last, self.song.title, self.song.artist];
+            textBody = [NSString stringWithFormat:@"%@ %@ wanted to share %@ by %@ with you.", first, last, self.song.title, self.song.artist];
         } else {
-            textBody = [NSString stringWithFormat:@"Check out %@ by %@", self.song.title, self.song.artist];
+            textBody = [NSString stringWithFormat:@"Check out %@ by %@.", self.song.title, self.song.artist];
         }
-        NSString *linkToApp = @"www.nostaligia.com";
-        [mailVC setMessageBody:[NSString stringWithFormat:@"%@ \n %@",textBody, linkToApp] isHTML:NO];
+        htmlString =[htmlString stringByReplacingOccurrencesOfString:@"!@#$%^&*()_+"
+                                                          withString:textBody];
+        [mailVC setMessageBody:htmlString isHTML:YES];
+        mailVC.subject = @"Someone shared a song with you!";
         [self presentViewController:mailVC animated:YES completion:NULL];
     } else {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
@@ -278,6 +332,8 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
     [self.ratingContainerView addSubview:_ratingControl];
     _ratingControl.center = CGPointMake(self.ratingContainerView.frame.size.width / 2, self.ratingContainerView.frame.size.height / 2);
     __block SongDetailVC *weakSelf = self;
+    [_ratingControl addTarget:self action:@selector(showPopup) forControlEvents:UIControlEventTouchUpInside];
+    /*
     _ratingControl.editingDidEndBlock = ^(NSUInteger rating) {
         PFObject *pfSong = [PFObject objectWithoutDataWithClassName:@"Song" objectId:weakSelf.song.identifier];
         [pfSong fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
@@ -298,8 +354,9 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
                 NSLog(@"%@",[error.userInfo objectForKey:NSLocalizedDescriptionKey]);
             }
         }];
+     
     };
-    
+    */
     return _ratingControl;
 }
 

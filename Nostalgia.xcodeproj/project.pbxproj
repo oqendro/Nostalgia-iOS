@@ -28,6 +28,10 @@
 		750F13A518DFB8470004BA86 /* 700-info-filled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 750F139F18DFB8470004BA86 /* 700-info-filled@2x.png */; };
 		7519BA4F18825BCD0010D874 /* SignUpCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7519BA4E18825BCD0010D874 /* SignUpCell.m */; };
 		75270AC0187CCBB700B49643 /* DataLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 75270ABF187CCBB700B49643 /* DataLoader.m */; };
+		7535D94819551978001C0362 /* Download_on_the_App_Store_Badge_US-UK_135x40.png in Resources */ = {isa = PBXBuildFile; fileRef = 7535D94719551978001C0362 /* Download_on_the_App_Store_Badge_US-UK_135x40.png */; };
+		7535D94A1956AD00001C0362 /* Share.html in Resources */ = {isa = PBXBuildFile; fileRef = 7535D9491956AD00001C0362 /* Share.html */; };
+		7535D94D1956AF17001C0362 /* AppStoreBadge.png in Resources */ = {isa = PBXBuildFile; fileRef = 7535D94B1956AF17001C0362 /* AppStoreBadge.png */; };
+		7535D94E1956AF17001C0362 /* AppStoreBadge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7535D94C1956AF17001C0362 /* AppStoreBadge@2x.png */; };
 		754BD99A18BBA2B20057EC38 /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 754BD99918BBA2B20057EC38 /* Song.m */; };
 		754BD99D18BBA2B30057EC38 /* Thumbnail.m in Sources */ = {isa = PBXBuildFile; fileRef = 754BD99C18BBA2B30057EC38 /* Thumbnail.m */; };
 		754BD9A618BBA5460057EC38 /* Media+Keys.m in Sources */ = {isa = PBXBuildFile; fileRef = 754BD9A518BBA5460057EC38 /* Media+Keys.m */; };
@@ -140,6 +144,10 @@
 		7519BA4E18825BCD0010D874 /* SignUpCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpCell.m; sourceTree = "<group>"; };
 		75270ABE187CCBB700B49643 /* DataLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataLoader.h; sourceTree = "<group>"; };
 		75270ABF187CCBB700B49643 /* DataLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataLoader.m; sourceTree = "<group>"; };
+		7535D94719551978001C0362 /* Download_on_the_App_Store_Badge_US-UK_135x40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Download_on_the_App_Store_Badge_US-UK_135x40.png"; sourceTree = "<group>"; };
+		7535D9491956AD00001C0362 /* Share.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Share.html; sourceTree = "<group>"; };
+		7535D94B1956AF17001C0362 /* AppStoreBadge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppStoreBadge.png; sourceTree = "<group>"; };
+		7535D94C1956AF17001C0362 /* AppStoreBadge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppStoreBadge@2x.png"; sourceTree = "<group>"; };
 		754BD99818BBA2B20057EC38 /* Song.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Song.h; sourceTree = "<group>"; };
 		754BD99918BBA2B20057EC38 /* Song.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Song.m; sourceTree = "<group>"; };
 		754BD99B18BBA2B30057EC38 /* Thumbnail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Thumbnail.h; sourceTree = "<group>"; };
@@ -359,6 +367,9 @@
 				75B729891882DFF200D0A695 /* Constants.h */,
 				75B7298A1882DFF200D0A695 /* Constants.m */,
 				75C735C51846E0260055F8C3 /* Main.storyboard */,
+				7535D94719551978001C0362 /* Download_on_the_App_Store_Badge_US-UK_135x40.png */,
+				7535D94B1956AF17001C0362 /* AppStoreBadge.png */,
+				7535D94C1956AF17001C0362 /* AppStoreBadge@2x.png */,
 				7519BA50188265970010D874 /* Sign Up */,
 				750A55AE18B6C49600E3BFA6 /* Results */,
 				75DC3D9018B988D4000A4778 /* Detail Screens */,
@@ -439,6 +450,7 @@
 				750A55B018B6C4EE00E3BFA6 /* SongAttributeCell.m */,
 				7557FDDC191B042A00FE9F11 /* MovieDetailVC.h */,
 				7557FDDD191B042A00FE9F11 /* MovieDetailVC.m */,
+				7535D9491956AD00001C0362 /* Share.html */,
 			);
 			name = "Detail Screens";
 			sourceTree = "<group>";
@@ -588,6 +600,7 @@
 				75C735CC1846E0260055F8C3 /* Images.xcassets in Resources */,
 				758AB1A618B430C800E5CBF3 /* 748-heart-white.png in Resources */,
 				750F139B18DF81B50004BA86 /* 769-male-white@2x.png in Resources */,
+				7535D94E1956AF17001C0362 /* AppStoreBadge@2x.png in Resources */,
 				750F138318DF64D90004BA86 /* info.html in Resources */,
 				758AB1A718B430C800E5CBF3 /* 748-heart-white@2x.png in Resources */,
 				758FF25C18E8B772008C010D /* 726-star-filled-gray.png in Resources */,
@@ -601,6 +614,7 @@
 				750F139618DF813E0004BA86 /* 769-male-gray.png in Resources */,
 				75D52A3718AE4755008177C3 /* 767-photo-1-gray@2x.png in Resources */,
 				756DE88218ADC3FF003A8518 /* 724-info-gray.png in Resources */,
+				7535D94819551978001C0362 /* Download_on_the_App_Store_Badge_US-UK_135x40.png in Resources */,
 				756F510418B16B8C0068C7AC /* 798-filter-gray@2x.png in Resources */,
 				7585B0AD1933C0DC00DD6838 /* 00s@2x.png in Resources */,
 				758AB1AA18B430F100E5CBF3 /* 748-heart-gray.png in Resources */,
@@ -618,6 +632,7 @@
 				756DE87F18ADC3E3003A8518 /* 724-info-white@2x.png in Resources */,
 				750F138118DF53CA0004BA86 /* 729-top-list-white@2x.png in Resources */,
 				7587C44B18AEA093000721C3 /* 702-share-gray@2x.png in Resources */,
+				7535D94A1956AD00001C0362 /* Share.html in Resources */,
 				750F13A318DFB8470004BA86 /* 700-heart-filled@2x.png in Resources */,
 				75C735BE1846E0260055F8C3 /* InfoPlist.strings in Resources */,
 				750F13A218DFB8470004BA86 /* 700-heart-filled.png in Resources */,
@@ -631,6 +646,7 @@
 				758CDBB418BBEBC0005FD9E7 /* SongCell.xib in Resources */,
 				758CDBB618BBEBD6005FD9E7 /* MovieCell.xib in Resources */,
 				750A55A818B6BDFE00E3BFA6 /* 726-star-gray.png in Resources */,
+				7535D94D1956AF17001C0362 /* AppStoreBadge.png in Resources */,
 				75DC3D9818B9B1C6000A4778 /* TextFieldCell.xib in Resources */,
 				756F510718B16BAF0068C7AC /* 798-filter-white.png in Resources */,
 				756DE87B18ADB3BB003A8518 /* SongAttributeCell.xib in Resources */,
