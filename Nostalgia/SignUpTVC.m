@@ -247,7 +247,7 @@ static NSString *textFieldCellIdentifier = @"TextFieldCell";
 
 #pragma mark - Convenience
 
-- (void)toggleMode:(UIButton *)button{
+- (void)toggleMode:(UIButton *)button {
     NSIndexPath *firstNameIndexPath = [NSIndexPath indexPathForRow:SignUpCellTypeFirstName inSection:0];
     NSIndexPath *lastNameIndexPath = [NSIndexPath indexPathForRow:SignUpCellTypeLastName inSection:0];
     NSIndexPath *dateOfBirthIndexPath = [NSIndexPath indexPathForRow:SignUpCellTypeDOB inSection:0];
@@ -258,6 +258,7 @@ static NSString *textFieldCellIdentifier = @"TextFieldCell";
     switch (self.mode) {
         case SignUpTVCModeSignUp: {
             self.mode = SignUpTVCModeLogin;
+            self.title = NSLocalizedString(@"LOGIN_TEXT", nil);
             [self.tableView beginUpdates];
             [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
             [self.tableView reloadRowsAtIndexPaths:@[signUpLoginIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -267,6 +268,7 @@ static NSString *textFieldCellIdentifier = @"TextFieldCell";
             break;
         case SignUpTVCModeLogin: {
             self.mode = SignUpTVCModeSignUp;
+            self.title = NSLocalizedString(@"SIGN_UP_VIEW_CONTROLLER_TITLE", nil);
             [self.tableView beginUpdates];
             [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
             [self.tableView reloadRowsAtIndexPaths:@[signUpLoginIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -279,9 +281,7 @@ static NSString *textFieldCellIdentifier = @"TextFieldCell";
     }
 }
 
-#warning PUT IN CONSTANTS
 - (void)signUpUser{
-    NSLog(@"sign up");
     PFUser *user = [PFUser user];
     user.username = self.userNameCell.textField.text;
     user.password = self.passwordCell.textField.text;
