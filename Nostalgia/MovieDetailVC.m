@@ -12,6 +12,7 @@
 #import <AMRatingControl.h>
 #import "Movie+Networking.h"
 #import <BlocksKit+UIKit.h>
+#import <Flurry.h>
 
 @import MessageUI;
 
@@ -211,9 +212,11 @@ static NSString *songAttributeCellIdentifier = @"SongAttributeCell";
     if (self.movie.favorite.boolValue) {
         self.movie.favorite = @NO;
         [favBarButton setImage:[UIImage imageNamed:@"726-star-gray"]];
+        [Flurry logEvent:@"Unfavorited" withParameters:@{@"title": self.movie.title, @"director": self.movie.director}];
     } else {
         self.movie.favorite = @YES;
         [favBarButton setImage:[UIImage imageNamed:@"726-star-filled-gray"]];
+        [Flurry logEvent:@"Favorited" withParameters:@{@"title": self.movie.title, @"director": self.movie.director}];
     }
     NSError *error;
     [[NSManagedObjectContext MR_defaultContext] save:&error];

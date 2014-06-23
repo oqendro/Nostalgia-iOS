@@ -1,7 +1,7 @@
 # Uncomment this line to define a global platform for your project
 # platform :ios, “7.0”
 
-target "Nostalgia" do
+target "LookBack" do
     inhibit_all_warnings!
     pod 'MagicalRecord'
     pod 'AFNetworking', '~> 2.2.1'
@@ -11,5 +11,6 @@ target "Nostalgia" do
     pod 'AMRatingControl', '~> 1.3.0'
     pod 'BlocksKit'
     pod 'UIColor+iOS7Colors'
+    pod 'FlurrySDK'
 end
 

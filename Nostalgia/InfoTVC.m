@@ -28,6 +28,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     self.title = @"Info";
     self.textView.editable = NO;
     self.textView.backgroundColor = [UIColor darkGrayColor];

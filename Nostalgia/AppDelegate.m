@@ -14,6 +14,7 @@
 #import "InfoTVC.h"
 #import <RNFrostedSidebar.h>
 #import <UIAlertView+BlocksKit.h>
+#import <Flurry.h>
 
 typedef NS_ENUM(NSInteger, SideBarOption) {
     SideBarOption00s,
@@ -41,9 +42,11 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
     NSDictionary *defaults = @{songsPreferenceKey: @YES, moviesPreferenceKey: @YES};
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    
+    [Flurry startSession:@"SXKF36GDSBV8YHRSYWMS" withOptions:launchOptions];
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"LookingBack"];
     [DataLoader setupParseWithLaunchOptions:launchOptions];
+    UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+    [Flurry logAllPageViewsForTarget:navController];
     [self setupInitialVC];
  
     return YES;

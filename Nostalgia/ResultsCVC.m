@@ -127,32 +127,6 @@ static NSString *headerViewIdentifier = @"HeaderView";
 
 - (NSArray *)years {
     NSArray *years = [NSArray array];
-    /*
-    if ((_filterOptions & ResultsCVCFilterOption00s)) {
-        NSLog(@"here 00");
-        // add 00s
-        years = [years arrayByAddingObjectsFromArray:@[@2000, @2001, @2002, @2003, @2004, @2005, @2006, @2007, @2008, @2009]];
-    }
-    if ((_filterOptions & ResultsCVCFilterOption90s)) {
-        NSLog(@"here 90");
-
-        //add 90s
-        years = [years arrayByAddingObjectsFromArray:@[@1990, @1991, @1992, @1993, @1994, @1995, @1996, @1997, @1998, @1999]];
-    }
-    if ((_filterOptions & ResultsCVCFilterOption80s)) {
-        NSLog(@"here 80");
-
-        //add 80s
-        years = [years arrayByAddingObjectsFromArray:@[@1980, @1981, @1982, @1983, @1984, @1985, @1986, @1987, @1988, @1989]];
-    }
-    if ((_filterOptions & ResultsCVCFilterOption70s)) {
-        NSLog(@"here 70");
-
-        //add 70s
-        years = [years arrayByAddingObjectsFromArray:@[@1970, @1971, @1972, @1973, @1974, @1975, @1976, @1977, @1978, @1979]];
-    }
-    
-     */
     switch (self.filterOptions) {
         case ResultsCVCFilterOption00s: {
             years = [years arrayByAddingObjectsFromArray:@[@2000, @2001, @2002, @2003, @2004, @2005, @2006, @2007, @2008, @2009]];
