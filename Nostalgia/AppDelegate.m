@@ -42,7 +42,7 @@ typedef NS_ENUM(NSInteger, SideBarOption) {
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"Nostalgia"];
+    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"LookingBack"];
     [DataLoader setupParseWithLaunchOptions:launchOptions];
     [self setupInitialVC];
  

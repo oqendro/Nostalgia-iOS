@@ -208,21 +208,21 @@
 		75B7298A1882DFF200D0A695 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		75B7298D1883920900D0A695 /* DatePickerTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatePickerTVC.h; sourceTree = "<group>"; };
 		75B7298E1883920900D0A695 /* DatePickerTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatePickerTVC.m; sourceTree = "<group>"; };
-		75C735B01846E0260055F8C3 /* Nostalgia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nostalgia.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		75C735B01846E0260055F8C3 /* LookingBack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LookingBack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75C735B31846E0260055F8C3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		75C735B51846E0260055F8C3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		75C735B71846E0260055F8C3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		75C735BB1846E0260055F8C3 /* Nostalgia-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Nostalgia-Info.plist"; sourceTree = "<group>"; };
+		75C735BB1846E0260055F8C3 /* LookingBack-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LookingBack-Info.plist"; sourceTree = "<group>"; };
 		75C735BD1846E0260055F8C3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		75C735BF1846E0260055F8C3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		75C735C11846E0260055F8C3 /* Nostalgia-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Nostalgia-Prefix.pch"; sourceTree = "<group>"; };
+		75C735C11846E0260055F8C3 /* LookingBack-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LookingBack-Prefix.pch"; sourceTree = "<group>"; };
 		75C735C21846E0260055F8C3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		75C735C31846E0260055F8C3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		75C735C61846E0260055F8C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		75C735CB1846E0260055F8C3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		75C735D11846E0270055F8C3 /* NostalgiaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NostalgiaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		75C735D11846E0270055F8C3 /* LookingBackTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LookingBackTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		75C735D21846E0270055F8C3 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		75C735DA1846E0270055F8C3 /* NostalgiaTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NostalgiaTests-Info.plist"; sourceTree = "<group>"; };
+		75C735DA1846E0270055F8C3 /* LookingBackTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LookingBackTests-Info.plist"; sourceTree = "<group>"; };
 		75C735DC1846E0270055F8C3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		75C735DE1846E0270055F8C3 /* NostalgiaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NostalgiaTests.m; sourceTree = "<group>"; };
 		75CA879B18821D24007A9F06 /* Nostalgia.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Nostalgia.xcdatamodel; sourceTree = "<group>"; };
@@ -342,8 +342,8 @@
 		75C735B11846E0260055F8C3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				75C735B01846E0260055F8C3 /* Nostalgia.app */,
-				75C735D11846E0270055F8C3 /* NostalgiaTests.xctest */,
+				75C735B01846E0260055F8C3 /* LookingBack.app */,
+				75C735D11846E0270055F8C3 /* LookingBackTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -391,11 +391,11 @@
 			isa = PBXGroup;
 			children = (
 				75F9BAC518F880A900C1B08C /* Images */,
-				75C735BB1846E0260055F8C3 /* Nostalgia-Info.plist */,
+				75C735BB1846E0260055F8C3 /* LookingBack-Info.plist */,
 				75C735BC1846E0260055F8C3 /* InfoPlist.strings */,
 				75FBBE3318AAE11E00914A98 /* Localizable.strings */,
 				75C735BF1846E0260055F8C3 /* main.m */,
-				75C735C11846E0260055F8C3 /* Nostalgia-Prefix.pch */,
+				75C735C11846E0260055F8C3 /* LookingBack-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -412,7 +412,7 @@
 		75C735D91846E0270055F8C3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				75C735DA1846E0270055F8C3 /* NostalgiaTests-Info.plist */,
+				75C735DA1846E0270055F8C3 /* LookingBackTests-Info.plist */,
 				75C735DB1846E0270055F8C3 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
@@ -517,9 +517,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		75C735AF1846E0260055F8C3 /* Nostalgia */ = {
+		75C735AF1846E0260055F8C3 /* LookingBack */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 75C735E21846E0270055F8C3 /* Build configuration list for PBXNativeTarget "Nostalgia" */;
+			buildConfigurationList = 75C735E21846E0270055F8C3 /* Build configuration list for PBXNativeTarget "LookingBack" */;
 			buildPhases = (
 				0A680BC1065C470ABB8C0D9C /* Check Pods Manifest.lock */,
 				75C735AC1846E0260055F8C3 /* Sources */,
@@ -531,14 +531,14 @@
 			);
 			dependencies = (
 			);
-			name = Nostalgia;
+			name = LookingBack;
 			productName = Nostalgia;
-			productReference = 75C735B01846E0260055F8C3 /* Nostalgia.app */;
+			productReference = 75C735B01846E0260055F8C3 /* LookingBack.app */;
 			productType = "com.apple.product-type.application";
 		};
-		75C735D01846E0270055F8C3 /* NostalgiaTests */ = {
+		75C735D01846E0270055F8C3 /* LookingBackTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 75C735E51846E0270055F8C3 /* Build configuration list for PBXNativeTarget "NostalgiaTests" */;
+			buildConfigurationList = 75C735E51846E0270055F8C3 /* Build configuration list for PBXNativeTarget "LookingBackTests" */;
 			buildPhases = (
 				75C735CD1846E0270055F8C3 /* Sources */,
 				75C735CE1846E0270055F8C3 /* Frameworks */,
@@ -549,9 +549,9 @@
 			dependencies = (
 				75C735D71846E0270055F8C3 /* PBXTargetDependency */,
 			);
-			name = NostalgiaTests;
+			name = LookingBackTests;
 			productName = NostalgiaTests;
-			productReference = 75C735D11846E0270055F8C3 /* NostalgiaTests.xctest */;
+			productReference = 75C735D11846E0270055F8C3 /* LookingBackTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -571,7 +571,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 75C735AB1846E0260055F8C3 /* Build configuration list for PBXProject "Nostalgia" */;
+			buildConfigurationList = 75C735AB1846E0260055F8C3 /* Build configuration list for PBXProject "LookingBack" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -584,8 +584,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				75C735AF1846E0260055F8C3 /* Nostalgia */,
-				75C735D01846E0270055F8C3 /* NostalgiaTests */,
+				75C735AF1846E0260055F8C3 /* LookingBack */,
+				75C735D01846E0270055F8C3 /* LookingBackTests */,
 			);
 		};
 /* End PBXProject section */
@@ -748,7 +748,7 @@
 /* Begin PBXTargetDependency section */
 		75C735D71846E0270055F8C3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 75C735AF1846E0260055F8C3 /* Nostalgia */;
+			target = 75C735AF1846E0260055F8C3 /* LookingBack */;
 			targetProxy = 75C735D61846E0270055F8C3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -868,9 +868,9 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Nostalgia/Nostalgia-Prefix.pch";
-				INFOPLIST_FILE = "Nostalgia/Nostalgia-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "Nostalgia/LookingBack-Prefix.pch";
+				INFOPLIST_FILE = "Nostalgia/LookingBack-Info.plist";
+				PRODUCT_NAME = LookingBack;
 				PROVISIONING_PROFILE = "33D64A36-2619-4197-AD02-4DD86329514A";
 				WRAPPER_EXTENSION = app;
 			};
@@ -885,9 +885,9 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Nostalgia/Nostalgia-Prefix.pch";
-				INFOPLIST_FILE = "Nostalgia/Nostalgia-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "Nostalgia/LookingBack-Prefix.pch";
+				INFOPLIST_FILE = "Nostalgia/LookingBack-Info.plist";
+				PRODUCT_NAME = LookingBack;
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
@@ -908,8 +908,8 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "NostalgiaTests/NostalgiaTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "NostalgiaTests/LookingBackTests-Info.plist";
+				PRODUCT_NAME = LookingBackTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -926,8 +926,8 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Nostalgia/Nostalgia-Prefix.pch";
-				INFOPLIST_FILE = "NostalgiaTests/NostalgiaTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "NostalgiaTests/LookingBackTests-Info.plist";
+				PRODUCT_NAME = LookingBackTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -936,7 +936,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		75C735AB1846E0260055F8C3 /* Build configuration list for PBXProject "Nostalgia" */ = {
+		75C735AB1846E0260055F8C3 /* Build configuration list for PBXProject "LookingBack" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				75C735E01846E0270055F8C3 /* Debug */,
@@ -945,7 +945,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		75C735E21846E0270055F8C3 /* Build configuration list for PBXNativeTarget "Nostalgia" */ = {
+		75C735E21846E0270055F8C3 /* Build configuration list for PBXNativeTarget "LookingBack" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				75C735E31846E0270055F8C3 /* Debug */,
@@ -954,7 +954,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		75C735E51846E0270055F8C3 /* Build configuration list for PBXNativeTarget "NostalgiaTests" */ = {
+		75C735E51846E0270055F8C3 /* Build configuration list for PBXNativeTarget "LookingBackTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				75C735E61846E0270055F8C3 /* Debug */,
